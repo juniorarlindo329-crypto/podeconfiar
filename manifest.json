@@ -3,9 +3,8 @@
   "short_name": "PodeConfiar",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#020806",
-  "theme_color": "#020806",
-  "description": "Aplicativo de segurança digital para analisar sinais de golpes, links, mensagens e cobranças suspeitas.",
+  "background_color": "#000906",
+  "theme_color": "#00110c",
   "icons": [
     {
       "src": "icon-192.png",

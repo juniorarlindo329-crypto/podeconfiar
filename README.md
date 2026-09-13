@@ -1,6 +1,2 @@
-# PodeConfiar? V2 — Upload fácil
-
-Todos os arquivos deste pacote devem ser enviados diretamente para a raiz do repositório GitHub.
-Não precisa criar nenhuma pasta.
-
-Desenvolvido por JNR.
+# PodeConfiar? V3 PRO
+Atualização visual profissional. Todos os arquivos ficam na raiz do repositório.

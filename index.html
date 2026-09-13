@@ -1,229 +1,37 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#020806">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="icon-192.png">
-  <title>PodeConfiar?</title>
-  <style>
-    :root{
-      --bg:#020806;--panel:#06130f;--panel2:#0a1b15;--line:#123a2d;
-      --text:#f6fff9;--muted:#9cb3aa;--green:#18ef95;--green2:#03b96b;
-      --blue:#1788ff;--purple:#7b36f2;--orange:#ff970f;--red:#ff4e5f;
-    }
-    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-    html,body{margin:0;background:#010503;color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-    body{min-height:100vh;background:
-      radial-gradient(circle at 50% -8%,rgba(22,101,71,.32),transparent 34%),
-      linear-gradient(180deg,#020806,#010503 72%)}
-    button,input,textarea{font:inherit}
-    .app{max-width:480px;margin:auto;min-height:100vh;padding-bottom:86px}
-    .screen{display:none;padding:18px}.screen.active{display:block}
-    .welcome{padding:18px 22px 28px;text-align:center}
-    .welcome-logo{width:min(78vw,320px);height:auto;display:block;margin:18px auto 4px;filter:drop-shadow(0 0 24px rgba(24,239,149,.22))}
-    .eyebrow{font-size:11px;letter-spacing:.28em;color:#b8c9c2;margin-top:2px}
-    .brand{font-size:36px;font-weight:900;line-height:1.05;margin:8px 0 2px}
-    .brand .white{color:#f7f7f7}.brand .green{color:var(--green)}
-    .tagline{font-size:14px;letter-spacing:.18em;line-height:1.55;color:#d1ddd7;margin:12px 0 24px}
-    .benefits{max-width:360px;margin:0 auto 24px;text-align:left;display:grid;gap:12px}
-    .benefit{display:flex;align-items:center;gap:12px;font-size:15px}
-    .benefit i{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#0b2b20;color:var(--green);font-style:normal;font-weight:800}
-    .primary{width:100%;border:0;border-radius:18px;padding:17px 18px;font-weight:900;font-size:17px;color:#001008;background:linear-gradient(90deg,#22f2a0,#00c875);box-shadow:0 10px 30px rgba(8,224,132,.2)}
-    .secondary{width:100%;margin-top:12px;border:1px solid #0bb36b;border-radius:18px;padding:15px 18px;background:transparent;color:#eefbf5;font-weight:700}
-    .credit{margin-top:34px;color:#d4e1db;font-size:13px}.credit b{color:var(--green)}
-    .top{display:flex;align-items:center;justify-content:space-between;margin:2px 0 18px}
-    .topbrand{display:flex;align-items:center;gap:9px;font-size:20px;font-weight:900}
-    .topbrand img{width:42px;height:42px;object-fit:contain}
-    .topbrand span span{color:var(--green)}
-    .bell{width:42px;height:42px;border-radius:14px;background:#071a13;border:1px solid #123c2f;display:grid;place-items:center;font-size:20px}
-    .profile-card{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#082018,#06150f);border:1px solid #0f4b38;border-radius:20px;padding:15px;margin-bottom:18px}
-    .avatar{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-size:27px;background:linear-gradient(145deg,#0a8d56,#043d28);border:1px solid #10b06e}
-    .profile-card h2{margin:0 0 3px;font-size:23px}.profile-card p{margin:0;color:#c4d4cd}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .action{border-radius:21px;padding:17px 14px;min-height:180px;border:1px solid rgba(255,255,255,.22);color:white;text-align:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
-    .action .ico{font-size:41px;display:block;margin:3px 0 19px}
-    .action b{font-size:18px;display:block}.action small{display:block;margin-top:7px;font-size:13px;line-height:1.35;opacity:.92}
-    .g{background:linear-gradient(145deg,#08ad61,#056f3e)}.b{background:linear-gradient(145deg,#198eff,#0c3ca9)}
-    .p{background:linear-gradient(145deg,#7c35f1,#3d138b)}.o{background:linear-gradient(145deg,#ff9d16,#d96000)}
-    .quick{margin-top:14px;display:grid;gap:10px}
-    .quick-btn{display:flex;align-items:center;justify-content:space-between;width:100%;padding:16px;border-radius:17px;background:linear-gradient(135deg,#09231b,#061812);border:1px solid #11513d;color:white;text-align:left}
-    .quick-btn .left{display:flex;align-items:center;gap:12px}.quick-btn .qicon{font-size:30px;color:var(--green)}
-    .quick-btn b{display:block;font-size:16px}.quick-btn small{color:var(--muted)}
-    .nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(480px,100%);background:rgba(2,10,7,.96);backdrop-filter:blur(12px);border-top:1px solid #103327;display:flex;justify-content:space-around;padding:9px 4px calc(9px + env(safe-area-inset-bottom))}
-    .nav button{background:none;border:0;color:#93a9a0;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;min-width:68px}
-    .nav button.active{color:var(--green)}.nicon{font-size:22px}
-    .title{font-size:23px;font-weight:900}.back{border:0;background:#091813;color:#fff;width:42px;height:42px;border-radius:13px;font-size:20px}
-    .card{background:#081712;border:1px solid #163c30;border-radius:18px;padding:16px;margin-bottom:12px}
-    .field{width:100%;margin-top:9px;padding:14px 15px;border-radius:14px;border:1px solid #1d4c3b;background:#04100c;color:#fff;outline:none}
-    textarea.field{min-height:145px;resize:vertical}.muted{color:var(--muted)}
-    .upload{border:1px dashed #2a765a;border-radius:18px;padding:28px 18px;text-align:center;background:#071813}
-    .scan{width:170px;height:170px;margin:35px auto;border-radius:50%;border:2px solid var(--green);display:grid;place-items:center;font-size:56px;box-shadow:0 0 38px rgba(24,239,149,.16),inset 0 0 36px rgba(24,239,149,.08)}
-    .steps div{padding:10px 0;border-bottom:1px solid #15372c}.steps div:last-child{border-bottom:0}
-    .ok{color:var(--green)}.danger{color:var(--red)}
-    .resultbox{text-align:center;padding:24px;border-radius:20px;margin-bottom:14px}.resultbox.high{background:#2b0c12;border:1px solid #8f2c37}.resultbox.low{background:#082819;border:1px solid #12864d}.big{font-size:54px}
-    .listitem{display:flex;align-items:center;justify-content:space-between;padding:14px;background:#081712;border:1px solid #173a30;border-radius:15px;margin-bottom:10px}
-    .hidden{display:none!important}
-    @media(max-width:360px){.action{min-height:165px;padding:14px 10px}.action b{font-size:16px}.grid{gap:9px}.brand{font-size:32px}}
-  </style>
-</head>
-<body>
-<main class="app">
-  <section id="welcome" class="screen active welcome">
-    <div class="eyebrow">SEGURANÇA • ANÁLISE • PROTEÇÃO</div>
-    <img class="welcome-logo" src="logo.png" alt="Logo PodeConfiar?">
-    <div class="brand"><span class="white">Pode</span><span class="green">Confiar?</span></div>
-    <div class="tagline">SUA SEGURANÇA DIGITAL<br>EM PRIMEIRO LUGAR</div>
-    <div class="benefits">
-      <div class="benefit"><i>✓</i><span>Analise mensagens, links e prints</span></div>
-      <div class="benefit"><i>✓</i><span>Identifique sinais de golpes e fraudes</span></div>
-      <div class="benefit"><i>✓</i><span>Proteja seus dados e seu dinheiro</span></div>
-      <div class="benefit"><i>✓</i><span>Mais segurança no seu dia a dia</span></div>
-    </div>
-    <button class="primary" data-go="home">Começar agora →</button>
-    <button class="secondary" data-go="home">Já tenho conta</button>
-    <div class="credit">Desenvolvido por <b>JNR</b></div>
-  </section>
-
-  <section id="home" class="screen">
-    <div class="top">
-      <div class="topbrand"><img src="logo.png" alt=""><span>Pode<span>Confiar?</span></span></div>
-      <div class="bell">🔔</div>
-    </div>
-    <div class="profile-card">
-      <div class="avatar">👤</div>
-      <div><h2>Olá, Alexandre!</h2><p>Vamos manter você sempre seguro.</p></div>
-    </div>
-    <div class="grid">
-      <button class="action g" data-tool="print"><span class="ico">🖼️</span><b>Analisar print</b><small>Envie uma captura de tela</small></button>
-      <button class="action b" data-tool="link"><span class="ico">🔗</span><b>Verificar link</b><small>Analise sites e URLs</small></button>
-      <button class="action p" data-tool="message"><span class="ico">💬</span><b>Verificar mensagem</b><small>Cole o texto aqui</small></button>
-      <button class="action o" data-tool="pix"><span class="ico">▦</span><b>Conferir cobrança/Pix</b><small>Analise boletos, QR Code ou código</small></button>
-    </div>
-    <div class="quick">
-      <button class="quick-btn" data-go="history"><span class="left"><span class="qicon">↺</span><span><b>Histórico de análises</b><small>Veja suas verificações anteriores</small></span></span><span>›</span></button>
-      <button class="quick-btn" data-go="tips"><span class="left"><span class="qicon">💡</span><span><b>Dicas de segurança</b><small>Aprenda a se proteger de golpes</small></span></span><span>›</span></button>
-    </div>
-  </section>
-
-  <section id="analyze" class="screen">
-    <div class="top"><button class="back" data-go="home">←</button><div class="title" id="analyzeTitle">Analisar</div><div></div></div>
-    <div id="inputWrap"></div>
-    <button class="primary" id="analyzeBtn" style="margin-top:14px">Analisar agora</button>
-    <p class="muted" style="font-size:12px;line-height:1.5;margin-top:14px">Nunca envie senhas, códigos de autenticação ou dados bancários completos. Esta versão indica sinais de risco e não substitui confirmação por canais oficiais.</p>
-  </section>
-
-  <section id="scanning" class="screen">
-    <div class="top"><button class="back" data-go="home">←</button><div class="title">Analisando...</div><div></div></div>
-    <div class="scan">🔎</div>
-    <h2 style="text-align:center">Analisando conteúdo...</h2>
-    <p class="muted" style="text-align:center">Procurando padrões suspeitos e sinais comuns de fraude.</p>
-    <div class="card steps"><div class="ok">✓ Verificando conteúdo</div><div class="ok">✓ Procurando urgência</div><div class="ok">✓ Conferindo pedidos de dados</div><div>◌ Calculando nível de atenção</div></div>
-  </section>
-
-  <section id="result" class="screen">
-    <div class="top"><button class="back" data-go="home">←</button><div class="title">Resultado da análise</div><div></div></div>
-    <div id="resultContent"></div>
-    <button class="primary" data-go="home">Nova análise</button>
-  </section>
-
-  <section id="history" class="screen">
-    <div class="top"><div class="title">Histórico</div><div></div></div>
-    <div id="historyList"></div>
-  </section>
-
-  <section id="tips" class="screen">
-    <div class="top"><div class="title">Dicas de segurança</div><div></div></div>
-    <div class="listitem"><div><b>📱 WhatsApp clonado</b><div class="muted">Nunca envie código de verificação.</div></div><span>›</span></div>
-    <div class="listitem"><div><b>💠 Pix e transferências</b><div class="muted">Confira nome e instituição antes de pagar.</div></div><span>›</span></div>
-    <div class="listitem"><div><b>🛒 Marketplace</b><div class="muted">Evite pagamentos fora da plataforma.</div></div><span>›</span></div>
-    <div class="listitem"><div><b>🧾 Boleto falso</b><div class="muted">Confira beneficiário e banco emissor.</div></div><span>›</span></div>
-    <div class="listitem"><div><b>🔗 Links perigosos</b><div class="muted">Desconfie de domínios parecidos com marcas.</div></div><span>›</span></div>
-  </section>
-
-  <section id="profile" class="screen">
-    <div class="top"><div class="title">Perfil</div><div></div></div>
-    <div class="profile-card"><div class="avatar">👤</div><div><h2>Alexandre</h2><p>Conta PodeConfiar?</p></div></div>
-    <div class="card"><b>🔐 Privacidade</b><p class="muted">Seus dados sensíveis nunca devem ser enviados completos para análise.</p></div>
-    <div class="card"><b>👑 PodeConfiar?+</b><p class="muted">Área preparada para recursos premium futuramente.</p></div>
-    <div class="credit" style="text-align:center">Desenvolvido por <b>JNR</b></div>
-  </section>
-</main>
-
-<nav id="nav" class="nav hidden">
-  <button data-go="home"><span class="nicon">⌂</span>Início</button>
-  <button data-go="history"><span class="nicon">◷</span>Histórico</button>
-  <button data-go="tips"><span class="nicon">💡</span>Dicas</button>
-  <button data-go="profile"><span class="nicon">♙</span>Perfil</button>
-</nav>
-
+<!doctype html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#00110c"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png">
+<title>PodeConfiar?</title>
+<style>
+:root{--g:#10ed91;--bg:#00100b;--card:#05231a;--line:#0a6245;--mut:#a8bdb5}
+*{box-sizing:border-box}body{margin:0;background:#000906;color:#fff;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}.app{max-width:480px;margin:auto;min-height:100vh;background:radial-gradient(circle at 50% 0,#063526 0,#00130d 30%,#000906 72%);padding-bottom:90px}.screen{display:none;padding:18px}.screen.on{display:block}
+button,input,textarea{font:inherit}.logo{object-fit:contain}.splash{text-align:center;padding:32px 22px}.splash .logo{width:150px;height:150px;filter:drop-shadow(0 0 25px #0b8)}.brand{font-size:38px;font-weight:950;margin:5px 0}.brand span{color:var(--g)}.kicker{letter-spacing:.25em;color:#75e9ba;font-size:11px}.splash h1{font-size:38px;line-height:1.08;margin:28px 0 12px}.splash h1 em{font-style:normal;color:var(--g)}.lead{font-size:18px;color:#d7e3de;line-height:1.5}.robot{height:260px;margin:22px 0;position:relative;display:grid;place-items:center;background:radial-gradient(circle,#0a6 0,#043c2b 22%,transparent 66%)}.robot .bot{font-size:145px;filter:drop-shadow(0 0 25px #0c8)}.float{position:absolute;width:55px;height:55px;border:1px solid #0b8;border-radius:14px;background:#063326;display:grid;place-items:center;font-size:27px}.f1{left:10px;top:35px}.f2{right:10px;top:18px}.f3{right:18px;bottom:25px}.features{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;background:#05251b;border:1px solid #096246;border-radius:18px;padding:14px 5px;margin:14px 0 24px}.feat{font-size:10px;color:#e5f2ed}.feat b{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:#0a3c2c;margin:0 auto 7px;color:var(--g);font-size:20px}.primary{width:100%;border:0;border-radius:18px;padding:17px;background:linear-gradient(90deg,#18f2a0,#04c978);font-weight:900;font-size:17px;color:#00140b}.outline{width:100%;margin-top:12px;border:1px solid var(--g);border-radius:18px;padding:15px;background:transparent;color:white;font-weight:800}.credit{margin:34px 0 5px;color:#91a79f;font-size:12px}
+.top{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #073e2d;padding-bottom:13px}.toplogo{display:flex;align-items:center;gap:8px;font-size:20px;font-weight:950}.toplogo .logo{width:45px;height:45px}.toplogo span span{color:var(--g)}.round{width:43px;height:43px;border:1px solid #126047;background:#05261c;border-radius:50%;display:grid;place-items:center;font-size:20px}
+.user{margin:16px 0;border:1px solid #0b6448;background:linear-gradient(135deg,#05261c,#031710);border-radius:18px;padding:14px;display:flex;align-items:center;gap:13px}.avatar{width:55px;height:55px;border-radius:50%;border:1px solid var(--g);display:grid;place-items:center;background:#07543a;font-size:28px}.user h2{font-size:20px;margin:0 0 4px}.user p{margin:0;color:#d1ddd8;font-size:14px}.badge{margin-left:auto;font-size:10px;border:1px solid #1b795a;border-radius:12px;padding:8px;text-align:center}
+.hero{height:210px;border:1px solid #078456;border-radius:20px;overflow:hidden;padding:20px;background:radial-gradient(circle at 90% 50%,#087e57,#043324 35%,#02170f 70%);position:relative}.hero h2{font-size:28px;line-height:1;margin:0}.hero h2 span{color:var(--g)}.hero p{width:55%;color:#e1eee9}.hero .shield{position:absolute;right:20px;bottom:15px;font-size:95px;filter:drop-shadow(0 0 20px #0c8)}.mini{border:1px solid var(--g);border-radius:999px;padding:8px 14px;background:transparent;color:white}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:15px}.tool{min-height:175px;border-radius:19px;border:1px solid rgba(255,255,255,.22);padding:17px;color:white;text-align:left}.tool i{font-style:normal;display:grid;place-items:center;width:58px;height:58px;border-radius:50%;background:rgba(255,255,255,.14);font-size:30px;margin-bottom:19px}.tool b{font-size:18px;display:block}.tool small{display:block;margin-top:7px;line-height:1.35}.green{background:linear-gradient(145deg,#079457,#03482f)}.blue{background:linear-gradient(145deg,#087bea,#063d92)}.purple{background:linear-gradient(145deg,#7833e6,#42138f)}.orange{background:linear-gradient(145deg,#f58c0a,#b94d00)}
+.row{width:100%;display:flex;align-items:center;gap:13px;margin-top:12px;padding:15px;border:1px solid #0b5941;border-radius:17px;background:#042119;color:white;text-align:left}.row i{font-style:normal;font-size:25px;width:45px;height:45px;display:grid;place-items:center;border-radius:50%;background:#07422f}.row b{font-size:16px}.row small{display:block;color:var(--mut)}.arrow{margin-left:auto;color:var(--g);font-size:25px}.pro{border-color:#dcae28}.pro i{background:#3c3211}.pro .arrow{color:#ffc93c}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(480px,100%);display:flex;justify-content:space-around;background:rgba(0,12,8,.97);border-top:1px solid #08402f;padding:9px 2px calc(9px + env(safe-area-inset-bottom));backdrop-filter:blur(12px)}.nav button{border:0;background:none;color:#91a49d;font-size:10px;display:flex;flex-direction:column;gap:4px;align-items:center}.nav button.active{color:var(--g)}.nav i{font-style:normal;font-size:22px}
+.back{border:0;background:#062219;color:#fff;width:42px;height:42px;border-radius:13px}.title{font-size:21px;font-weight:900}.card{background:#041c14;border:1px solid #0b4b37;border-radius:18px;padding:16px;margin:13px 0}.field{width:100%;margin-top:9px;background:#00110c;border:1px solid #126047;color:#fff;border-radius:14px;padding:14px}.field.ta{min-height:150px}.upload{border:1px dashed #15825d;border-radius:18px;text-align:center;padding:28px}.scan{width:170px;height:170px;margin:35px auto;border:2px solid var(--g);border-radius:50%;display:grid;place-items:center;font-size:55px;box-shadow:0 0 40px #063}.result{text-align:center;border-radius:18px;padding:22px}.high{background:#2a0b10;border:1px solid #9d3440}.low{background:#06281a;border:1px solid #12814c}.danger{color:#ff5b6a}.ok{color:var(--g)}.mut{color:var(--mut)}.hide{display:none!important}
+</style></head><body><main class="app">
+<section id="welcome" class="screen on splash"><img class="logo" src="logo.png"><div class="brand">Pode<span>Confiar?</span></div><div class="kicker">SEGURANÇA • ANÁLISE • PROTEÇÃO</div><h1>Sua segurança<br>digital em <em>primeiro lugar!</em></h1><p class="lead">Analise mensagens, links, prints e cobranças suspeitas com inteligência e rapidez.</p><div class="robot"><span class="bot">🤖</span><span class="float f1">💬</span><span class="float f2">🔗</span><span class="float f3">▦</span></div><div class="features"><div class="feat"><b>🛡</b>Previne<br>golpes</div><div class="feat"><b>⚡</b>Análise em<br>segundos</div><div class="feat"><b>🔒</b>Seus dados<br>protegidos</div><div class="feat"><b>👥</b>Tecnologia<br>confiável</div></div><button class="primary" data-go="home">Começar agora →</button><button class="outline" data-go="home">Já tenho conta</button><div class="credit">Desenvolvido por JNR</div></section>
+<section id="home" class="screen"><div class="top"><div class="toplogo"><img class="logo" src="logo.png"><span>Pode<span>Confiar?</span></span></div><div class="round">♧</div></div><div class="user"><div class="avatar">👤</div><div><h2>Olá, Alexandre!</h2><p>Vamos manter você sempre seguro.</p></div><div class="badge">🛡️<br>Usuário<br><b>Gratuito</b></div></div><div class="hero"><h2>Desconfie.<br>Analise.<br><span>Fique seguro.</span></h2><p>Evite golpes e proteja o que é seu.</p><button class="mini">Saiba mais →</button><div class="shield">🛡️</div></div><div class="grid"><button class="tool green" data-tool="print"><i>▣</i><b>Analisar print</b><small>Envie uma captura de tela</small></button><button class="tool blue" data-tool="link"><i>🔗</i><b>Verificar link</b><small>Analise sites e URLs</small></button><button class="tool purple" data-tool="msg"><i>●●●</i><b>Verificar mensagem</b><small>Cole o texto aqui</small></button><button class="tool orange" data-tool="pix"><i>▦</i><b>Conferir cobrança/Pix</b><small>Analise boletos, QR Code ou código</small></button></div><button class="row" data-go="history"><i>◷</i><span><b>Histórico de análises</b><small>Veja suas verificações anteriores</small></span><span class="arrow">›</span></button><button class="row" data-go="tips"><i>💡</i><span><b>Dicas de segurança</b><small>Aprenda a se proteger de golpes</small></span><span class="arrow">›</span></button><button class="row pro"><i>👑</i><span><b>Tenha ainda mais proteção</b><small>Recursos avançados e análise ilimitada</small></span><span class="arrow">›</span></button></section>
+<section id="analyze" class="screen"><div class="top"><button class="back" data-go="home">←</button><div id="atitle" class="title">Analisar</div><div></div></div><div id="input"></div><button id="analyzeBtn" class="primary">Analisar agora</button><p class="mut" style="font-size:12px">Não envie senhas, códigos de autenticação ou dados bancários completos. A análise indica sinais de risco; confirme operações importantes por canais oficiais.</p></section>
+<section id="scanning" class="screen"><div class="top"><button class="back" data-go="home">←</button><div class="title">Analisando...</div><div></div></div><div class="scan">🔎</div><h2 style="text-align:center">Verificando sinais de risco</h2><div class="card"><p class="ok">✓ Conteúdo recebido</p><p class="ok">✓ Padrões de urgência</p><p class="ok">✓ Solicitação de dados</p><p>◌ Calculando nível de atenção</p></div></section>
+<section id="result" class="screen"><div class="top"><button class="back" data-go="home">←</button><div class="title">Resultado</div><div></div></div><div id="resultbox"></div><button class="primary" data-go="home">Nova análise</button></section>
+<section id="history" class="screen"><div class="top"><div class="title">Histórico</div><div></div></div><div id="hist"></div></section>
+<section id="tips" class="screen"><div class="top"><div class="title">Dicas</div><div></div></div><div class="card"><b>🔐 Nunca envie códigos</b><p class="mut">Bancos e empresas sérias não precisam do código de autenticação recebido no seu celular.</p></div><div class="card"><b>💠 Confira o Pix</b><p class="mut">Leia o nome do beneficiário e a instituição antes de confirmar.</p></div><div class="card"><b>🔗 Observe o endereço</b><p class="mut">Domínios parecidos com marcas conhecidas podem ser usados em golpes.</p></div></section>
+<section id="protect" class="screen"><div class="top"><div class="title">Proteção</div><div></div></div><div class="card"><b>🛡 Central de proteção</b><p class="mut">Use as análises antes de abrir links, enviar dados ou realizar pagamentos.</p></div></section>
+<section id="profile" class="screen"><div class="top"><div class="title">Perfil</div><div></div></div><div class="user"><div class="avatar">👤</div><div><h2>Alexandre</h2><p>Usuário gratuito</p></div></div><div class="card"><b>👑 PodeConfiar?+</b><p class="mut">Espaço preparado para os recursos premium do aplicativo.</p></div><div class="credit" style="text-align:center">Desenvolvido por JNR</div></section>
+</main><nav id="nav" class="nav hide"><button data-go="home"><i>⌂</i>Início</button><button data-go="history"><i>◷</i>Histórico</button><button data-go="protect"><i>♢</i>Proteção</button><button data-go="tips"><i>▤</i>Dicas</button><button data-go="profile"><i>♙</i>Perfil</button></nav>
 <script>
-(() => {
-  const screens=[...document.querySelectorAll('.screen')], nav=document.getElementById('nav');
-  const history=[]; let currentTool='message';
-  function go(id){
-    screens.forEach(s=>s.classList.toggle('active',s.id===id));
-    nav.classList.toggle('hidden',['welcome','analyze','scanning','result'].includes(id));
-    nav.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.go===id));
-    if(id==='history') renderHistory();
-    window.scrollTo({top:0,behavior:'instant'});
-  }
-  function setupTool(tool){
-    currentTool=tool;
-    const title=document.getElementById('analyzeTitle'), wrap=document.getElementById('inputWrap');
-    if(tool==='print'){
-      title.textContent='Analisar print';
-      wrap.innerHTML='<div class="upload"><div style="font-size:48px">🖼️</div><b>Envie uma captura de tela</b><p class="muted">Escolha uma imagem do celular.</p><input id="fileInput" type="file" accept="image/*" style="margin-top:12px;width:100%;color:#cddbd5"></div>';
-    }else if(tool==='link'){
-      title.textContent='Verificar link';
-      wrap.innerHTML='<div class="card"><label>Link suspeito</label><input id="textInput" class="field" inputmode="url" placeholder="https://exemplo.com"></div>';
-    }else if(tool==='message'){
-      title.textContent='Verificar mensagem';
-      wrap.innerHTML='<div class="card"><label>Mensagem recebida</label><textarea id="textInput" class="field" placeholder="Cole aqui a mensagem suspeita..."></textarea></div>';
-    }else{
-      title.textContent='Conferir cobrança/Pix';
-      wrap.innerHTML='<div class="card"><label>Informações da cobrança</label><textarea id="textInput" class="field" placeholder="Cole a mensagem, chave ou informações recebidas..."></textarea></div>';
-    }
-    go('analyze');
-  }
-  function analyze(){
-    const file=document.getElementById('fileInput'), input=document.getElementById('textInput');
-    if(currentTool==='print' && (!file||!file.files.length)){alert('Escolha uma imagem para analisar.');return}
-    const text=(input?.value||'').trim();
-    if(currentTool!=='print'&&!text){alert('Digite ou cole o conteúdo para analisar.');return}
-    go('scanning'); setTimeout(()=>showResult(text),1100);
-  }
-  function showResult(text){
-    const raw=(text||'').toLowerCase(); let score=0,reasons=[];
-    const rules=[
-      [/urgente|agora|imediatamente|bloquead|suspens|última chance/,2,'Cria senso de urgência'],
-      [/senha|código|token|cpf|cartão|cvv|dados pessoais/,3,'Pede dados sensíveis ou códigos'],
-      [/pix|transferência|pagamento|depósito|boleto/,1,'Envolve pagamento ou transferência'],
-      [/clique|acesse|http|www\.|link/,1,'Traz chamada para acessar um link'],
-      [/prêmio|ganhou|brinde|sorteio|renda garantida/,2,'Promessa incomum de prêmio ou dinheiro']
-    ];
-    rules.forEach(([re,p,msg])=>{if(re.test(raw)){score+=p;reasons.push(msg)}});
-    if(currentTool==='print'){score=1;reasons=['Imagem recebida: confirme remetente, valor e destino antes de agir']}
-    const high=score>=4, box=document.getElementById('resultContent');
-    box.innerHTML=high
-      ? `<div class="resultbox high"><div class="big">⚠️</div><h2 class="danger">ALTO RISCO</h2><b>Há sinais que merecem muita atenção</b></div><div class="card"><b>Sinais encontrados</b>${reasons.map(r=>`<p class="danger">● ${r}</p>`).join('')}</div><div class="card"><b>💡 Recomendação</b><p>Não faça pagamentos e não compartilhe códigos. Confirme por um canal oficial.</p></div>`
-      : `<div class="resultbox low"><div class="big">✅</div><h2 class="ok">BAIXO RISCO</h2><b>Não encontramos sinais fortes nesta análise simples</b></div><div class="card"><b>Mesmo assim</b><p>Confirme remetente, domínio, beneficiário e informações antes de agir.</p></div>`;
-    history.unshift({type:currentTool,high,time:new Date().toLocaleString('pt-BR')}); go('result');
-  }
-  function renderHistory(){
-    const el=document.getElementById('historyList');
-    if(!history.length){el.innerHTML='<div class="card"><b>Nenhuma análise ainda</b><p class="muted">Suas verificações desta sessão aparecerão aqui.</p></div>';return}
-    const names={print:'Print analisado',link:'Link verificado',message:'Mensagem analisada',pix:'Cobrança/Pix analisado'};
-    el.innerHTML=history.map(h=>`<div class="listitem"><div><b>${names[h.type]}</b><div class="${h.high?'danger':'ok'}">${h.high?'Atenção elevada':'Baixo risco'}</div></div><div class="muted" style="font-size:11px">${h.time}</div></div>`).join('');
-  }
-  document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
-  document.querySelectorAll('[data-tool]').forEach(b=>b.addEventListener('click',()=>setupTool(b.dataset.tool)));
-  document.getElementById('analyzeBtn').addEventListener('click',analyze);
-  if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}
+(()=>{let tool='msg';const history=[],$=s=>document.querySelector(s),screens=[...document.querySelectorAll('.screen')],nav=$('#nav');
+function go(id){screens.forEach(x=>x.classList.toggle('on',x.id===id));nav.classList.toggle('hide',['welcome','analyze','scanning','result'].includes(id));nav.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.go===id));if(id==='history')render();scrollTo(0,0)}
+function setup(t){tool=t;let title={print:'Analisar print',link:'Verificar link',msg:'Verificar mensagem',pix:'Conferir cobrança/Pix'}[t];$('#atitle').textContent=title;if(t==='print')$('#input').innerHTML='<div class="upload"><div style="font-size:45px">▣</div><b>Envie uma captura de tela</b><p class="mut">Escolha uma imagem do celular</p><input id="file" type="file" accept="image/*"></div>';else $('#input').innerHTML=`<div class="card"><b>${title}</b><textarea id="text" class="field ta" placeholder="Cole ou digite aqui o conteúdo suspeito..."></textarea></div>`;go('analyze')}
+function analyze(){let f=$('#file'),t=$('#text')?.value.trim()||'';if(tool==='print'&&(!f||!f.files.length))return alert('Escolha uma imagem.');if(tool!=='print'&&!t)return alert('Digite ou cole o conteúdo.');go('scanning');setTimeout(()=>result(t),1100)}
+function result(t){let s=0,r=[],x=t.toLowerCase();[[/urgente|agora|bloquead|suspens/,2,'Senso de urgência'],[/senha|código|token|cpf|cartão|cvv/,3,'Pedido de dados sensíveis'],[/pix|pagamento|transferência|boleto/,1,'Solicitação financeira'],[/http|www\.|clique|acesse|link/,1,'Link ou chamada externa'],[/prêmio|ganhou|brinde|renda garantida/,2,'Promessa incomum']].forEach(a=>{if(a[0].test(x)){s+=a[1];r.push(a[2])}});if(tool==='print'){s=1;r=['Imagem recebida: confirme remetente, valores e destino antes de agir']}let high=s>=4;$('#resultbox').innerHTML=high?`<div class="result high"><div style="font-size:50px">⚠️</div><h2 class="danger">ALTO RISCO</h2><p>Encontramos sinais que merecem atenção.</p></div><div class="card">${r.map(q=>`<p class="danger">● ${q}</p>`).join('')}<b>Recomendação</b><p>Não pague nem compartilhe códigos. Confirme por um canal oficial.</p></div>`:`<div class="result low"><div style="font-size:50px">✓</div><h2 class="ok">BAIXO RISCO</h2><p>Não encontramos sinais fortes nesta análise simples.</p></div><div class="card"><b>Atenção</b><p>Isso não garante segurança. Confirme remetente, domínio e beneficiário antes de agir.</p></div>`;history.unshift({tool,high,time:new Date().toLocaleString('pt-BR')});go('result')}
+function render(){let h=$('#hist');if(!history.length)return h.innerHTML='<div class="card"><b>Nenhuma análise ainda</b><p class="mut">Suas verificações desta sessão aparecerão aqui.</p></div>';h.innerHTML=history.map(v=>`<div class="row"><span><b>${{print:'Print',link:'Link',msg:'Mensagem',pix:'Cobrança/Pix'}[v.tool]}</b><small class="${v.high?'danger':'ok'}">${v.high?'Atenção elevada':'Baixo risco'}</small></span><span class="mut">${v.time}</span></div>`).join('')}
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));document.querySelectorAll('[data-tool]').forEach(b=>b.onclick=()=>setup(b.dataset.tool));$('#analyzeBtn').onclick=analyze;if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
 })();
-</script>
-</body>
-</html>
+</script></body></html>
