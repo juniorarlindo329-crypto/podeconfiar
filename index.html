@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#03110d" />
+  <title>PodeConfiar?</title>
+  <style>
+    :root{
+      --bg:#020806;--panel:#071511;--card:#0b1d18;--line:#14382d;
+      --text:#f4fff9;--muted:#9bb4aa;--green:#18e58b;--green2:#00b86b;
+      --red:#ff4d5e;--orange:#ff9e32;--blue:#3988ff;--purple:#8b5cff;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(circle at 50% -10%,#0b2b21 0,#03100c 32%,var(--bg) 70%);
+      color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+    button,input,textarea{font:inherit}
+    .app{max-width:480px;margin:auto;min-height:100vh;padding-bottom:86px}
+    .screen{display:none;padding:18px}.screen.active{display:block}
+    .top{display:flex;align-items:center;justify-content:space-between;margin:8px 0 22px}
+    .brand{font-size:23px;font-weight:800}.brand span{color:var(--green)}
+    .pill{border:1px solid #7a5b16;color:#ffd24b;background:#1b1608;padding:7px 10px;border-radius:999px;font-size:12px;font-weight:800}
+    .hello{font-size:26px;font-weight:800;margin:8px 0 4px}.sub{color:var(--muted);margin:0 0 18px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .action{border:0;border-radius:20px;padding:18px 14px;min-height:145px;color:white;text-align:left;box-shadow:inset 0 0 0 1px rgba(255,255,255,.13)}
+    .action b{display:block;font-size:18px;margin-top:28px}.action small{opacity:.9;display:block;margin-top:4px}
+    .g{background:linear-gradient(145deg,#0aa95d,#05733f)}.b{background:linear-gradient(145deg,#2974eb,#1248a2)}
+    .p{background:linear-gradient(145deg,#7f42e7,#4d1ea0)}.o{background:linear-gradient(145deg,#ff992b,#d15e00)}
+    .ico{font-size:30px}
+    .banner{margin-top:14px;background:linear-gradient(135deg,#0b241d,#082019);border:1px solid #156345;border-radius:17px;padding:16px;display:flex;gap:12px;align-items:center}
+    .banner strong{display:block}.banner small{color:var(--muted)}
+    .hero{padding:44px 18px 24px;text-align:center}.shield{font-size:88px;filter:drop-shadow(0 0 24px rgba(24,229,139,.35))}
+    .hero h1{font-size:38px;margin:10px 0 4px}.hero h1 span{color:var(--green)}
+    .hero p{color:#c8d8d1;line-height:1.55}.primary{width:100%;border:0;border-radius:15px;padding:16px;background:linear-gradient(90deg,#2df09c,#08c976);font-weight:800;font-size:17px;color:#02110b}
+    .features{display:flex;justify-content:space-around;color:var(--green);margin:24px 0 50px;font-size:13px}
+    .footer{text-align:center;color:#7e948b;font-size:12px}
+    .nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(480px,100%);background:rgba(3,12,9,.95);backdrop-filter:blur(12px);border-top:1px solid #103126;display:flex;justify-content:space-around;padding:10px 4px calc(10px + env(safe-area-inset-bottom))}
+    .nav button{border:0;background:transparent;color:#8aa399;font-size:12px;display:flex;flex-direction:column;gap:4px;align-items:center;min-width:66px}
+    .nav button.active{color:var(--green)}.nav .nicon{font-size:21px}
+    .back{border:0;background:#0c1a16;color:white;width:42px;height:42px;border-radius:13px;font-size:20px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px}
+    .field{width:100%;border:1px solid #1a4436;background:#06130f;color:white;border-radius:14px;padding:14px;outline:none}
+    textarea.field{min-height:140px;resize:vertical}
+    .muted{color:var(--muted)}.title{font-size:24px;font-weight:800}
+    .scan{width:170px;height:170px;margin:34px auto;border-radius:50%;border:2px solid var(--green);display:grid;place-items:center;font-size:56px;box-shadow:0 0 35px rgba(24,229,139,.18),inset 0 0 35px rgba(24,229,139,.08)}
+    .steps div{padding:10px 0;border-bottom:1px solid #17352c}.steps div:last-child{border-bottom:0}
+    .ok{color:var(--green)}.warn{color:var(--orange)}.danger{color:var(--red)}
+    .resultbox{text-align:center;padding:22px;border-radius:20px;margin-bottom:14px}.resultbox.low{background:#082718;border:1px solid #14864d}.resultbox.high{background:#2b0d12;border:1px solid #9d2f3c}
+    .resultbox .big{font-size:54px}.resultbox h2{margin:8px 0 2px}
+    .listitem{display:flex;align-items:center;justify-content:space-between;padding:14px;background:#0a1814;border:1px solid #17392f;border-radius:14px;margin-bottom:10px}
+    .tiptitle{font-weight:700}.tag{font-size:11px;padding:5px 8px;border-radius:999px;background:#123529;color:#7ff1b8}
+    .profile{display:grid;place-items:center;text-align:center;padding:20px}.avatar{width:78px;height:78px;border-radius:50%;display:grid;place-items:center;background:#0f3025;font-size:32px;border:1px solid #1d6c50}
+    .notice{font-size:12px;color:#8ea69d;line-height:1.45;margin-top:14px}
+    .upload{border:1px dashed #267155;border-radius:16px;padding:24px;text-align:center;background:#071812}
+    input[type=file]{width:100%;margin-top:12px;color:#b9cdc4}
+    .hidden{display:none!important}
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section id="welcome" class="screen active">
+      <div class="hero">
+        <div class="shield">🛡️</div>
+        <h1>Pode<span>Confiar?</span></h1>
+        <h3>Sua segurança digital em primeiro lugar</h3>
+        <p>Analise mensagens, links, prints e cobranças suspeitas antes de agir.</p>
+        <button class="primary" data-go="home">Começar agora →</button>
+        <div class="features"><span>◉ Rápido</span><span>♢ Seguro</span><span>✓ Confiável</span></div>
+        <div class="footer">Desenvolvido por JNR</div>
+      </div>
+    </section>
+
+    <section id="home" class="screen">
+      <div class="top"><div class="brand">Pode<span>Confiar?</span></div><div class="pill">👑 PRO</div></div>
+      <div class="hello">Olá!</div><p class="sub">O que você quer verificar hoje?</p>
+      <div class="grid">
+        <button class="action g" data-tool="print"><span class="ico">🖼️</span><b>Analisar print</b><small>Envie uma captura de tela</small></button>
+        <button class="action b" data-tool="link"><span class="ico">🔗</span><b>Verificar link</b><small>Analise sites e URLs</small></button>
+        <button class="action p" data-tool="message"><span class="ico">💬</span><b>Verificar mensagem</b><small>Cole o texto suspeito</small></button>
+        <button class="action o" data-tool="pix"><span class="ico">▦</span><b>Conferir cobrança/Pix</b><small>Cheque sinais de fraude</small></button>
+      </div>
+      <div class="banner"><div style="font-size:30px">🛡️</div><div><strong>Proteja você e sua família</strong><small>Evite golpes e navegue com mais tranquilidade.</small></div></div>
+    </section>
+
+    <section id="analyze" class="screen">
+      <div class="top"><button class="back" data-go="home">←</button><div class="title" id="analyzeTitle">Analisar</div><div></div></div>
+      <div id="inputWrap"></div>
+      <button class="primary" id="analyzeBtn" style="margin-top:14px">Analisar agora</button>
+      <p class="notice">Esta versão demonstra a experiência do aplicativo. O resultado é baseado em sinais simples no conteúdo informado e não substitui confirmação junto a bancos, empresas ou órgãos oficiais.</p>
+    </section>
+
+    <section id="scanning" class="screen">
+      <div class="top"><button class="back" data-go="home">←</button><div class="title">Analisando...</div><div></div></div>
+      <div class="scan">🔎</div>
+      <h2 style="text-align:center">Analisando conteúdo...</h2>
+      <p class="sub" style="text-align:center">Procurando sinais comuns de fraude e comportamento suspeito.</p>
+      <div class="card steps"><div class="ok">✓ Verificando conteúdo</div><div class="ok">✓ Procurando sinais de urgência</div><div class="ok">✓ Conferindo solicitações de dados</div><div>◌ Calculando nível de atenção</div></div>
+    </section>
+
+    <section id="result" class="screen">
+      <div class="top"><button class="back" data-go="home">←</button><div class="title">Resultado da análise</div><div></div></div>
+      <div id="resultContent"></div>
+      <button class="primary" data-go="home">Nova análise</button>
+    </section>
+
+    <section id="history" class="screen">
+      <div class="top"><div class="title">Histórico</div><div></div></div>
+      <div id="historyList"></div>
+    </section>
+
+    <section id="tips" class="screen">
+      <div class="top"><div class="title">Dicas de segurança</div><div></div></div>
+      <div class="listitem"><div><div class="tiptitle">📱 WhatsApp clonado</div><div class="muted">Nunca envie código de verificação.</div></div><span>›</span></div>
+      <div class="listitem"><div><div class="tiptitle">💠 Pix errado</div><div class="muted">Confirme nome e instituição antes de pagar.</div></div><span>›</span></div>
+      <div class="listitem"><div><div class="tiptitle">🛒 Marketplace</div><div class="muted">Desconfie de pressa e pagamento fora da plataforma.</div></div><span>›</span></div>
+      <div class="listitem"><div><div class="tiptitle">🧾 Boleto falso</div><div class="muted">Confira beneficiário, valor e banco emissor.</div></div><span>›</span></div>
+      <div class="listitem"><div><div class="tiptitle">🔗 Links perigosos</div><div class="muted">Evite links encurtados ou domínios parecidos com marcas.</div></div><span>›</span></div>
+    </section>
+
+    <section id="profile" class="screen">
+      <div class="top"><div class="title">Perfil</div><div></div></div>
+      <div class="profile"><div class="avatar">👤</div><h2>Minha conta</h2><p class="muted">PodeConfiar? • Segurança digital</p></div>
+      <div class="card"><strong>🔐 Privacidade</strong><p class="muted">Evite enviar senhas, códigos de autenticação ou dados bancários completos.</p></div>
+      <div class="card"><strong>👑 PodeConfiar?+</strong><p class="muted">Área preparada para recursos premium no futuro.</p></div>
+      <div class="footer">Desenvolvido por JNR</div>
+    </section>
+  </main>
+
+  <nav class="nav hidden" id="nav">
+    <button data-go="home"><span class="nicon">⌂</span>Início</button>
+    <button data-go="history"><span class="nicon">◷</span>Histórico</button>
+    <button data-go="tips"><span class="nicon">🛡</span>Dicas</button>
+    <button data-go="profile"><span class="nicon">♙</span>Perfil</button>
+  </nav>
+
+<script>
+(() => {
+  const screens=[...document.querySelectorAll('.screen')], nav=document.getElementById('nav');
+  const history=[];
+  let currentTool='message';
+
+  function go(id){
+    screens.forEach(s=>s.classList.toggle('active',s.id===id));
+    nav.classList.toggle('hidden',id==='welcome'||id==='analyze'||id==='scanning'||id==='result');
+    [...nav.querySelectorAll('button')].forEach(b=>b.classList.toggle('active',b.dataset.go===id));
+    if(id==='history') renderHistory();
+    scrollTo(0,0);
+  }
+
+  function setupTool(tool){
+    currentTool=tool;
+    const title=document.getElementById('analyzeTitle'), wrap=document.getElementById('inputWrap');
+    if(tool==='print'){
+      title.textContent='Analisar print';
+      wrap.innerHTML='<div class="upload"><div style="font-size:46px">🖼️</div><b>Envie uma captura de tela</b><p class="muted">Escolha uma imagem do seu celular.</p><input id="fileInput" type="file" accept="image/*"></div>';
+    }else if(tool==='link'){
+      title.textContent='Verificar link';
+      wrap.innerHTML='<div class="card"><label>Link suspeito</label><input id="textInput" class="field" inputmode="url" placeholder="https://exemplo.com"></div>';
+    }else if(tool==='message'){
+      title.textContent='Verificar mensagem';
+      wrap.innerHTML='<div class="card"><label>Mensagem recebida</label><textarea id="textInput" class="field" placeholder="Cole aqui a mensagem suspeita..."></textarea></div>';
+    }else{
+      title.textContent='Conferir cobrança/Pix';
+      wrap.innerHTML='<div class="card"><label>Informações da cobrança</label><textarea id="textInput" class="field" placeholder="Cole a mensagem, chave, texto do boleto ou informações recebidas..."></textarea></div>';
+    }
+    go('analyze');
+  }
+
+  function analyze(){
+    const input=document.getElementById('textInput');
+    const file=document.getElementById('fileInput');
+    if(currentTool==='print' && (!file || !file.files || !file.files.length)){
+      alert('Escolha uma imagem para analisar.');
+      return;
+    }
+    const text=(input?.value||'').trim();
+    if(currentTool!=='print' && !text){ alert('Digite ou cole o conteúdo para analisar.'); return; }
+    go('scanning');
+    setTimeout(()=>showResult(text),1200);
+  }
+
+  function showResult(text){
+    const raw=(text||'').toLowerCase();
+    let score=0, reasons=[];
+    const checks=[
+      [/urgente|agora|imediatamente|última chance|bloqueado|suspensa/,2,'Mensagem cria senso de urgência'],
+      [/senha|código|token|dados pessoais|cpf|cartão|cvv/,3,'Solicita dados sensíveis ou códigos'],
+      [/pix|transferência|pagamento|depósito/,1,'Envolve pagamento ou transferência'],
+      [/clique|acesse|link|http|www\./,1,'Contém chamada para acessar um link'],
+      [/prêmio|ganhou|sorteio|brinde|renda garantida/,2,'Promessa financeira ou prêmio incomum']
+    ];
+    checks.forEach(([re,p,msg])=>{ if(re.test(raw)){score+=p;reasons.push(msg)} });
+    if(currentTool==='print'){ score=1; reasons=['Imagem recebida; confirme remetente, valores e links antes de agir']; }
+    const high=score>=4;
+    const box=document.getElementById('resultContent');
+    box.innerHTML=high
+      ? `<div class="resultbox high"><div class="big">⚠️</div><h2 class="danger">ALTO RISCO</h2><b>Há sinais que merecem muita atenção</b></div>
+         <div class="card"><b>Sinais encontrados</b>${reasons.map(r=>`<p class="danger">● ${r}</p>`).join('')||'<p class="muted">Nenhum padrão claro foi identificado.</p>'}</div>
+         <div class="card"><b>💡 Recomendação</b><p>Não faça pagamentos, não compartilhe códigos e confirme a solicitação por um canal oficial.</p></div>`
+      : `<div class="resultbox low"><div class="big">✅</div><h2 class="ok">BAIXO RISCO</h2><b>Não encontramos sinais fortes nesta análise simples</b></div>
+         <div class="card"><b>Mesmo assim</b><p>Confirme remetente, domínio, beneficiário e informações antes de pagar ou compartilhar dados.</p></div>`;
+    history.unshift({type: currentTool, high, time:new Date().toLocaleString('pt-BR')});
+    go('result');
+  }
+
+  function renderHistory(){
+    const el=document.getElementById('historyList');
+    if(!history.length){el.innerHTML='<div class="card"><b>Nenhuma análise ainda</b><p class="muted">Suas verificações aparecerão aqui durante esta sessão.</p></div>';return;}
+    const names={print:'Print analisado',link:'Link verificado',message:'Mensagem analisada',pix:'Cobrança/Pix analisado'};
+    el.innerHTML=history.map(h=>`<div class="listitem"><div><b>${names[h.type]}</b><div class="${h.high?'danger':'ok'}">${h.high?'Atenção elevada':'Baixo risco'}</div></div><div class="muted" style="font-size:11px">${h.time}</div></div>`).join('');
+  }
+
+  document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+  document.querySelectorAll('[data-tool]').forEach(b=>b.addEventListener('click',()=>setupTool(b.dataset.tool)));
+  document.getElementById('analyzeBtn').addEventListener('click',analyze);
+})();
+</script>
+</body>
+  </html>
