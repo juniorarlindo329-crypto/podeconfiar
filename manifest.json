@@ -3,7 +3,7 @@
   "short_name": "PodeConfiar",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#020806",
+  "background_color": "#010805",
   "theme_color": "#020b08",
   "icons": [
     {
