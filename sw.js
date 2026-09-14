@@ -1,4 +1,4 @@
-const CACHE='podeconfiar-v17';
+const CACHE='podeconfiar-v18';
 self.addEventListener('install',()=>self.skipWaiting());
 self.addEventListener('activate',e=>e.waitUntil(
   caches.keys().then(keys=>Promise.all(keys.map(k=>k===CACHE?null:caches.delete(k))))

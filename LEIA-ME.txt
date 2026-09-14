@@ -1,22 +1,25 @@
-PODECONFIAR? V17 — OCR PARA LOJAS ONLINE
+PODECONFIAR? V18 — PAGAMENTOS MERCADO PAGO
+
+PLANOS:
+Básico — R$ 19,90/mês
+https://mpago.la/1Zunq22
+
+Profissional — R$ 39,90/mês
+https://mpago.la/2PkdKf7
+
+Premium — R$ 69,90/mês
+https://mpago.la/32sefa5
 
 NOVIDADES:
-- A função “Analisar compra online” agora tenta LER O TEXTO DO PRINT.
-- Usa OCR gratuito (Tesseract.js) no navegador.
-- Tenta extrair produto, preço, loja, avaliações, mensagens e outros textos visíveis.
-- O texto encontrado entra automaticamente na análise.
-- Detecta sinais escritos no print como Pix/transferência, WhatsApp/Telegram, urgência, senha/código, taxa para liberar pedido e links externos.
-- Mostra o texto que conseguiu ler.
-- Cada print pode gerar resultado diferente conforme o conteúdo reconhecido.
-- Mantém perguntas manuais para complementar a análise.
-- Resultado continua salvo no histórico.
+- Os botões Assinar agora abrem o pagamento real do Mercado Pago.
+- O plano e o preço aparecem na tela antes de continuar.
+- Mantém OCR de lojas online e demais funções da V17.
 
 IMPORTANTE:
-- OCR não é IA visual completa e pode errar palavras.
-- Prints nítidos, com letras maiores e sem cortes funcionam melhor.
-- Na primeira leitura, o celular precisa de internet para carregar o mecanismo OCR.
-- A análise é um indicador de risco, não certificação de loja/vendedor.
-- Mantém planos e demais funções da V16.1.
+- A cobrança acontece de verdade no Mercado Pago.
+- O app ainda NÃO recebe automaticamente a confirmação de pagamento.
+- Para ativar/suspender planos automaticamente será necessário backend + webhook do Mercado Pago.
+- Nunca coloque token secreto do Mercado Pago no GitHub Pages.
 
-DEPOIS DE ATUALIZAR:
-https://juniorarlindo329-crypto.github.io/podeconfiar/?v=17
+ABRIR:
+https://juniorarlindo329-crypto.github.io/podeconfiar/?v=18
