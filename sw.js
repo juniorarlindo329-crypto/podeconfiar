@@ -1,4 +1,4 @@
-const CACHE='podeconfiar-v7-completa';
+const CACHE='podeconfiar-v8-logo-oficial';
 self.addEventListener('install',()=>self.skipWaiting());
 self.addEventListener('activate',e=>e.waitUntil(
   caches.keys()

@@ -1,29 +1,20 @@
-PODECONFIAR? V7 COMPLETA
+PODECONFIAR? V8 — LOGO OFICIAL
 
-Incluído nesta versão:
-- Logo oficial P no topo, sem JNR.
-- Visual profissional atual mantido.
-- Verificação de links melhorada.
-- Classificação: BAIXO RISCO / ATENÇÃO / ALTO RISCO.
-- Detecta localmente:
-  * HTTP sem HTTPS
-  * endereço IP no lugar de domínio
-  * encurtadores de link
-  * domínio codificado (xn--)
-  * muitos subdomínios/hífens/números
-  * extensões suspeitas
-  * termos como login, pix, prêmio, bloqueio, senha etc.
-  * uso de @ e caracteres codificados
-  * domínio parecido com marcas junto de termos suspeitos
-- Mostra os motivos encontrados.
-- Histórico também mostra o nível de risco.
-- Cache atualizado para V7.
+Esta é uma ATUALIZAÇÃO REAL DO APLICATIVO, não é foto/mockup.
 
-IMPORTANTE:
-A análise de links desta versão é local. Ela NÃO consulta ainda serviços externos de reputação/ameaças em tempo real, então não existe garantia de 100% de detecção.
+Mantido da V7:
+- verificação de links melhorada
+- baixo risco / atenção / alto risco
+- motivos da classificação
+- histórico
+- visual profissional
+- robô e escudo
 
-PARA INSTALAR:
-Substitua/envie na raiz do GitHub:
+Alterado:
+- a imagem logo-p.png agora é EXATAMENTE a logo enviada pelo usuário
+- cache atualizado para V8 para evitar aparecer a logo antiga
+
+ENVIE/SUBSTITUA NA RAIZ DO GITHUB:
 index.html
 logo-p.png
 robot-clean.png
@@ -31,4 +22,4 @@ shield-clean.png
 sw.js
 
 Depois do Commit, abra:
-https://juniorarlindo329-crypto.github.io/podeconfiar/?v=7
+https://juniorarlindo329-crypto.github.io/podeconfiar/?v=8
