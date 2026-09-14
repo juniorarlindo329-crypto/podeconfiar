@@ -166,12 +166,12 @@ textarea.field{min-height:150px;resize:vertical}
 <main class="app">
 
 <section id="welcome" class="screen active welcome">
-  <img class="logo-real-welcome" src="./logo-oficial-v11.png?v=16" alt="Logo oficial PodeConfiar">
+  <img class="logo-real-welcome" src="./logo-oficial-v11.png?v=16.1" alt="Logo oficial PodeConfiar">
   <div class="brand">Pode<span>Confiar?</span></div>
   <div class="kicker">SEGURANÇA • ANÁLISE • PROTEÇÃO</div>
   <h1>Sua segurança digital em <span>primeiro lugar!</span></h1>
   <p class="lead">Analise mensagens, links, prints e cobranças suspeitas com inteligência e rapidez.</p>
-  <div class="robot-stage"><img src="robot-clean.png?v=16" alt="Robô de segurança PodeConfiar"></div>
+  <div class="robot-stage"><img src="robot-clean.png?v=16.1" alt="Robô de segurança PodeConfiar"></div>
   <div class="featurebar">
     <div><b>🛡</b>Previne<br>golpes</div>
     <div><b>⚡</b>Análise em<br>segundos</div>
@@ -185,7 +185,7 @@ textarea.field{min-height:150px;resize:vertical}
 
 <section id="home" class="screen">
   <div class="header">
-    <div class="header-left"><div class="header-logo header-logo-real"><img src="./logo-oficial-v11.png?v=16" alt="Logo"></div><div class="header-name">Pode<span>Confiar?</span></div></div>
+    <div class="header-left"><div class="header-logo header-logo-real"><img src="./logo-oficial-v11.png?v=16.1" alt="Logo"></div><div class="header-name">Pode<span>Confiar?</span></div></div>
     <button class="iconbtn">🔔</button>
   </div>
   <div class="usercard">
@@ -197,7 +197,7 @@ textarea.field{min-height:150px;resize:vertical}
     <h2>Desconfie.<br>Analise.<br><span>Fique seguro.</span></h2>
     <p>Evite golpes e proteja o que é seu.</p>
     <button class="smallbtn" data-go="tips">Saiba mais →</button>
-    <img src="shield-clean.png?v=16" alt="Escudo de proteção">
+    <img src="shield-clean.png?v=16.1" alt="Escudo de proteção">
   </div>
 
   <div class="grid">
@@ -277,11 +277,6 @@ textarea.field{min-height:150px;resize:vertical}
   <div class="card"><strong>🔐 Privacidade</strong><p class="muted">Evite enviar senhas, códigos de autenticação ou dados bancários completos.</p></div>
   <div class="footer">Desenvolvido por JNR</div>
 </section>
-</main>
-
-
-
-
 <section id="shopcheck" class="screen">
 <div class="top"><button class="back" data-go="home">←</button><div class="title">Analisar compra online</div><div></div></div>
 <div class="card"><h2>🛍️ Verificar uma compra</h2><p class="muted">Envie o print do produto/anúncio como registro e responda às perguntas. A imagem ainda não é lida automaticamente.</p></div>
@@ -301,6 +296,7 @@ textarea.field{min-height:150px;resize:vertical}
 <label class="checkrow"><input type="checkbox" id="sData"> Pediu senha, código, cartão ou dados fora do checkout</label>
 <label class="checkrow"><input type="checkbox" id="sOutside"> Mandou pagar em outro site/link</label>
 </div><button class="primary" id="shopAnalyzeBtn">Analisar compra</button></section>
+
 <section id="plans" class="screen">
   <div class="topline"><button class="back" data-go="home">‹</button><b>Planos PodeConfiar?</b></div>
   <div class="card" style="text-align:center">
@@ -395,6 +391,41 @@ textarea.field{min-height:150px;resize:vertical}
   <div class="card"><b>4. Registre a ocorrência</b><p>Com as provas em mãos, procure os canais oficiais de segurança pública disponíveis na sua região.</p></div>
   <button class="primary" data-go="home">Voltar ao início</button>
 </section>
+
+<section id="checkout" class="screen">
+  <div class="top"><button class="back" data-go="plans">←</button><div class="title">Pagamento</div><div></div></div>
+  <div class="card">
+    <h2 id="checkoutPlan">Assinatura</h2>
+    <div id="checkoutPrice" style="font-size:28px;font-weight:900;color:#54f0aa;margin:8px 0"></div>
+    <p class="muted">Escolha como deseja pagar.</p>
+  </div>
+
+  <div class="card">
+    <button class="row payment-method" data-pay="pix">
+      <span class="ri">💠</span><span><b>Pix</b><small>Pagamento rápido</small></span><span class="arrow">›</span>
+    </button>
+    <button class="row payment-method" data-pay="card">
+      <span class="ri">💳</span><span><b>Cartão</b><small>Crédito</small></span><span class="arrow">›</span>
+    </button>
+  </div>
+
+  <div class="card">
+    <b>Importante</b>
+    <p class="muted">A tela de pagamento está pronta, mas a cobrança real ainda precisa ser conectada a um provedor de pagamento. Nenhuma cobrança será feita até essa integração.</p>
+  </div>
+</section>
+
+</main>
+
+
+
+
+
+
+
+
+
+
 <nav class="nav hidden" id="nav">
   <button data-go="home"><span class="nicon">⌂</span>Início</button>
   <button data-go="history"><span class="nicon">◷</span>Histórico</button>
@@ -417,7 +448,7 @@ function riskPercent(score, level){
 
   function go(id){
     screens.forEach(s=>s.classList.toggle('active',s.id===id));
-    nav.classList.toggle('hidden',id==='welcome'||id==='analyze'||id==='scanning'||id==='result'||id==='historyDetail'||id==='tipDetail'||id==='plans'||id==='call'||id==='shopcheck');
+    nav.classList.toggle('hidden',id==='welcome'||id==='analyze'||id==='scanning'||id==='result'||id==='historyDetail'||id==='tipDetail'||id==='plans'||id==='call'||id==='shopcheck'||id==='checkout');
     [...nav.querySelectorAll('button')].forEach(b=>b.classList.toggle('active',b.dataset.go===id));
     if(id==='history') renderHistory();
     scrollTo(0,0);
@@ -948,7 +979,13 @@ saveHistory();
   }
 
   function prepareSubscription(name,price){
-    alert(`${name} — ${price}\n\nA regra do plano já está pronta no aplicativo.\n\nPara cobrar e liberar automaticamente após o pagamento, ainda precisamos conectar um meio de pagamento. Nenhuma cobrança foi feita.`);
+    localStorage.setItem('pc_checkout_plan_v16',name);
+    localStorage.setItem('pc_checkout_price_v16',price);
+    const pn=document.getElementById('checkoutPlan');
+    const pr=document.getElementById('checkoutPrice');
+    if(pn) pn.textContent='Plano '+name;
+    if(pr) pr.textContent=price;
+    go('checkout');
   }
 
 
@@ -1025,6 +1062,14 @@ saveHistory();
   const shopAnalyzeBtn=document.getElementById('shopAnalyzeBtn');
   if(shopAnalyzeBtn)shopAnalyzeBtn.addEventListener('click',analyzeShop);
 
+
+  document.querySelectorAll('.payment-method').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const method=btn.dataset.pay==='pix'?'Pix':'Cartão';
+      alert(method+' selecionado.\n\nPara receber o pagamento de verdade, precisamos conectar o PodeConfiar? a um provedor de pagamento. A tela já está preparada e não fará cobrança falsa.');
+    });
+  });
+
   document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
   document.querySelectorAll('[data-tool]').forEach(b=>b.addEventListener('click',()=>setupTool(b.dataset.tool)));
   document.getElementById('analyzeBtn').addEventListener('click',analyze);
@@ -1048,7 +1093,7 @@ saveHistory();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
-      const reg = await navigator.serviceWorker.register('./sw.js?v=16', { updateViaCache: 'none' });
+      const reg = await navigator.serviceWorker.register('./sw.js?v=16.1', { updateViaCache: 'none' });
       await reg.update();
     } catch(e) {}
   });
