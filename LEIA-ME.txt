@@ -1,15 +1,19 @@
-PODECONFIAR? V12 — PROTEÇÃO COMPLETA (SEM IA PAGA)
+PODECONFIAR? V13 — VERIFICAR LIGAÇÃO
 
-Mantém a logo oficial e a análise local de links.
-Novidades:
-- pontuação de risco 0–100
-- histórico salvo no próprio aparelho
-- botão apagar histórico
-- analisar novamente
-- compartilhar resultado
-- dicas de Pix, WhatsApp, links e falso prêmio
-- área “Caí em um golpe” com primeiros passos
-- cache V12 atualizado
+Novidade principal:
+- nova função “Verificar ligação”
+- envia print da chamada como registro
+- campo para número exibido
+- campo para descrever o que foi falado
+- perguntas sobre Pix, senha, banco, urgência, link, acesso remoto, segredo e prêmio
+- calcula Baixo risco / Atenção / Alto risco
+- mostra porcentagem e motivos
+- salva no histórico
+- permite compartilhar o resultado
 
-Envie/substitua TODOS os arquivos deste pacote na raiz do GitHub e dê Commit changes.
-Depois abra: https://juniorarlindo329-crypto.github.io/podeconfiar/?v=12
+Sem IA paga.
+O print NÃO é interpretado automaticamente nesta versão; a análise é feita pelas respostas e pelo texto informado.
+
+Envie/substitua todos os arquivos deste pacote na raiz do GitHub e dê Commit changes.
+Depois abra:
+https://juniorarlindo329-crypto.github.io/podeconfiar/?v=13

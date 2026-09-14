@@ -127,17 +127,28 @@ textarea.field{min-height:150px;resize:vertical}
 }
 </style>
 
+
+<style>
+#call input[type=text],#call textarea,#call input[type=file]{
+ width:100%;box-sizing:border-box;background:#081410;border:1px solid rgba(255,255,255,.12);
+ color:#fff;border-radius:14px;padding:12px;margin-top:8px;font:inherit;
+}
+.checkrow{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:14px;line-height:1.35}
+.checkrow:last-child{border-bottom:0}
+.checkrow input{margin-top:2px;transform:scale(1.15)}
+.call-score{font-size:38px;font-weight:900;margin:8px 0}
+</style>
 </head>
 <body>
 <main class="app">
 
 <section id="welcome" class="screen active welcome">
-  <img class="logo-real-welcome" src="./logo-oficial-v11.png?v=12" alt="Logo oficial PodeConfiar">
+  <img class="logo-real-welcome" src="./logo-oficial-v11.png?v=13" alt="Logo oficial PodeConfiar">
   <div class="brand">Pode<span>Confiar?</span></div>
   <div class="kicker">SEGURANÇA • ANÁLISE • PROTEÇÃO</div>
   <h1>Sua segurança digital em <span>primeiro lugar!</span></h1>
   <p class="lead">Analise mensagens, links, prints e cobranças suspeitas com inteligência e rapidez.</p>
-  <div class="robot-stage"><img src="robot-clean.png?v=12" alt="Robô de segurança PodeConfiar"></div>
+  <div class="robot-stage"><img src="robot-clean.png?v=13" alt="Robô de segurança PodeConfiar"></div>
   <div class="featurebar">
     <div><b>🛡</b>Previne<br>golpes</div>
     <div><b>⚡</b>Análise em<br>segundos</div>
@@ -151,7 +162,7 @@ textarea.field{min-height:150px;resize:vertical}
 
 <section id="home" class="screen">
   <div class="header">
-    <div class="header-left"><div class="header-logo header-logo-real"><img src="./logo-oficial-v11.png?v=12" alt="Logo"></div><div class="header-name">Pode<span>Confiar?</span></div></div>
+    <div class="header-left"><div class="header-logo header-logo-real"><img src="./logo-oficial-v11.png?v=13" alt="Logo"></div><div class="header-name">Pode<span>Confiar?</span></div></div>
     <button class="iconbtn">🔔</button>
   </div>
   <div class="usercard">
@@ -163,7 +174,7 @@ textarea.field{min-height:150px;resize:vertical}
     <h2>Desconfie.<br>Analise.<br><span>Fique seguro.</span></h2>
     <p>Evite golpes e proteja o que é seu.</p>
     <button class="smallbtn" data-go="tips">Saiba mais →</button>
-    <img src="shield-clean.png?v=12" alt="Escudo de proteção">
+    <img src="shield-clean.png?v=13" alt="Escudo de proteção">
   </div>
 
   <div class="grid">
@@ -178,7 +189,13 @@ textarea.field{min-height:150px;resize:vertical}
 </section>
 
 <section id="analyze" class="screen">
-  <div class="top"><button class="back" data-go="home">←</button><div class="title" id="analyzeTitle">Analisar</div><div></div></div>
+  <div class="top"><button class="back" data-go="home">←</button><div class="title" id="analyzeTitle">Analisar</div>
+
+<div class="toolcard" data-go="call">
+  <div class="toolicon">📞</div>
+  <div><b>Verificar ligação</b><span>Analise uma chamada suspeita</span></div>
+</div>
+<div></div></div>
   <div id="inputWrap"></div>
   <button class="primary" id="analyzeBtn" style="margin-top:14px">Analisar agora</button>
   <p class="muted" style="font-size:12px;line-height:1.5">Não envie senhas, códigos de autenticação ou dados bancários completos.</p>
@@ -219,6 +236,45 @@ textarea.field{min-height:150px;resize:vertical}
 </section>
 </main>
 
+
+
+<section id="call" class="screen">
+  <div class="topline"><button class="back" data-go="home">‹</button><b>Verificar ligação</b></div>
+
+  <div class="card">
+    <h2>📞 Ligação suspeita</h2>
+    <p class="muted">Envie um print da chamada e responda algumas perguntas. O print será usado como registro; a análise gratuita é feita pelas respostas.</p>
+  </div>
+
+  <div class="card">
+    <label><b>Print da ligação</b></label>
+    <input id="callPrint" type="file" accept="image/*" style="margin-top:10px">
+  </div>
+
+  <div class="card">
+    <label><b>Número exibido</b></label>
+    <input id="callNumber" type="text" placeholder="Ex.: (31) 99999-9999 ou Número privado">
+  </div>
+
+  <div class="card">
+    <label><b>O que a pessoa falou?</b></label>
+    <textarea id="callText" rows="5" placeholder="Escreva com suas palavras o que aconteceu na ligação..."></textarea>
+  </div>
+
+  <div class="card">
+    <b>Marque o que aconteceu</b>
+    <label class="checkrow"><input type="checkbox" id="qPix"> Pediu Pix, transferência ou pagamento</label>
+    <label class="checkrow"><input type="checkbox" id="qPass"> Pediu senha, código SMS, token ou dados bancários</label>
+    <label class="checkrow"><input type="checkbox" id="qBank"> Disse ser de banco, governo ou empresa conhecida</label>
+    <label class="checkrow"><input type="checkbox" id="qUrgent"> Disse que era urgente ou que sua conta seria bloqueada</label>
+    <label class="checkrow"><input type="checkbox" id="qLink"> Pediu para clicar em link, instalar app ou acessar site</label>
+    <label class="checkrow"><input type="checkbox" id="qRemote"> Pediu acesso remoto à tela/celular/computador</label>
+    <label class="checkrow"><input type="checkbox" id="qSecret"> Pediu segredo ou disse para não falar com ninguém</label>
+    <label class="checkrow"><input type="checkbox" id="qPrize"> Falou em prêmio, benefício ou dinheiro liberado</label>
+  </div>
+
+  <button class="primary" onclick="analyzeCall()">Analisar ligação</button>
+</section>
 
 <section id="emergency" class="screen">
   <div class="topline"><button class="back" data-go="home">‹</button><b>Caí em um golpe</b></div>
@@ -483,7 +539,7 @@ saveHistory();
       el.innerHTML='<div class="card"><b>Nenhuma análise ainda</b><p class="muted">Suas verificações aparecerão aqui durante esta sessão.</p></div>';
       return;
     }
-    const names={print:'Print analisado',link:'Link verificado',message:'Mensagem analisada',pix:'Cobrança/Pix analisado'};
+    const names={print:'Print analisado',link:'Link verificado',message:'Mensagem analisada',pix:'Cobrança/Pix analisado',call:'Ligação analisada'};
     el.innerHTML=history.map(h=>{
       const level=h.level||'low';
       const cls=level==='high'?'danger':level==='medium'?'warn':'ok';
@@ -505,6 +561,72 @@ saveHistory();
     }
   }
 
+  function analyzeCall(){
+    const text=(document.getElementById('callText')?.value||'').toLowerCase();
+    const number=(document.getElementById('callNumber')?.value||'').trim();
+
+    let score=0, reasons=[];
+
+    const add=(points,msg)=>{score+=points;reasons.push(msg)};
+
+    if(document.getElementById('qPix')?.checked) add(3,'Pediu Pix, transferência ou pagamento');
+    if(document.getElementById('qPass')?.checked) add(4,'Pediu senha, código, token ou dados bancários');
+    if(document.getElementById('qBank')?.checked) add(2,'Afirmou representar banco, governo ou empresa conhecida');
+    if(document.getElementById('qUrgent')?.checked) add(3,'Criou urgência, ameaça ou risco de bloqueio');
+    if(document.getElementById('qLink')?.checked) add(2,'Pediu acesso a link, site ou instalação de aplicativo');
+    if(document.getElementById('qRemote')?.checked) add(5,'Pediu acesso remoto ao aparelho');
+    if(document.getElementById('qSecret')?.checked) add(3,'Pediu segredo ou tentou impedir confirmação com terceiros');
+    if(document.getElementById('qPrize')?.checked) add(2,'Usou promessa de prêmio, benefício ou dinheiro');
+
+    const checks=[
+      [/pix|transferência|transferencia|pagamento|depósito|deposito/,2,'A descrição menciona pagamento ou transferência'],
+      [/senha|token|código|codigo|sms|cvv|cartão|cartao|dados bancários|dados bancarios/,3,'A descrição menciona senha, código ou dado bancário'],
+      [/urgente|agora|imediatamente|bloquead|suspens|cancelad/,2,'A descrição contém urgência ou ameaça'],
+      [/clique|link|instale|aplicativo|app|site/,1,'A descrição menciona link, site ou instalação'],
+      [/acesso remoto|anydesk|teamviewer|tela do celular|compartilhar tela/,4,'A descrição menciona acesso remoto ou compartilhamento de tela'],
+      [/prêmio|premio|benefício|beneficio|ganhou|liberado|resgate/,2,'A descrição menciona prêmio ou benefício'],
+      [/não conte|nao conte|segredo|não fale|nao fale/,2,'A descrição tenta impedir confirmação com terceiros']
+    ];
+    checks.forEach(([re,p,msg])=>{if(re.test(text)){score+=p;reasons.push(msg)}});
+
+    if(/privado|desconhecido|sem número|sem numero/i.test(number)){
+      score+=1; reasons.push('A chamada veio de número privado/desconhecido');
+    }
+
+    const percent=Math.min(99, Math.max(8, score*8));
+    const level=score>=8?'high':score>=4?'medium':'low';
+    const label=level==='high'?'ALTO RISCO':level==='medium'?'ATENÇÃO':'BAIXO RISCO';
+    const cls=level==='high'?'danger':level==='medium'?'warn':'ok';
+
+    const signals=reasons.length
+      ? reasons.map(r=>`<div class="reason"><span class="dot ${cls}">●</span><span>${escapeHtml(r)}</span></div>`).join('')
+      : '<p class="muted">Nenhum sinal forte foi marcado ou descrito.</p>';
+
+    const result=document.getElementById('resultContent');
+    result.innerHTML=`
+      <div class="resultbox ${level==='high'?'high':level==='medium'?'medium':'low'}">
+        <div class="big">${level==='high'?'⚠️':level==='medium'?'⚠️':'✅'}</div>
+        <h2 class="${cls}">${label}</h2>
+        <div class="call-score ${cls}">${percent}%</div>
+        <b>${level==='high'?'Há vários sinais comuns de golpe nessa ligação.':level==='medium'?'Existem sinais que precisam ser confirmados antes de agir.':'Não apareceram sinais fortes nas respostas informadas.'}</b>
+      </div>
+      <div class="card"><b>Motivos encontrados</b>${signals}</div>
+      <div class="card"><b>🛡️ O que fazer agora</b>
+        <p>${level==='low'
+          ? 'Mesmo com baixo risco, não informe senhas, códigos ou dados bancários por telefone. Se houver dúvida, desligue e ligue você mesmo para o número oficial da empresa.'
+          : 'Não faça Pix, não informe senha/código e não instale aplicativos. Desligue a chamada e confirme a situação usando o aplicativo, site ou telefone oficial da instituição.'}</p>
+        <p class="safe-note">O print fica apenas como registro nesta versão. A classificação é feita pelas respostas e pelo texto informado, sem IA paga.</p>
+      </div>
+      <div class="card">
+        <button class="primary" onclick="go('call')">Analisar outra ligação</button>
+        <button class="secondary" style="margin-top:10px" onclick="shareLastResult('${level}',${percent})">Compartilhar resultado</button>
+      </div>`;
+
+    history.unshift({type:'call',level,percent,time:new Date().toLocaleString('pt-BR')});
+    saveHistory();
+    go('result');
+  }
+
   document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
   document.querySelectorAll('[data-tool]').forEach(b=>b.addEventListener('click',()=>setupTool(b.dataset.tool)));
   document.getElementById('analyzeBtn').addEventListener('click',analyze);
@@ -515,7 +637,7 @@ saveHistory();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
-      const reg = await navigator.serviceWorker.register('./sw.js?v=12', { updateViaCache: 'none' });
+      const reg = await navigator.serviceWorker.register('./sw.js?v=13', { updateViaCache: 'none' });
       await reg.update();
     } catch(e) {}
   });
