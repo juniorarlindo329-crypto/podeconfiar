@@ -101,17 +101,43 @@ textarea.field{min-height:150px;resize:vertical}
 .reason .dot{font-size:15px;line-height:1.2}
 .safe-note{font-size:12px;line-height:1.5;opacity:.78}
 </style>
-<style>.official-p-logo{display:block!important;width:190px!important;max-width:52vw!important;height:auto!important;margin:0 auto 14px!important;object-fit:contain!important;opacity:1!important;visibility:visible!important;border-radius:24px!important;filter:drop-shadow(0 0 20px rgba(0,255,145,.35))!important}</style></head>
+<style>.official-p-logo{display:block!important;width:190px!important;max-width:52vw!important;height:auto!important;margin:0 auto 14px!important;object-fit:contain!important;opacity:1!important;visibility:visible!important;border-radius:24px!important;filter:drop-shadow(0 0 20px rgba(0,255,145,.35))!important}</style>
+<style>
+.logo-real-welcome{
+  display:block !important;
+  width:210px !important;
+  max-width:58vw !important;
+  height:auto !important;
+  margin:0 auto 10px !important;
+  object-fit:contain !important;
+  border-radius:26px !important;
+  filter:drop-shadow(0 0 22px rgba(0,255,145,.32)) !important;
+}
+.header-logo-real{
+  overflow:hidden !important;
+  background:#031711 !important;
+  padding:2px !important;
+}
+.header-logo-real img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important;
+  display:block !important;
+  border-radius:9px !important;
+}
+</style>
+
+</head>
 <body>
 <main class="app">
 
 <section id="welcome" class="screen active welcome">
-  <div class="logo-mark"></div>
+  <img class="logo-real-welcome" src="./logo-oficial-v11.png?v=11" alt="Logo oficial PodeConfiar">
   <div class="brand">Pode<span>Confiar?</span></div>
   <div class="kicker">SEGURANÇA • ANÁLISE • PROTEÇÃO</div>
   <h1>Sua segurança digital em <span>primeiro lugar!</span></h1>
   <p class="lead">Analise mensagens, links, prints e cobranças suspeitas com inteligência e rapidez.</p>
-  <div class="robot-stage"><img src="robot-clean.png?v=10" alt="Robô de segurança PodeConfiar"></div>
+  <div class="robot-stage"><img src="robot-clean.png?v=11" alt="Robô de segurança PodeConfiar"></div>
   <div class="featurebar">
     <div><b>🛡</b>Previne<br>golpes</div>
     <div><b>⚡</b>Análise em<br>segundos</div>
@@ -125,7 +151,7 @@ textarea.field{min-height:150px;resize:vertical}
 
 <section id="home" class="screen">
   <div class="header">
-    <div class="header-left"><div class="header-logo">P</div><div class="header-name">Pode<span>Confiar?</span></div></div>
+    <div class="header-left"><div class="header-logo header-logo-real"><img src="./logo-oficial-v11.png?v=11" alt="Logo"></div><div class="header-name">Pode<span>Confiar?</span></div></div>
     <button class="iconbtn">🔔</button>
   </div>
   <div class="usercard">
@@ -137,7 +163,7 @@ textarea.field{min-height:150px;resize:vertical}
     <h2>Desconfie.<br>Analise.<br><span>Fique seguro.</span></h2>
     <p>Evite golpes e proteja o que é seu.</p>
     <button class="smallbtn" data-go="tips">Saiba mais →</button>
-    <img src="shield-clean.png?v=10" alt="Escudo de proteção">
+    <img src="shield-clean.png?v=11" alt="Escudo de proteção">
   </div>
 
   <div class="grid">
@@ -450,7 +476,7 @@ textarea.field{min-height:150px;resize:vertical}
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
-      const reg = await navigator.serviceWorker.register('./sw.js?v=10', { updateViaCache: 'none' });
+      const reg = await navigator.serviceWorker.register('./sw.js?v=11', { updateViaCache: 'none' });
       await reg.update();
     } catch(e) {}
   });

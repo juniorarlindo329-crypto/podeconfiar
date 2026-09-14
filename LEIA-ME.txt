@@ -1,1 +1,27 @@
-V10 REAL DO APP. Envie index.html, minha-logo-p.png, robot-clean.png, shield-clean.png e sw.js na raiz do GitHub. Mantém a verificação de links da V7 e troca o P simples pela logo exata enviada. Não renomeie minha-logo-p.png.
+PODECONFIAR? V11 — LOGO REAL CORRIGIDA
+
+O problema foi encontrado:
+o topo antigo NÃO estava carregando uma imagem. O index.html desenhava a letra P pelo CSS.
+Por isso trocar apenas o arquivo da logo não alterava aquela letra P.
+
+Na V11:
+- removi o P desenhado por CSS da tela inicial;
+- coloquei a logo exata enviada por você;
+- coloquei a mesma logo no cabeçalho interno;
+- mantive a verificação de links da V7/V10;
+- atualizei o cache;
+- atualizei também os ícones do PWA.
+
+ENVIE/SUBSTITUA TODOS ESTES ARQUIVOS NA RAIZ DO GITHUB:
+index.html
+logo-oficial-v11.png
+robot-clean.png
+shield-clean.png
+sw.js
+manifest.json
+icon-192.png
+icon-512.png
+
+Depois clique em Commit changes.
+Abra:
+https://juniorarlindo329-crypto.github.io/podeconfiar/?v=11
