@@ -161,17 +161,17 @@ textarea.field{min-height:150px;resize:vertical}
 .detail-reasons{margin-top:10px}
 .plan-card button{width:100%}
 </style>
-</head>
+<style>#shopcheck input[type=text],#shopcheck input[type=file],#shopcheck textarea{width:100%;box-sizing:border-box;background:#081410;border:1px solid rgba(255,255,255,.12);color:#fff;border-radius:14px;padding:12px;margin:8px 0 15px;font:inherit}</style></head>
 <body>
 <main class="app">
 
 <section id="welcome" class="screen active welcome">
-  <img class="logo-real-welcome" src="./logo-oficial-v11.png?v=15.1" alt="Logo oficial PodeConfiar">
+  <img class="logo-real-welcome" src="./logo-oficial-v11.png?v=16" alt="Logo oficial PodeConfiar">
   <div class="brand">Pode<span>Confiar?</span></div>
   <div class="kicker">SEGURANÇA • ANÁLISE • PROTEÇÃO</div>
   <h1>Sua segurança digital em <span>primeiro lugar!</span></h1>
   <p class="lead">Analise mensagens, links, prints e cobranças suspeitas com inteligência e rapidez.</p>
-  <div class="robot-stage"><img src="robot-clean.png?v=15.1" alt="Robô de segurança PodeConfiar"></div>
+  <div class="robot-stage"><img src="robot-clean.png?v=16" alt="Robô de segurança PodeConfiar"></div>
   <div class="featurebar">
     <div><b>🛡</b>Previne<br>golpes</div>
     <div><b>⚡</b>Análise em<br>segundos</div>
@@ -185,7 +185,7 @@ textarea.field{min-height:150px;resize:vertical}
 
 <section id="home" class="screen">
   <div class="header">
-    <div class="header-left"><div class="header-logo header-logo-real"><img src="./logo-oficial-v11.png?v=15.1" alt="Logo"></div><div class="header-name">Pode<span>Confiar?</span></div></div>
+    <div class="header-left"><div class="header-logo header-logo-real"><img src="./logo-oficial-v11.png?v=16" alt="Logo"></div><div class="header-name">Pode<span>Confiar?</span></div></div>
     <button class="iconbtn">🔔</button>
   </div>
   <div class="usercard">
@@ -197,7 +197,7 @@ textarea.field{min-height:150px;resize:vertical}
     <h2>Desconfie.<br>Analise.<br><span>Fique seguro.</span></h2>
     <p>Evite golpes e proteja o que é seu.</p>
     <button class="smallbtn" data-go="tips">Saiba mais →</button>
-    <img src="shield-clean.png?v=15.1" alt="Escudo de proteção">
+    <img src="shield-clean.png?v=16" alt="Escudo de proteção">
   </div>
 
   <div class="grid">
@@ -208,7 +208,8 @@ textarea.field{min-height:150px;resize:vertical}
   </div>
 
 
-  <button class="row plans-home-btn" data-go="plans">
+  <button class="row" data-go="shopcheck"><span class="ri">🛍️</span><span><b>Analisar compra online</b><small>Produto, anúncio, vendedor ou loja suspeita</small></span><span class="arrow">›</span></button>
+<button class="row plans-home-btn" data-go="plans">
     <span class="ri">👑</span>
     <span><b>Planos e assinatura</b><small>5 dias grátis • Básico • Profissional • Premium</small></span>
     <span class="arrow">›</span>
@@ -281,6 +282,25 @@ textarea.field{min-height:150px;resize:vertical}
 
 
 
+<section id="shopcheck" class="screen">
+<div class="top"><button class="back" data-go="home">←</button><div class="title">Analisar compra online</div><div></div></div>
+<div class="card"><h2>🛍️ Verificar uma compra</h2><p class="muted">Envie o print do produto/anúncio como registro e responda às perguntas. A imagem ainda não é lida automaticamente.</p></div>
+<div class="card">
+<label><b>Print do produto ou anúncio</b></label><input id="shopPrint" type="file" accept="image/*">
+<label><b>Loja, site ou vendedor</b></label><input id="shopName" type="text" placeholder="Nome da loja ou vendedor">
+<label><b>Link do produto (se tiver)</b></label><input id="shopUrl" type="text" placeholder="https://...">
+<label><b>Preço anunciado</b></label><input id="shopPrice" type="text" placeholder="Ex.: R$ 99,90">
+<label><b>O que chamou sua atenção?</b></label><textarea id="shopText" rows="4" placeholder="Ex.: pediu Pix pelo WhatsApp..."></textarea>
+</div>
+<div class="card"><b>Marque o que aconteceu</b>
+<label class="checkrow"><input type="checkbox" id="sPix"> Pediu Pix/pagamento fora da plataforma</label>
+<label class="checkrow"><input type="checkbox" id="sWhatsapp"> Pediu para continuar pelo WhatsApp/Telegram</label>
+<label class="checkrow"><input type="checkbox" id="sCheap"> Preço muito abaixo do normal</label>
+<label class="checkrow"><input type="checkbox" id="sUrgent"> Pressionou para pagar rapidamente</label>
+<label class="checkrow"><input type="checkbox" id="sNoReviews"> Sem avaliações ou poucas informações</label>
+<label class="checkrow"><input type="checkbox" id="sData"> Pediu senha, código, cartão ou dados fora do checkout</label>
+<label class="checkrow"><input type="checkbox" id="sOutside"> Mandou pagar em outro site/link</label>
+</div><button class="primary" id="shopAnalyzeBtn">Analisar compra</button></section>
 <section id="plans" class="screen">
   <div class="topline"><button class="back" data-go="home">‹</button><b>Planos PodeConfiar?</b></div>
   <div class="card" style="text-align:center">
@@ -397,7 +417,7 @@ function riskPercent(score, level){
 
   function go(id){
     screens.forEach(s=>s.classList.toggle('active',s.id===id));
-    nav.classList.toggle('hidden',id==='welcome'||id==='analyze'||id==='scanning'||id==='result'||id==='historyDetail'||id==='tipDetail'||id==='plans'||id==='call');
+    nav.classList.toggle('hidden',id==='welcome'||id==='analyze'||id==='scanning'||id==='result'||id==='historyDetail'||id==='tipDetail'||id==='plans'||id==='call'||id==='shopcheck');
     [...nav.querySelectorAll('button')].forEach(b=>b.classList.toggle('active',b.dataset.go===id));
     if(id==='history') renderHistory();
     scrollTo(0,0);
@@ -635,7 +655,7 @@ saveHistory();
       el.innerHTML='<div class="card"><b>Nenhuma análise ainda</b><p class="muted">Suas verificações salvas aparecerão aqui.</p></div>';
       return;
     }
-    const names={print:'Print analisado',link:'Link verificado',message:'Mensagem analisada',pix:'Cobrança/Pix analisado',call:'Ligação analisada'};
+    const names={print:'Print analisado',link:'Link verificado',message:'Mensagem analisada',pix:'Cobrança/Pix analisado',call:'Ligação analisada',shop:'Compra online analisada'};
     el.innerHTML=history.map((x,i)=>{
       const level=x.level||'low';
       const cls=level==='high'?'danger':level==='medium'?'warn':'ok';
@@ -654,7 +674,7 @@ saveHistory();
   function openHistoryItem(index){
     const item=history[index];
     if(!item) return;
-    const names={print:'Print analisado',link:'Link verificado',message:'Mensagem analisada',pix:'Cobrança/Pix analisado',call:'Ligação analisada'};
+    const names={print:'Print analisado',link:'Link verificado',message:'Mensagem analisada',pix:'Cobrança/Pix analisado',call:'Ligação analisada',shop:'Compra online analisada'};
     const level=item.level||'low';
     const cls=level==='high'?'danger':level==='medium'?'warn':'ok';
     const label=level==='high'?'Alto risco':level==='medium'?'Atenção':'Baixo risco';
@@ -968,6 +988,43 @@ saveHistory();
   }
   document.querySelectorAll('[data-tip]').forEach(b=>b.addEventListener('click',()=>openTip(b.dataset.tip)));
 
+
+  function analyzeShop(){
+    if(!checkAccess(true)) return;
+    const name=(document.getElementById('shopName')?.value||'').trim();
+    const url=(document.getElementById('shopUrl')?.value||'').trim().toLowerCase();
+    const text=(document.getElementById('shopText')?.value||'').toLowerCase();
+    let score=0,reasons=[];
+    const add=(p,m)=>{score+=p;reasons.push(m)};
+    if(document.getElementById('sPix')?.checked)add(5,'Pediu Pix ou pagamento fora da plataforma');
+    if(document.getElementById('sWhatsapp')?.checked)add(3,'Tentou levar a compra para WhatsApp ou Telegram');
+    if(document.getElementById('sCheap')?.checked)add(3,'Preço parece muito abaixo do normal');
+    if(document.getElementById('sUrgent')?.checked)add(2,'Criou pressão ou urgência para pagar');
+    if(document.getElementById('sNoReviews')?.checked)add(2,'Poucas informações ou avaliações');
+    if(document.getElementById('sData')?.checked)add(5,'Pediu senha, código ou dados fora do checkout');
+    if(document.getElementById('sOutside')?.checked)add(4,'Pediu pagamento em outro site/link');
+    if(url && /^http:\/\//.test(url))add(2,'O link não usa HTTPS');
+    if(url && /bit\.ly|tinyurl|cutt\.ly|t\.co|rb\.gy|is\.gd/.test(url))add(2,'O endereço usa encurtador');
+    if(/pix|transferência|transferencia/.test(text))add(2,'A descrição menciona Pix/transferência');
+    if(/whatsapp|telegram/.test(text))add(1,'A descrição menciona negociação fora da plataforma');
+    if(/urgente|última chance|ultima chance|só hoje|so hoje/.test(text))add(2,'A descrição contém pressão/urgência');
+    if(/senha|código|codigo|token|cvv/.test(text))add(4,'A descrição menciona dado sensível');
+
+    const percent=Math.min(99,Math.max(7,score*8));
+    const level=score>=8?'high':score>=4?'medium':'low';
+    const label=level==='high'?'ALTO RISCO':level==='medium'?'ATENÇÃO':'POUCOS SINAIS DE RISCO';
+    const cls=level==='high'?'danger':level==='medium'?'warn':'ok';
+    const reasonsHtml=reasons.length?reasons.map(r=>`<div class="reason"><span class="dot ${cls}">●</span><span>${escapeHtml(r)}</span></div>`).join(''):'<p class="muted">Nenhum sinal forte foi informado. Isso não garante que a compra seja confiável.</p>';
+    const result=document.getElementById('resultContent');
+    result.innerHTML=`<div class="resultbox ${level}"><div class="big">${level==='high'?'🚨':level==='medium'?'⚠️':'✅'}</div><h2 class="${cls}">${label}</h2><div class="call-score ${cls}">${percent}%</div>${name?'<b>'+escapeHtml(name)+'</b>':''}</div>
+    <div class="card"><b>Por que recebemos esse resultado?</b>${reasonsHtml}</div>
+    <div class="card"><b>🛡️ Recomendação</b><p>${level==='high'?'Não conclua o pagamento até confirmar a oferta. Não faça Pix fora da plataforma e procure o produto pelo aplicativo/site oficial.':level==='medium'?'Confira vendedor, avaliações, endereço, preço e pagamento antes de comprar. Prefira o checkout oficial.':'Não apareceram sinais fortes, mas isso não certifica a loja ou vendedor. Confira tudo pelo canal oficial antes de pagar.'}</p><p class="safe-note">O print fica como registro e não é interpretado automaticamente nesta versão.</p></div>`;
+    history.unshift({id:Date.now(),type:'shop',level,percent,time:new Date().toLocaleString('pt-BR'),resultHtml:result.innerHTML});
+    saveHistory(); recordAnalysisUse(); go('result');
+  }
+  const shopAnalyzeBtn=document.getElementById('shopAnalyzeBtn');
+  if(shopAnalyzeBtn)shopAnalyzeBtn.addEventListener('click',analyzeShop);
+
   document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
   document.querySelectorAll('[data-tool]').forEach(b=>b.addEventListener('click',()=>setupTool(b.dataset.tool)));
   document.getElementById('analyzeBtn').addEventListener('click',analyze);
@@ -977,6 +1034,7 @@ saveHistory();
   window.shareLastResult=shareLastResult;
   window.clearHistory=clearHistory;
   window.analyzeCall=analyzeCall;
+  window.analyzeShop=analyzeShop;
   window.prepareSubscription=prepareSubscription;
   window.choosePlan=choosePlan;
   window.showTrialStatus=showTrialStatus;
@@ -990,7 +1048,7 @@ saveHistory();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
-      const reg = await navigator.serviceWorker.register('./sw.js?v=15.1', { updateViaCache: 'none' });
+      const reg = await navigator.serviceWorker.register('./sw.js?v=16', { updateViaCache: 'none' });
       await reg.update();
     } catch(e) {}
   });

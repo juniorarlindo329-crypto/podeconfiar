@@ -1,19 +1,17 @@
-PODECONFIAR? V15.1 — CORREÇÃO DOS BOTÕES
+PODECONFIAR? V16 — ANALISAR COMPRA ONLINE
 
-CORRIGIDO:
-- "Começar agora" volta a funcionar
-- "Já tenho conta" volta a funcionar
-- Navegação da tela inicial volta a funcionar
-- Dicas de segurança clicáveis
-- Histórico clicável
-- Planos clicáveis
-- Corrigido erro de JavaScript que travava todos os botões
+NOVO:
+- Analisar produto, anúncio, loja ou vendedor.
+- Enviar print como registro.
+- Informar loja/vendedor, link, preço e descrição.
+- Perguntas sobre Pix fora da plataforma, WhatsApp/Telegram, preço muito baixo, urgência, avaliações, dados sensíveis e pagamento em outro site.
+- Resultado com indicador de risco, motivos e recomendação.
+- Resultado salvo no histórico para abrir novamente.
+- Mantém as correções dos botões da V15.1 e a tela de planos.
 
-INSTALAÇÃO:
-1. Extraia este ZIP.
-2. Substitua TODOS os arquivos na raiz do GitHub.
-3. Clique em Commit changes.
-4. Abra:
-https://juniorarlindo329-crypto.github.io/podeconfiar/?v=15.1
+IMPORTANTE:
+O print ainda NÃO é interpretado automaticamente; a análise é feita pelas informações e respostas fornecidas.
+O resultado indica sinais de risco e não certifica uma loja ou vendedor.
 
-Se o navegador mostrar a versão antiga, feche a aba e abra o link acima novamente.
+Depois de substituir todos os arquivos no GitHub:
+https://juniorarlindo329-crypto.github.io/podeconfiar/?v=16
