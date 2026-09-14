@@ -1,14 +1,22 @@
-PODECONFIAR? V16.1 — PLANOS CORRIGIDOS
+PODECONFIAR? V17 — OCR PARA LOJAS ONLINE
 
-CORRIGIDO:
-- Tela de Planos não fica mais vazia.
-- As telas Planos, Verificar ligação, Compra online e Emergência foram colocadas corretamente dentro do aplicativo.
-- Botões Assinar Básico / Profissional / Premium agora abrem a tela de Pagamento.
-- Tela de Pagamento mostra Pix e Cartão.
+NOVIDADES:
+- A função “Analisar compra online” agora tenta LER O TEXTO DO PRINT.
+- Usa OCR gratuito (Tesseract.js) no navegador.
+- Tenta extrair produto, preço, loja, avaliações, mensagens e outros textos visíveis.
+- O texto encontrado entra automaticamente na análise.
+- Detecta sinais escritos no print como Pix/transferência, WhatsApp/Telegram, urgência, senha/código, taxa para liberar pedido e links externos.
+- Mostra o texto que conseguiu ler.
+- Cada print pode gerar resultado diferente conforme o conteúdo reconhecido.
+- Mantém perguntas manuais para complementar a análise.
+- Resultado continua salvo no histórico.
 
 IMPORTANTE:
-Pix e Cartão ainda NÃO cobram de verdade. Para pagamento real é necessário integrar um provedor de pagamento (ex.: Mercado Pago, PagBank, Stripe etc.) e um backend seguro.
-Nenhum pagamento falso é confirmado nesta versão.
+- OCR não é IA visual completa e pode errar palavras.
+- Prints nítidos, com letras maiores e sem cortes funcionam melhor.
+- Na primeira leitura, o celular precisa de internet para carregar o mecanismo OCR.
+- A análise é um indicador de risco, não certificação de loja/vendedor.
+- Mantém planos e demais funções da V16.1.
 
-Abra após atualizar:
-https://juniorarlindo329-crypto.github.io/podeconfiar/?v=16.1
+DEPOIS DE ATUALIZAR:
+https://juniorarlindo329-crypto.github.io/podeconfiar/?v=17

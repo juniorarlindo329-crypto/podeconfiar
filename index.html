@@ -161,17 +161,24 @@ textarea.field{min-height:150px;resize:vertical}
 .detail-reasons{margin-top:10px}
 .plan-card button{width:100%}
 </style>
-<style>#shopcheck input[type=text],#shopcheck input[type=file],#shopcheck textarea{width:100%;box-sizing:border-box;background:#081410;border:1px solid rgba(255,255,255,.12);color:#fff;border-radius:14px;padding:12px;margin:8px 0 15px;font:inherit}</style></head>
+<style>#shopcheck input[type=text],#shopcheck input[type=file],#shopcheck textarea{width:100%;box-sizing:border-box;background:#081410;border:1px solid rgba(255,255,255,.12);color:#fff;border-radius:14px;padding:12px;margin:8px 0 15px;font:inherit}</style><style>
+.ocr-status{margin-top:12px;padding:10px 12px;border-radius:12px;background:rgba(0,235,145,.08);border:1px solid rgba(0,235,145,.18);font-size:12px;line-height:1.45}
+.ocr-status.working{border-color:rgba(255,196,0,.35);background:rgba(255,196,0,.08)}
+.ocr-status.ok{border-color:rgba(0,235,145,.4)}
+.ocr-status.fail{border-color:rgba(255,80,80,.35);background:rgba(255,80,80,.08)}
+#shopOcrText{opacity:.92}
+</style>
+</head>
 <body>
 <main class="app">
 
 <section id="welcome" class="screen active welcome">
-  <img class="logo-real-welcome" src="./logo-oficial-v11.png?v=16.1" alt="Logo oficial PodeConfiar">
+  <img class="logo-real-welcome" src="./logo-oficial-v11.png?v=17" alt="Logo oficial PodeConfiar">
   <div class="brand">Pode<span>Confiar?</span></div>
   <div class="kicker">SEGURANÇA • ANÁLISE • PROTEÇÃO</div>
   <h1>Sua segurança digital em <span>primeiro lugar!</span></h1>
   <p class="lead">Analise mensagens, links, prints e cobranças suspeitas com inteligência e rapidez.</p>
-  <div class="robot-stage"><img src="robot-clean.png?v=16.1" alt="Robô de segurança PodeConfiar"></div>
+  <div class="robot-stage"><img src="robot-clean.png?v=17" alt="Robô de segurança PodeConfiar"></div>
   <div class="featurebar">
     <div><b>🛡</b>Previne<br>golpes</div>
     <div><b>⚡</b>Análise em<br>segundos</div>
@@ -185,7 +192,7 @@ textarea.field{min-height:150px;resize:vertical}
 
 <section id="home" class="screen">
   <div class="header">
-    <div class="header-left"><div class="header-logo header-logo-real"><img src="./logo-oficial-v11.png?v=16.1" alt="Logo"></div><div class="header-name">Pode<span>Confiar?</span></div></div>
+    <div class="header-left"><div class="header-logo header-logo-real"><img src="./logo-oficial-v11.png?v=17" alt="Logo"></div><div class="header-name">Pode<span>Confiar?</span></div></div>
     <button class="iconbtn">🔔</button>
   </div>
   <div class="usercard">
@@ -197,7 +204,7 @@ textarea.field{min-height:150px;resize:vertical}
     <h2>Desconfie.<br>Analise.<br><span>Fique seguro.</span></h2>
     <p>Evite golpes e proteja o que é seu.</p>
     <button class="smallbtn" data-go="tips">Saiba mais →</button>
-    <img src="shield-clean.png?v=16.1" alt="Escudo de proteção">
+    <img src="shield-clean.png?v=17" alt="Escudo de proteção">
   </div>
 
   <div class="grid">
@@ -279,9 +286,18 @@ textarea.field{min-height:150px;resize:vertical}
 </section>
 <section id="shopcheck" class="screen">
 <div class="top"><button class="back" data-go="home">←</button><div class="title">Analisar compra online</div><div></div></div>
-<div class="card"><h2>🛍️ Verificar uma compra</h2><p class="muted">Envie o print do produto/anúncio como registro e responda às perguntas. A imagem ainda não é lida automaticamente.</p></div>
+<div class="card"><h2>🛍️ Verificar uma compra</h2>
+<p class="muted">Envie o print do produto/anúncio. O PodeConfiar? tenta ler automaticamente os textos visíveis da imagem (produto, preço, avaliações, vendedor e mensagens) usando OCR gratuito no próprio navegador.</p>
+<div id="ocrInfo" class="ocr-status">📷 Nenhum print selecionado.</div>
+</div>
 <div class="card">
-<label><b>Print do produto ou anúncio</b></label><input id="shopPrint" type="file" accept="image/*">
+<label><b>Print do produto ou anúncio</b></label>
+<input id="shopPrint" type="file" accept="image/*">
+<button type="button" class="secondary" id="readShopPrintBtn" style="margin:-4px 0 14px">📷 Ler texto do print</button>
+<div id="ocrPreviewWrap" style="display:none">
+  <label><b>Texto encontrado no print</b></label>
+  <textarea id="shopOcrText" rows="5" readonly placeholder="O texto lido da imagem aparecerá aqui..."></textarea>
+</div>
 <label><b>Loja, site ou vendedor</b></label><input id="shopName" type="text" placeholder="Nome da loja ou vendedor">
 <label><b>Link do produto (se tiver)</b></label><input id="shopUrl" type="text" placeholder="https://...">
 <label><b>Preço anunciado</b></label><input id="shopPrice" type="text" placeholder="Ex.: R$ 99,90">
@@ -433,6 +449,7 @@ textarea.field{min-height:150px;resize:vertical}
   <button data-go="profile"><span class="nicon">♙</span>Perfil</button>
 </nav>
 
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script>
 (() => {
   const screens=[...document.querySelectorAll('.screen')], nav=document.getElementById('nav');
@@ -1026,41 +1043,192 @@ saveHistory();
   document.querySelectorAll('[data-tip]').forEach(b=>b.addEventListener('click',()=>openTip(b.dataset.tip)));
 
 
-  function analyzeShop(){
-    if(!checkAccess(true)) return;
-    const name=(document.getElementById('shopName')?.value||'').trim();
-    const url=(document.getElementById('shopUrl')?.value||'').trim().toLowerCase();
-    const text=(document.getElementById('shopText')?.value||'').toLowerCase();
-    let score=0,reasons=[];
-    const add=(p,m)=>{score+=p;reasons.push(m)};
-    if(document.getElementById('sPix')?.checked)add(5,'Pediu Pix ou pagamento fora da plataforma');
-    if(document.getElementById('sWhatsapp')?.checked)add(3,'Tentou levar a compra para WhatsApp ou Telegram');
-    if(document.getElementById('sCheap')?.checked)add(3,'Preço parece muito abaixo do normal');
-    if(document.getElementById('sUrgent')?.checked)add(2,'Criou pressão ou urgência para pagar');
-    if(document.getElementById('sNoReviews')?.checked)add(2,'Poucas informações ou avaliações');
-    if(document.getElementById('sData')?.checked)add(5,'Pediu senha, código ou dados fora do checkout');
-    if(document.getElementById('sOutside')?.checked)add(4,'Pediu pagamento em outro site/link');
-    if(url && /^http:\/\//.test(url))add(2,'O link não usa HTTPS');
-    if(url && /bit\.ly|tinyurl|cutt\.ly|t\.co|rb\.gy|is\.gd/.test(url))add(2,'O endereço usa encurtador');
-    if(/pix|transferência|transferencia/.test(text))add(2,'A descrição menciona Pix/transferência');
-    if(/whatsapp|telegram/.test(text))add(1,'A descrição menciona negociação fora da plataforma');
-    if(/urgente|última chance|ultima chance|só hoje|so hoje/.test(text))add(2,'A descrição contém pressão/urgência');
-    if(/senha|código|codigo|token|cvv/.test(text))add(4,'A descrição menciona dado sensível');
 
-    const percent=Math.min(99,Math.max(7,score*8));
-    const level=score>=8?'high':score>=4?'medium':'low';
-    const label=level==='high'?'ALTO RISCO':level==='medium'?'ATENÇÃO':'POUCOS SINAIS DE RISCO';
-    const cls=level==='high'?'danger':level==='medium'?'warn':'ok';
-    const reasonsHtml=reasons.length?reasons.map(r=>`<div class="reason"><span class="dot ${cls}">●</span><span>${escapeHtml(r)}</span></div>`).join(''):'<p class="muted">Nenhum sinal forte foi informado. Isso não garante que a compra seja confiável.</p>';
-    const result=document.getElementById('resultContent');
-    result.innerHTML=`<div class="resultbox ${level}"><div class="big">${level==='high'?'🚨':level==='medium'?'⚠️':'✅'}</div><h2 class="${cls}">${label}</h2><div class="call-score ${cls}">${percent}%</div>${name?'<b>'+escapeHtml(name)+'</b>':''}</div>
-    <div class="card"><b>Por que recebemos esse resultado?</b>${reasonsHtml}</div>
-    <div class="card"><b>🛡️ Recomendação</b><p>${level==='high'?'Não conclua o pagamento até confirmar a oferta. Não faça Pix fora da plataforma e procure o produto pelo aplicativo/site oficial.':level==='medium'?'Confira vendedor, avaliações, endereço, preço e pagamento antes de comprar. Prefira o checkout oficial.':'Não apareceram sinais fortes, mas isso não certifica a loja ou vendedor. Confira tudo pelo canal oficial antes de pagar.'}</p><p class="safe-note">O print fica como registro e não é interpretado automaticamente nesta versão.</p></div>`;
-    history.unshift({id:Date.now(),type:'shop',level,percent,time:new Date().toLocaleString('pt-BR'),resultHtml:result.innerHTML});
-    saveHistory(); recordAnalysisUse(); go('result');
+  let shopOcrCache={fileKey:'',text:''};
+
+  function normalizeShopText(s){
+    return (s||'')
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g,' ')
+      .replace(/\s+/g,' ')
+      .trim();
   }
+
+  function fileKey(file){
+    return file ? [file.name,file.size,file.lastModified].join('|') : '';
+  }
+
+  async function readShopPrint(showAlertOnFail=false){
+    const input=document.getElementById('shopPrint');
+    const file=input?.files?.[0];
+    const status=document.getElementById('ocrInfo');
+    const preview=document.getElementById('shopOcrText');
+    const wrap=document.getElementById('ocrPreviewWrap');
+
+    if(!file){
+      if(status){status.className='ocr-status fail';status.textContent='⚠️ Selecione um print primeiro.';}
+      if(showAlertOnFail) alert('Selecione o print do produto ou anúncio primeiro.');
+      return '';
+    }
+
+    const key=fileKey(file);
+    if(shopOcrCache.fileKey===key && shopOcrCache.text){
+      if(preview) preview.value=shopOcrCache.text;
+      if(wrap) wrap.style.display='block';
+      return shopOcrCache.text;
+    }
+
+    if(typeof Tesseract==='undefined'){
+      if(status){status.className='ocr-status fail';status.textContent='⚠️ O leitor de imagem não carregou. Verifique sua internet e tente novamente.';}
+      return '';
+    }
+
+    try{
+      if(status){status.className='ocr-status working';status.textContent='⏳ Lendo o print... 0%';}
+      const result=await Tesseract.recognize(file,'por+eng',{
+        logger:m=>{
+          if(m.status==='recognizing text' && status){
+            const pct=Math.round((m.progress||0)*100);
+            status.textContent='⏳ Lendo o print... '+pct+'%';
+          }
+        }
+      });
+      const text=(result?.data?.text||'').trim();
+      shopOcrCache={fileKey:key,text};
+      if(preview) preview.value=text;
+      if(wrap) wrap.style.display=text?'block':'none';
+
+      if(text){
+        if(status){status.className='ocr-status ok';status.textContent='✅ Print lido. O texto da imagem será usado na análise.';}
+      }else{
+        if(status){status.className='ocr-status fail';status.textContent='⚠️ Não consegui identificar texto suficiente nesse print. Você ainda pode responder às perguntas manualmente.';}
+      }
+      return text;
+    }catch(err){
+      console.error('OCR error',err);
+      if(status){status.className='ocr-status fail';status.textContent='⚠️ Não foi possível ler esse print. Tente uma imagem mais nítida ou responda manualmente.';}
+      return '';
+    }
+  }
+
+  async function analyzeShop(){
+    if(!checkAccess(true)) return;
+
+    const analyzeBtn=document.getElementById('shopAnalyzeBtn');
+    if(analyzeBtn){analyzeBtn.disabled=true; analyzeBtn.textContent='Analisando...';}
+
+    try{
+      const name=(document.getElementById('shopName')?.value||'').trim();
+      const url=(document.getElementById('shopUrl')?.value||'').trim().toLowerCase();
+      const manual=(document.getElementById('shopText')?.value||'');
+      const ocr=await readShopPrint(false);
+      const combined=normalizeShopText([ocr,manual,name,url].join(' '));
+
+      let score=0,reasons=[],positive=[];
+      const add=(p,m)=>{score+=p;if(m&&!reasons.includes(m))reasons.push(m)};
+      const good=m=>{if(m&&!positive.includes(m))positive.push(m)};
+
+      if(document.getElementById('sPix')?.checked)add(5,'Pediu Pix ou pagamento fora da plataforma');
+      if(document.getElementById('sWhatsapp')?.checked)add(3,'Tentou levar a compra para WhatsApp ou Telegram');
+      if(document.getElementById('sCheap')?.checked)add(3,'Preço parece muito abaixo do normal');
+      if(document.getElementById('sUrgent')?.checked)add(2,'Criou pressão ou urgência para pagar');
+      if(document.getElementById('sNoReviews')?.checked)add(2,'Poucas informações ou avaliações');
+      if(document.getElementById('sData')?.checked)add(5,'Pediu senha, código ou dados fora do checkout');
+      if(document.getElementById('sOutside')?.checked)add(4,'Pediu pagamento em outro site/link');
+
+      // Link heuristics
+      if(url){
+        if(/^http:\/\//.test(url))add(2,'O link informado não usa HTTPS');
+        if(/bit\.ly|tinyurl|cutt\.ly|t\.co|rb\.gy|is\.gd/.test(url))add(2,'O endereço usa encurtador de links');
+        if(/xn--/.test(url))add(3,'O domínio usa codificação que merece atenção');
+        if(/@/.test(url))add(3,'O endereço contém @, sinal incomum em links de compra');
+      }
+
+      // OCR/manual text heuristics
+      if(/pix|transferencia|deposito/.test(combined)) add(2,'O print/texto menciona Pix ou transferência');
+      if(/whatsapp|telegram/.test(combined)) add(2,'O print/texto menciona negociação fora da plataforma');
+      if(/urgente|ultima chance|so hoje|agora|acaba hoje|ultimas unidades/.test(combined)) add(2,'O anúncio usa pressão ou urgência');
+      if(/senha|codigo sms|token|cvv|senha do cartao/.test(combined)) add(5,'O print/texto menciona senha, código ou dado sensível');
+      if(/taxa de liberacao|taxa para liberar|liberar pedido|liberar encomenda|frete por pix/.test(combined)) add(4,'A cobrança menciona taxa extra para liberar pedido');
+      if(/clique.*link|acesse.*link|pague.*link/.test(combined)) add(2,'O texto direciona para outro link');
+      if(/100% gratis|premio garantido|ganhou premio|dinheiro facil/.test(combined)) add(3,'O anúncio usa promessa exagerada ou prêmio');
+
+      // Marketplace context and review signals: informational, not certification.
+      if(/shopee|shein|mercado livre|amazon|magalu|aliexpress/.test(combined)) good('O print parece mencionar uma plataforma conhecida; ainda é preciso verificar o vendedor e concluir o pagamento somente no canal oficial.');
+      if(/avaliac|review|estrelas|classificacao/.test(combined)) good('O print contém referência a avaliações/classificação.');
+      if(/\b4[.,][5-9]\b|\b5[.,]0\b/.test(combined)) good('Foi encontrada uma nota alta no texto do print, mas isso não prova autenticidade.');
+      if(/\b\d{2,}\s*(vendidos|vendas|avaliacoes|avaliações)\b/.test(combined)) good('O print mostra volume de vendas/avaliações, que deve ser conferido dentro da plataforma oficial.');
+
+      // If OCR produced useful content, reduce uncertainty slightly, never enough to cancel red flags.
+      if(ocr.length>40) good('O aplicativo conseguiu ler informações do print para complementar a análise.');
+
+      const percent=Math.min(99,Math.max(6,score*9 + (ocr?2:0)));
+      const level=score>=8?'high':score>=4?'medium':'low';
+      const label=level==='high'?'ALTO RISCO':level==='medium'?'ATENÇÃO':'POUCOS SINAIS DE RISCO';
+      const cls=level==='high'?'danger':level==='medium'?'warn':'ok';
+      const icon=level==='high'?'🚨':level==='medium'?'⚠️':'✅';
+
+      const reasonsHtml=reasons.length
+        ? reasons.map(r=>`<div class="reason"><span class="dot ${cls}">●</span><span>${escapeHtml(r)}</span></div>`).join('')
+        : '<p class="muted">Nenhum sinal forte de golpe foi encontrado nas informações lidas e respondidas. Isso não garante que a compra seja legítima.</p>';
+
+      const positivesHtml=positive.length
+        ? `<div class="card"><b>Informações encontradas no print</b>${positive.map(r=>`<div class="reason"><span class="dot ok">●</span><span>${escapeHtml(r)}</span></div>`).join('')}</div>`
+        : '';
+
+      const ocrBlock=ocr
+        ? `<div class="card"><b>🔎 Texto lido da imagem</b><p class="muted" style="white-space:pre-wrap;max-height:220px;overflow:auto">${escapeHtml(ocr.slice(0,1800))}</p></div>`
+        : `<div class="card"><b>🔎 Leitura da imagem</b><p class="muted">Não foi possível extrair texto suficiente do print. A análise considerou as respostas preenchidas manualmente.</p></div>`;
+
+      const result=document.getElementById('resultContent');
+      result.innerHTML=`
+        <div class="resultbox ${level}">
+          <div class="big">${icon}</div>
+          <h2 class="${cls}">${label}</h2>
+          <div class="call-score ${cls}">${percent}%</div>
+          ${name?'<b>'+escapeHtml(name)+'</b>':''}
+        </div>
+        <div class="card"><b>Por que recebemos esse resultado?</b>${reasonsHtml}</div>
+        ${positivesHtml}
+        ${ocrBlock}
+        <div class="card"><b>🛡️ Recomendação</b>
+          <p>${level==='high'
+            ? 'Não conclua o pagamento até confirmar a oferta. Não faça Pix fora da plataforma e procure o produto diretamente no aplicativo/site oficial.'
+            : level==='medium'
+            ? 'Confira vendedor, avaliações, endereço, preço e pagamento antes de comprar. Prefira sempre o checkout oficial da plataforma.'
+            : 'Não apareceram sinais fortes, mas isso não certifica a loja ou o vendedor. Confira avaliações, vendedor e pagamento dentro do canal oficial antes de comprar.'}</p>
+          <p class="safe-note">A leitura da imagem usa OCR gratuito e pode errar palavras, especialmente em prints pequenos, borrados ou com fontes estilizadas. O resultado é um indicador de risco, não uma garantia.</p>
+        </div>`;
+
+      history.unshift({
+        id:Date.now(),type:'shop',level,percent,time:new Date().toLocaleString('pt-BR'),
+        resultHtml:result.innerHTML
+      });
+      saveHistory();
+      recordAnalysisUse();
+      go('result');
+    }finally{
+      if(analyzeBtn){analyzeBtn.disabled=false; analyzeBtn.textContent='Analisar compra';}
+    }
+  }
+
   const shopAnalyzeBtn=document.getElementById('shopAnalyzeBtn');
-  if(shopAnalyzeBtn)shopAnalyzeBtn.addEventListener('click',analyzeShop);
+  if(shopAnalyzeBtn) shopAnalyzeBtn.addEventListener('click',analyzeShop);
+
+  const readShopPrintBtn=document.getElementById('readShopPrintBtn');
+  if(readShopPrintBtn) readShopPrintBtn.addEventListener('click',()=>readShopPrint(true));
+
+  const shopPrintInput=document.getElementById('shopPrint');
+  if(shopPrintInput) shopPrintInput.addEventListener('change',()=>{
+    shopOcrCache={fileKey:'',text:''};
+    const status=document.getElementById('ocrInfo');
+    const wrap=document.getElementById('ocrPreviewWrap');
+    if(wrap) wrap.style.display='none';
+    if(status){
+      status.className='ocr-status';
+      status.textContent=shopPrintInput.files?.[0]?'📷 Print selecionado. Toque em “Ler texto do print” ou em “Analisar compra”.':'📷 Nenhum print selecionado.';
+    }
+  });
 
 
   document.querySelectorAll('.payment-method').forEach(btn=>{
@@ -1093,7 +1261,7 @@ saveHistory();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
-      const reg = await navigator.serviceWorker.register('./sw.js?v=16.1', { updateViaCache: 'none' });
+      const reg = await navigator.serviceWorker.register('./sw.js?v=17', { updateViaCache: 'none' });
       await reg.update();
     } catch(e) {}
   });
