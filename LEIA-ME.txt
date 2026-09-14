@@ -1,8 +1,19 @@
-PODECONFIAR? V15
-- Dicas de segurança agora abrem e mostram explicações.
-- Histórico agora é clicável; novas análises guardam o resultado completo para abrir novamente.
-- Resultados antigos continuam aparecendo, mas podem não ter detalhes completos.
-- Compartilhamento disponível ao reabrir análise.
-- Botão Planos e assinatura destacado na tela inicial.
-- Mantidos: 5 dias grátis; Básico R$19,90/20 análises; Profissional R$39,90/100; Premium R$69,90/ilimitado; 1 dia de tolerância após vencimento.
-IMPORTANTE: cobrança real ainda precisa de integração com um provedor de pagamentos. Esta versão não cobra nem confirma pagamentos sozinha.
+PODECONFIAR? V15.1 — CORREÇÃO DOS BOTÕES
+
+CORRIGIDO:
+- "Começar agora" volta a funcionar
+- "Já tenho conta" volta a funcionar
+- Navegação da tela inicial volta a funcionar
+- Dicas de segurança clicáveis
+- Histórico clicável
+- Planos clicáveis
+- Corrigido erro de JavaScript que travava todos os botões
+
+INSTALAÇÃO:
+1. Extraia este ZIP.
+2. Substitua TODOS os arquivos na raiz do GitHub.
+3. Clique em Commit changes.
+4. Abra:
+https://juniorarlindo329-crypto.github.io/podeconfiar/?v=15.1
+
+Se o navegador mostrar a versão antiga, feche a aba e abra o link acima novamente.

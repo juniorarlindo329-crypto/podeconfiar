@@ -166,12 +166,12 @@ textarea.field{min-height:150px;resize:vertical}
 <main class="app">
 
 <section id="welcome" class="screen active welcome">
-  <img class="logo-real-welcome" src="./logo-oficial-v11.png?v=15" alt="Logo oficial PodeConfiar">
+  <img class="logo-real-welcome" src="./logo-oficial-v11.png?v=15.1" alt="Logo oficial PodeConfiar">
   <div class="brand">Pode<span>Confiar?</span></div>
   <div class="kicker">SEGURANÇA • ANÁLISE • PROTEÇÃO</div>
   <h1>Sua segurança digital em <span>primeiro lugar!</span></h1>
   <p class="lead">Analise mensagens, links, prints e cobranças suspeitas com inteligência e rapidez.</p>
-  <div class="robot-stage"><img src="robot-clean.png?v=15" alt="Robô de segurança PodeConfiar"></div>
+  <div class="robot-stage"><img src="robot-clean.png?v=15.1" alt="Robô de segurança PodeConfiar"></div>
   <div class="featurebar">
     <div><b>🛡</b>Previne<br>golpes</div>
     <div><b>⚡</b>Análise em<br>segundos</div>
@@ -185,7 +185,7 @@ textarea.field{min-height:150px;resize:vertical}
 
 <section id="home" class="screen">
   <div class="header">
-    <div class="header-left"><div class="header-logo header-logo-real"><img src="./logo-oficial-v11.png?v=15" alt="Logo"></div><div class="header-name">Pode<span>Confiar?</span></div></div>
+    <div class="header-left"><div class="header-logo header-logo-real"><img src="./logo-oficial-v11.png?v=15.1" alt="Logo"></div><div class="header-name">Pode<span>Confiar?</span></div></div>
     <button class="iconbtn">🔔</button>
   </div>
   <div class="usercard">
@@ -197,7 +197,7 @@ textarea.field{min-height:150px;resize:vertical}
     <h2>Desconfie.<br>Analise.<br><span>Fique seguro.</span></h2>
     <p>Evite golpes e proteja o que é seu.</p>
     <button class="smallbtn" data-go="tips">Saiba mais →</button>
-    <img src="shield-clean.png?v=15" alt="Escudo de proteção">
+    <img src="shield-clean.png?v=15.1" alt="Escudo de proteção">
   </div>
 
   <div class="grid">
@@ -669,7 +669,7 @@ saveHistory();
         <p>Esta análise foi salva em uma versão anterior. As novas análises passam a guardar também os detalhes completos.</p>
         <button class="secondary" id="historyShareBtn">Compartilhar resultado</button></div>`;
     }
-    content.querySelectorAll('button[onclick*="setupTool"],button[onclick*="go(\\'call\\')"]').forEach(b=>b.remove());
+    content.querySelectorAll('button').forEach(b=>{ const a=b.getAttribute('onclick')||''; if(a.includes('setupTool')||a.includes("go('call')")) b.remove(); });
     const sb=document.getElementById('historyShareBtn');
     if(sb) sb.addEventListener('click',()=>shareLastResult(level,item.percent||0));
     go('historyDetail');
@@ -990,7 +990,7 @@ saveHistory();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
-      const reg = await navigator.serviceWorker.register('./sw.js?v=15', { updateViaCache: 'none' });
+      const reg = await navigator.serviceWorker.register('./sw.js?v=15.1', { updateViaCache: 'none' });
       await reg.update();
     } catch(e) {}
   });
