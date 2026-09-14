@@ -1,25 +1,8 @@
-PODECONFIAR? — V14 FINAL
-
-REGRAS IMPLEMENTADAS:
-- Teste grátis por 5 dias, contado a partir do primeiro acesso neste aparelho.
-- Após os 5 dias, as análises são bloqueadas até haver assinatura válida.
-- Básico: R$ 19,90/mês — 20 análises por mês.
-- Profissional: R$ 39,90/mês — 100 análises por mês.
-- Premium: R$ 69,90/mês — análises ilimitadas.
-- Planos pagos: vencimento mensal.
-- Após o vencimento: somente 1 dia de tolerância.
-- Depois desse 1 dia: assinatura suspensa e análises bloqueadas.
-- Mantém a função Verificar Ligação da V13.
-- Corrigido o botão “Analisar novamente”.
-- Corrigidas funções de botões que antes podiam falhar por escopo JavaScript.
-
-IMPORTANTE:
-A lógica de teste, limites e suspensão está pronta.
-O PAGAMENTO REAL AINDA NÃO ESTÁ CONECTADO. Para ativar planos automaticamente após o pagamento, é necessário integrar um meio de pagamento/servidor. Nesta versão nenhum botão cobra dinheiro nem libera assinatura falsa.
-
-INSTALAÇÃO:
-1. Extraia o ZIP.
-2. Envie/substitua TODOS os arquivos na raiz do repositório GitHub.
-3. Clique em Commit changes.
-4. Abra:
-https://juniorarlindo329-crypto.github.io/podeconfiar/?v=14-final
+PODECONFIAR? V15
+- Dicas de segurança agora abrem e mostram explicações.
+- Histórico agora é clicável; novas análises guardam o resultado completo para abrir novamente.
+- Resultados antigos continuam aparecendo, mas podem não ter detalhes completos.
+- Compartilhamento disponível ao reabrir análise.
+- Botão Planos e assinatura destacado na tela inicial.
+- Mantidos: 5 dias grátis; Básico R$19,90/20 análises; Profissional R$39,90/100; Premium R$69,90/ilimitado; 1 dia de tolerância após vencimento.
+IMPORTANTE: cobrança real ainda precisa de integração com um provedor de pagamentos. Esta versão não cobra nem confirma pagamentos sozinha.

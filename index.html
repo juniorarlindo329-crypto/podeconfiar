@@ -153,17 +153,25 @@ textarea.field{min-height:150px;resize:vertical}
 .access-warning{margin:14px 0;padding:14px;border-radius:16px;border:1px solid rgba(255,90,90,.35);background:rgba(90,20,20,.18)}
 .plan-status{font-size:12px;line-height:1.5}
 </style>
+
+<style>
+.tip-button{width:100%;text-align:left;color:inherit;font:inherit;cursor:pointer}
+.history-click{width:100%;text-align:left;color:inherit;font:inherit;cursor:pointer}
+.plans-home-btn{border-color:rgba(0,235,145,.42)!important;box-shadow:0 0 20px rgba(0,235,145,.08)}
+.detail-reasons{margin-top:10px}
+.plan-card button{width:100%}
+</style>
 </head>
 <body>
 <main class="app">
 
 <section id="welcome" class="screen active welcome">
-  <img class="logo-real-welcome" src="./logo-oficial-v11.png?v=14-final" alt="Logo oficial PodeConfiar">
+  <img class="logo-real-welcome" src="./logo-oficial-v11.png?v=15" alt="Logo oficial PodeConfiar">
   <div class="brand">Pode<span>Confiar?</span></div>
   <div class="kicker">SEGURANÇA • ANÁLISE • PROTEÇÃO</div>
   <h1>Sua segurança digital em <span>primeiro lugar!</span></h1>
   <p class="lead">Analise mensagens, links, prints e cobranças suspeitas com inteligência e rapidez.</p>
-  <div class="robot-stage"><img src="robot-clean.png?v=14-final" alt="Robô de segurança PodeConfiar"></div>
+  <div class="robot-stage"><img src="robot-clean.png?v=15" alt="Robô de segurança PodeConfiar"></div>
   <div class="featurebar">
     <div><b>🛡</b>Previne<br>golpes</div>
     <div><b>⚡</b>Análise em<br>segundos</div>
@@ -177,7 +185,7 @@ textarea.field{min-height:150px;resize:vertical}
 
 <section id="home" class="screen">
   <div class="header">
-    <div class="header-left"><div class="header-logo header-logo-real"><img src="./logo-oficial-v11.png?v=14-final" alt="Logo"></div><div class="header-name">Pode<span>Confiar?</span></div></div>
+    <div class="header-left"><div class="header-logo header-logo-real"><img src="./logo-oficial-v11.png?v=15" alt="Logo"></div><div class="header-name">Pode<span>Confiar?</span></div></div>
     <button class="iconbtn">🔔</button>
   </div>
   <div class="usercard">
@@ -189,7 +197,7 @@ textarea.field{min-height:150px;resize:vertical}
     <h2>Desconfie.<br>Analise.<br><span>Fique seguro.</span></h2>
     <p>Evite golpes e proteja o que é seu.</p>
     <button class="smallbtn" data-go="tips">Saiba mais →</button>
-    <img src="shield-clean.png?v=14-final" alt="Escudo de proteção">
+    <img src="shield-clean.png?v=15" alt="Escudo de proteção">
   </div>
 
   <div class="grid">
@@ -198,6 +206,13 @@ textarea.field{min-height:150px;resize:vertical}
     <button class="action p" data-tool="message"><span class="ico">💬</span><b>Verificar mensagem</b><small>Cole o texto suspeito</small></button>
     <button class="action o" data-tool="pix"><span class="ico">▦</span><b>Conferir cobrança/Pix</b><small>Analise boletos e QR Code</small></button>
   </div>
+
+
+  <button class="row plans-home-btn" data-go="plans">
+    <span class="ri">👑</span>
+    <span><b>Planos e assinatura</b><small>5 dias grátis • Básico • Profissional • Premium</small></span>
+    <span class="arrow">›</span>
+  </button>
 
   <button class="row" data-go="history"><span class="ri">◷</span><span><b>Histórico de análises</b><small>Veja suas verificações anteriores</small></span><span class="arrow">›</span></button>
   <button class="row" data-go="tips"><span class="ri">💡</span><span><b>Dicas de segurança</b><small>Aprenda a se proteger de golpes</small></span><span class="arrow">›</span></button>
@@ -235,12 +250,24 @@ textarea.field{min-height:150px;resize:vertical}
   <div id="historyList"></div>
 </section>
 
+
+<section id="historyDetail" class="screen">
+  <div class="top"><button class="back" data-go="history">←</button><div class="title">Detalhes da análise</div><div></div></div>
+  <div id="historyDetailContent"></div>
+</section>
+
 <section id="tips" class="screen">
   <div class="top"><div class="title">Dicas de segurança</div><div></div></div>
-  <div class="listitem"><div><b>📱 WhatsApp clonado</b><div class="muted">Nunca envie código de verificação.</div></div><span>›</span></div>
-  <div class="listitem"><div><b>💠 Pix errado</b><div class="muted">Confirme nome e instituição antes de pagar.</div></div><span>›</span></div>
-  <div class="listitem"><div><b>🧾 Boleto falso</b><div class="muted">Confira beneficiário, valor e banco emissor.</div></div><span>›</span></div>
-  <div class="listitem"><div><b>🔗 Links perigosos</b><div class="muted">Evite links encurtados ou domínios parecidos com marcas.</div></div><span>›</span></div>
+  <button class="listitem tip-button" data-tip="tip-whatsapp"><div><b>📱 WhatsApp clonado</b><div class="muted">Nunca envie código de verificação.</div></div><span>›</span></button>
+  <button class="listitem tip-button" data-tip="tip-pix"><div><b>💠 Pix errado</b><div class="muted">Confirme nome e instituição antes de pagar.</div></div><span>›</span></button>
+  <button class="listitem tip-button" data-tip="tip-boleto"><div><b>🧾 Boleto falso</b><div class="muted">Confira beneficiário, valor e banco emissor.</div></div><span>›</span></button>
+  <button class="listitem tip-button" data-tip="tip-links"><div><b>🔗 Links perigosos</b><div class="muted">Evite links encurtados ou domínios parecidos com marcas.</div></div><span>›</span></button>
+</section>
+
+
+<section id="tipDetail" class="screen">
+  <div class="top"><button class="back" data-go="tips">←</button><div class="title" id="tipDetailTitle">Dica de segurança</div><div></div></div>
+  <div id="tipDetailContent"></div>
 </section>
 
 <section id="profile" class="screen">
@@ -370,7 +397,7 @@ function riskPercent(score, level){
 
   function go(id){
     screens.forEach(s=>s.classList.toggle('active',s.id===id));
-    nav.classList.toggle('hidden',id==='welcome'||id==='analyze'||id==='scanning'||id==='result');
+    nav.classList.toggle('hidden',id==='welcome'||id==='analyze'||id==='scanning'||id==='result'||id==='historyDetail'||id==='tipDetail'||id==='plans'||id==='call');
     [...nav.querySelectorAll('button')].forEach(b=>b.classList.toggle('active',b.dataset.go===id));
     if(id==='history') renderHistory();
     scrollTo(0,0);
@@ -585,7 +612,14 @@ function riskPercent(score, level){
       </div>`;
 
     const percent=riskPercent(analysis.score||0,level);
-history.unshift({type:currentTool,level,percent,time:new Date().toLocaleString('pt-BR')});
+history.unshift({
+  id:Date.now(),
+  type:currentTool,
+  level,
+  percent,
+  time:new Date().toLocaleString('pt-BR'),
+  resultHtml:document.getElementById('resultContent').innerHTML
+});
 saveHistory();
     recordAnalysisUse();
     go('result');
@@ -598,16 +632,47 @@ saveHistory();
   function renderHistory(){
     const el=document.getElementById('historyList');
     if(!history.length){
-      el.innerHTML='<div class="card"><b>Nenhuma análise ainda</b><p class="muted">Suas verificações aparecerão aqui durante esta sessão.</p></div>';
+      el.innerHTML='<div class="card"><b>Nenhuma análise ainda</b><p class="muted">Suas verificações salvas aparecerão aqui.</p></div>';
       return;
     }
     const names={print:'Print analisado',link:'Link verificado',message:'Mensagem analisada',pix:'Cobrança/Pix analisado',call:'Ligação analisada'};
-    el.innerHTML=history.map(h=>{
-      const level=h.level||'low';
+    el.innerHTML=history.map((x,i)=>{
+      const level=x.level||'low';
       const cls=level==='high'?'danger':level==='medium'?'warn':'ok';
       const label=level==='high'?'Alto risco':level==='medium'?'Atenção':'Baixo risco';
-      return `<div class="listitem"><div><b>${names[h.type]}</b><div class="${cls}">${label}${h.percent!=null?' · '+h.percent+'%':''}</div></div><div class="muted" style="font-size:11px">${h.time}</div></div>`;
+      return `<button class="listitem history-click" data-history-index="${i}">
+        <div><b>${names[x.type]||'Análise'}</b><div class="${cls}">${label}${x.percent!=null?' · '+x.percent+'%':''}</div>
+        <div class="muted" style="font-size:11px;margin-top:5px">Toque para abrir novamente</div></div>
+        <div><div class="muted" style="font-size:11px">${x.time||''}</div><div class="arrow" style="text-align:right">›</div></div>
+      </button>`;
     }).join('');
+    el.querySelectorAll('[data-history-index]').forEach(btn=>{
+      btn.addEventListener('click',()=>openHistoryItem(Number(btn.dataset.historyIndex)));
+    });
+  }
+
+  function openHistoryItem(index){
+    const item=history[index];
+    if(!item) return;
+    const names={print:'Print analisado',link:'Link verificado',message:'Mensagem analisada',pix:'Cobrança/Pix analisado',call:'Ligação analisada'};
+    const level=item.level||'low';
+    const cls=level==='high'?'danger':level==='medium'?'warn':'ok';
+    const label=level==='high'?'Alto risco':level==='medium'?'Atenção':'Baixo risco';
+    const content=document.getElementById('historyDetailContent');
+    if(item.resultHtml){
+      content.innerHTML=item.resultHtml+
+        `<div class="card"><button class="secondary" id="historyShareBtn">Compartilhar resultado</button></div>`;
+    }else{
+      content.innerHTML=`<div class="card"><h2>${names[item.type]||'Análise'}</h2>
+        <div class="${cls}" style="font-size:28px;font-weight:900">${label}${item.percent!=null?' · '+item.percent+'%':''}</div>
+        <p class="muted">${item.time||''}</p>
+        <p>Esta análise foi salva em uma versão anterior. As novas análises passam a guardar também os detalhes completos.</p>
+        <button class="secondary" id="historyShareBtn">Compartilhar resultado</button></div>`;
+    }
+    content.querySelectorAll('button[onclick*="setupTool"],button[onclick*="go(\\'call\\')"]').forEach(b=>b.remove());
+    const sb=document.getElementById('historyShareBtn');
+    if(sb) sb.addEventListener('click',()=>shareLastResult(level,item.percent||0));
+    go('historyDetail');
   }
 
   async function shareLastResult(level,percent){
@@ -685,7 +750,14 @@ saveHistory();
         <button class="secondary" style="margin-top:10px" onclick="shareLastResult('${level}',${percent})">Compartilhar resultado</button>
       </div>`;
 
-    history.unshift({type:'call',level,percent,time:new Date().toLocaleString('pt-BR')});
+    history.unshift({
+      id:Date.now(),
+      type:'call',
+      level,
+      percent,
+      time:new Date().toLocaleString('pt-BR'),
+      resultHtml:document.getElementById('resultContent').innerHTML
+    });
     saveHistory();
     recordAnalysisUse();
     go('result');
@@ -859,6 +931,43 @@ saveHistory();
     alert(`${name} — ${price}\n\nA regra do plano já está pronta no aplicativo.\n\nPara cobrar e liberar automaticamente após o pagamento, ainda precisamos conectar um meio de pagamento. Nenhuma cobrança foi feita.`);
   }
 
+
+  const tipData={
+    'tip-whatsapp':{
+      title:'📱 WhatsApp clonado',
+      body:`<div class="card"><h2>Como se proteger</h2><p>Golpistas podem tentar conseguir seu código de verificação para assumir sua conta.</p>
+      <div class="reason"><span class="dot danger">●</span><span>Nunca informe o código recebido por SMS.</span></div>
+      <div class="reason"><span class="dot danger">●</span><span>Desconfie de pedidos urgentes de dinheiro feitos por contatos.</span></div>
+      <div class="reason"><span class="dot ok">●</span><span>Confirme a identidade da pessoa por outro meio antes de pagar.</span></div></div>`
+    },
+    'tip-pix':{
+      title:'💠 Pix errado',
+      body:`<div class="card"><h2>Antes de confirmar um Pix</h2><p>Confira os dados mostrados pelo seu banco antes de autorizar.</p>
+      <div class="reason"><span class="dot ok">●</span><span>Confira nome do recebedor e instituição.</span></div>
+      <div class="reason"><span class="dot ok">●</span><span>Confira valor e motivo do pagamento.</span></div>
+      <div class="reason"><span class="dot danger">●</span><span>Se alguém pressionar você a devolver dinheiro para outra chave, pare e confirme com seu banco.</span></div></div>`
+    },
+    'tip-boleto':{
+      title:'🧾 Boleto falso',
+      body:`<div class="card"><h2>Confira antes de pagar</h2><div class="reason"><span class="dot ok">●</span><span>Veja beneficiário, valor e banco emissor.</span></div>
+      <div class="reason"><span class="dot danger">●</span><span>Desconfie se os dados exibidos no banco forem diferentes da cobrança recebida.</span></div>
+      <div class="reason"><span class="dot ok">●</span><span>Na dúvida, gere uma nova cobrança pelo canal oficial da empresa.</span></div></div>`
+    },
+    'tip-links':{
+      title:'🔗 Links perigosos',
+      body:`<div class="card"><h2>Sinais de atenção</h2><div class="reason"><span class="dot danger">●</span><span>Links encurtados escondem o endereço real.</span></div>
+      <div class="reason"><span class="dot danger">●</span><span>Domínios com nomes parecidos com bancos e marcas podem ser falsos.</span></div>
+      <div class="reason"><span class="dot ok">●</span><span>Prefira abrir o aplicativo ou digitar o endereço oficial por conta própria.</span></div></div>`
+    }
+  };
+  function openTip(id){
+    const d=tipData[id]; if(!d) return;
+    document.getElementById('tipDetailTitle').textContent=d.title;
+    document.getElementById('tipDetailContent').innerHTML=d.body;
+    go('tipDetail');
+  }
+  document.querySelectorAll('[data-tip]').forEach(b=>b.addEventListener('click',()=>openTip(b.dataset.tip)));
+
   document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
   document.querySelectorAll('[data-tool]').forEach(b=>b.addEventListener('click',()=>setupTool(b.dataset.tool)));
   document.getElementById('analyzeBtn').addEventListener('click',analyze);
@@ -871,6 +980,8 @@ saveHistory();
   window.prepareSubscription=prepareSubscription;
   window.choosePlan=choosePlan;
   window.showTrialStatus=showTrialStatus;
+  window.openHistoryItem=openHistoryItem;
+  window.openTip=openTip;
   updatePlanUI();
 })();
 </script>
@@ -879,7 +990,7 @@ saveHistory();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
-      const reg = await navigator.serviceWorker.register('./sw.js?v=14-final', { updateViaCache: 'none' });
+      const reg = await navigator.serviceWorker.register('./sw.js?v=15', { updateViaCache: 'none' });
       await reg.update();
     } catch(e) {}
   });
