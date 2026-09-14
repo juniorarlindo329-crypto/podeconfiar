@@ -132,12 +132,12 @@ textarea.field{min-height:150px;resize:vertical}
 <main class="app">
 
 <section id="welcome" class="screen active welcome">
-  <img class="logo-real-welcome" src="./logo-oficial-v11.png?v=11" alt="Logo oficial PodeConfiar">
+  <img class="logo-real-welcome" src="./logo-oficial-v11.png?v=12" alt="Logo oficial PodeConfiar">
   <div class="brand">Pode<span>Confiar?</span></div>
   <div class="kicker">SEGURANÇA • ANÁLISE • PROTEÇÃO</div>
   <h1>Sua segurança digital em <span>primeiro lugar!</span></h1>
   <p class="lead">Analise mensagens, links, prints e cobranças suspeitas com inteligência e rapidez.</p>
-  <div class="robot-stage"><img src="robot-clean.png?v=11" alt="Robô de segurança PodeConfiar"></div>
+  <div class="robot-stage"><img src="robot-clean.png?v=12" alt="Robô de segurança PodeConfiar"></div>
   <div class="featurebar">
     <div><b>🛡</b>Previne<br>golpes</div>
     <div><b>⚡</b>Análise em<br>segundos</div>
@@ -151,7 +151,7 @@ textarea.field{min-height:150px;resize:vertical}
 
 <section id="home" class="screen">
   <div class="header">
-    <div class="header-left"><div class="header-logo header-logo-real"><img src="./logo-oficial-v11.png?v=11" alt="Logo"></div><div class="header-name">Pode<span>Confiar?</span></div></div>
+    <div class="header-left"><div class="header-logo header-logo-real"><img src="./logo-oficial-v11.png?v=12" alt="Logo"></div><div class="header-name">Pode<span>Confiar?</span></div></div>
     <button class="iconbtn">🔔</button>
   </div>
   <div class="usercard">
@@ -163,7 +163,7 @@ textarea.field{min-height:150px;resize:vertical}
     <h2>Desconfie.<br>Analise.<br><span>Fique seguro.</span></h2>
     <p>Evite golpes e proteja o que é seu.</p>
     <button class="smallbtn" data-go="tips">Saiba mais →</button>
-    <img src="shield-clean.png?v=11" alt="Escudo de proteção">
+    <img src="shield-clean.png?v=12" alt="Escudo de proteção">
   </div>
 
   <div class="grid">
@@ -219,6 +219,19 @@ textarea.field{min-height:150px;resize:vertical}
 </section>
 </main>
 
+
+<section id="emergency" class="screen">
+  <div class="topline"><button class="back" data-go="home">‹</button><b>Caí em um golpe</b></div>
+  <div class="card" style="border-color:rgba(255,70,70,.35)">
+    <h2 class="danger">Aja rapidamente</h2>
+    <p>Se houve pagamento, transferência ou acesso à sua conta, entre em contato imediatamente com o banco pelos canais oficiais.</p>
+  </div>
+  <div class="card"><b>1. Proteja suas contas</b><p>Troque senhas comprometidas e encerre sessões desconhecidas. Nunca passe códigos recebidos por SMS ou aplicativo.</p></div>
+  <div class="card"><b>2. Avise o banco</b><p>Use somente o aplicativo, site ou telefone oficial do banco. Informe a fraude e siga as orientações da instituição.</p></div>
+  <div class="card"><b>3. Guarde as provas</b><p>Salve prints, números, comprovantes, links, conversas, horários e dados do recebedor.</p></div>
+  <div class="card"><b>4. Registre a ocorrência</b><p>Com as provas em mãos, procure os canais oficiais de segurança pública disponíveis na sua região.</p></div>
+  <button class="primary" data-go="home">Voltar ao início</button>
+</section>
 <nav class="nav hidden" id="nav">
   <button data-go="home"><span class="nicon">⌂</span>Início</button>
   <button data-go="history"><span class="nicon">◷</span>Histórico</button>
@@ -229,7 +242,14 @@ textarea.field{min-height:150px;resize:vertical}
 <script>
 (() => {
   const screens=[...document.querySelectorAll('.screen')], nav=document.getElementById('nav');
-  const history=[];
+  let history=[];
+try{ history=JSON.parse(localStorage.getItem('pc_history_v12')||'[]'); }catch(e){ history=[]; }
+function saveHistory(){localStorage.setItem('pc_history_v12',JSON.stringify(history.slice(0,100)))}
+function riskPercent(score, level){
+  if(level==='high') return Math.min(99,70+score*3);
+  if(level==='medium') return Math.min(69,40+score*5);
+  return Math.min(35,Math.max(8,score*8));
+}
   let currentTool='message';
 
   function go(id){
@@ -430,7 +450,7 @@ textarea.field{min-height:150px;resize:vertical}
     box.innerHTML=`
       <div class="resultbox ${cls}">
         <div class="big">${icon}</div>
-        <h2 class="${textCls}">${riskLabel(level)}</h2>
+        <h2 class="${textCls}">${riskLabel(level)} · ${riskPercent(analysis.score||0,level)}%</h2>
         <b>${subtitle}</b>
       </div>
       ${extra}
@@ -441,9 +461,15 @@ textarea.field{min-height:150px;resize:vertical}
           ? 'Mesmo com baixo risco, confirme o domínio, o remetente e o beneficiário antes de informar dados ou fazer pagamentos.'
           : 'Não informe senhas ou códigos, não faça pagamentos e confirme a solicitação usando o aplicativo/site oficial ou um telefone oficial.'}</p>
         <p class="safe-note">Esta verificação é uma análise local de sinais do conteúdo e do endereço. Ela não consulta, nesta versão, bancos externos de reputação em tempo real.</p>
+      </div>
+      <div class="card">
+        <button class="primary" onclick="go(currentTool)">Analisar novamente</button>
+        <button class="secondary" style="margin-top:10px" onclick="shareLastResult('${level}',${riskPercent(analysis.score||0,level)})">Compartilhar resultado</button>
       </div>`;
 
-    history.unshift({type:currentTool,level,time:new Date().toLocaleString('pt-BR')});
+    const percent=riskPercent(analysis.score||0,level);
+history.unshift({type:currentTool,level,percent,time:new Date().toLocaleString('pt-BR')});
+saveHistory();
     go('result');
   }
 
@@ -462,8 +488,21 @@ textarea.field{min-height:150px;resize:vertical}
       const level=h.level||'low';
       const cls=level==='high'?'danger':level==='medium'?'warn':'ok';
       const label=level==='high'?'Alto risco':level==='medium'?'Atenção':'Baixo risco';
-      return `<div class="listitem"><div><b>${names[h.type]}</b><div class="${cls}">${label}</div></div><div class="muted" style="font-size:11px">${h.time}</div></div>`;
+      return `<div class="listitem"><div><b>${names[h.type]}</b><div class="${cls}">${label}${h.percent!=null?' · '+h.percent+'%':''}</div></div><div class="muted" style="font-size:11px">${h.time}</div></div>`;
     }).join('');
+  }
+
+  async function shareLastResult(level,percent){
+    const msg=`PodeConfiar? — Resultado da análise: ${riskLabel(level)} (${percent}% de risco). Confirme sempre informações e pagamentos pelos canais oficiais.`;
+    try{
+      if(navigator.share) await navigator.share({title:'PodeConfiar?',text:msg});
+      else { await navigator.clipboard.writeText(msg); alert('Resultado copiado!'); }
+    }catch(e){}
+  }
+  function clearHistory(){
+    if(confirm('Apagar todo o histórico salvo neste aparelho?')){
+      history=[]; saveHistory(); renderHistory();
+    }
   }
 
   document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
@@ -476,7 +515,7 @@ textarea.field{min-height:150px;resize:vertical}
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
-      const reg = await navigator.serviceWorker.register('./sw.js?v=11', { updateViaCache: 'none' });
+      const reg = await navigator.serviceWorker.register('./sw.js?v=12', { updateViaCache: 'none' });
       await reg.update();
     } catch(e) {}
   });
