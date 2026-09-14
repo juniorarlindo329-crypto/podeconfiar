@@ -1,12 +1,12 @@
 {
   "name": "PodeConfiar?",
   "short_name": "PodeConfiar",
-  "start_url": "./?v=13",
+  "start_url": "./?v=14-final",
   "display": "standalone",
   "background_color": "#00140e",
   "theme_color": "#00e990",
   "icons": [
-    {"src":"icon-192.png?v=13","sizes":"192x192","type":"image/png"},
-    {"src":"icon-512.png?v=13","sizes":"512x512","type":"image/png"}
+    {"src":"icon-192.png?v=14-final","sizes":"192x192","type":"image/png"},
+    {"src":"icon-512.png?v=14-final","sizes":"512x512","type":"image/png"}
   ]
 }

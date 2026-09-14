@@ -138,17 +138,32 @@ textarea.field{min-height:150px;resize:vertical}
 .checkrow input{margin-top:2px;transform:scale(1.15)}
 .call-score{font-size:38px;font-weight:900;margin:8px 0}
 </style>
+
+<style>
+.plan-card{position:relative;margin:14px 0;padding:18px;border-radius:20px;background:rgba(8,25,19,.92);border:1px solid rgba(255,255,255,.10)}
+.plan-card>div:not(.popular){display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.plan-name{font-size:19px;font-weight:900}.plan-price{font-size:18px;font-weight:900;color:#54f0aa;text-align:right}.plan-price small{font-size:10px;opacity:.75}
+.plan-card p{font-size:13px;opacity:.75}.plan-card ul{padding-left:20px;line-height:1.9;font-size:13px}
+.basic-plan{border-color:rgba(0,235,145,.4)}.pro-plan{border-color:rgba(70,130,255,.65);box-shadow:0 0 24px rgba(50,110,255,.10)}
+.premium-plan{border-color:rgba(150,80,255,.6);box-shadow:0 0 24px rgba(140,70,255,.10)}
+.popular{position:absolute;right:14px;top:-10px;background:#2563eb;color:white;border-radius:999px;padding:5px 9px;font-size:9px;font-weight:900}
+</style>
+
+<style>
+.access-warning{margin:14px 0;padding:14px;border-radius:16px;border:1px solid rgba(255,90,90,.35);background:rgba(90,20,20,.18)}
+.plan-status{font-size:12px;line-height:1.5}
+</style>
 </head>
 <body>
 <main class="app">
 
 <section id="welcome" class="screen active welcome">
-  <img class="logo-real-welcome" src="./logo-oficial-v11.png?v=13" alt="Logo oficial PodeConfiar">
+  <img class="logo-real-welcome" src="./logo-oficial-v11.png?v=14-final" alt="Logo oficial PodeConfiar">
   <div class="brand">Pode<span>Confiar?</span></div>
   <div class="kicker">SEGURANÇA • ANÁLISE • PROTEÇÃO</div>
   <h1>Sua segurança digital em <span>primeiro lugar!</span></h1>
   <p class="lead">Analise mensagens, links, prints e cobranças suspeitas com inteligência e rapidez.</p>
-  <div class="robot-stage"><img src="robot-clean.png?v=13" alt="Robô de segurança PodeConfiar"></div>
+  <div class="robot-stage"><img src="robot-clean.png?v=14-final" alt="Robô de segurança PodeConfiar"></div>
   <div class="featurebar">
     <div><b>🛡</b>Previne<br>golpes</div>
     <div><b>⚡</b>Análise em<br>segundos</div>
@@ -162,7 +177,7 @@ textarea.field{min-height:150px;resize:vertical}
 
 <section id="home" class="screen">
   <div class="header">
-    <div class="header-left"><div class="header-logo header-logo-real"><img src="./logo-oficial-v11.png?v=13" alt="Logo"></div><div class="header-name">Pode<span>Confiar?</span></div></div>
+    <div class="header-left"><div class="header-logo header-logo-real"><img src="./logo-oficial-v11.png?v=14-final" alt="Logo"></div><div class="header-name">Pode<span>Confiar?</span></div></div>
     <button class="iconbtn">🔔</button>
   </div>
   <div class="usercard">
@@ -174,7 +189,7 @@ textarea.field{min-height:150px;resize:vertical}
     <h2>Desconfie.<br>Analise.<br><span>Fique seguro.</span></h2>
     <p>Evite golpes e proteja o que é seu.</p>
     <button class="smallbtn" data-go="tips">Saiba mais →</button>
-    <img src="shield-clean.png?v=13" alt="Escudo de proteção">
+    <img src="shield-clean.png?v=14-final" alt="Escudo de proteção">
   </div>
 
   <div class="grid">
@@ -237,6 +252,51 @@ textarea.field{min-height:150px;resize:vertical}
 </main>
 
 
+
+
+<section id="plans" class="screen">
+  <div class="topline"><button class="back" data-go="home">‹</button><b>Planos PodeConfiar?</b></div>
+  <div class="card" style="text-align:center">
+    <h2>Escolha sua proteção</h2>
+    <p class="muted">Comece grátis e escolha um plano quando quiser mais recursos.</p>
+    <div class="badge-risk low" id="currentPlanBadge">Plano atual: Teste grátis</div>
+    <div id="subscriptionStatus" class="muted" style="margin-top:10px"></div>
+  </div>
+
+  <div class="plan-card free-plan">
+    <div><span class="plan-name">Gratuito</span><span class="plan-price">R$ 0</span></div>
+    <p>Para conhecer o PodeConfiar?</p>
+    <ul><li>Teste grátis por 5 dias</li><li>Verificar mensagens</li><li>Verificar links</li><li>Verificar ligação</li><li>Dicas de segurança</li><li>Histórico limitado</li></ul>
+    <button class="secondary" onclick="showTrialStatus()">Ver status do teste grátis</button>
+  </div>
+
+  <div class="plan-card basic-plan">
+    <div><span class="plan-name">Básico</span><span class="plan-price">R$ 19,90<small>/mês</small></span></div>
+    <p>Proteção para o dia a dia</p>
+    <ul><li>20 análises por mês</li><li>Mensagens</li><li>Links avançados</li><li>Pix e cobranças</li><li>Verificar ligação</li><li>Histórico completo</li><li>Compartilhar resultados</li></ul>
+    <button class="primary" onclick="prepareSubscription('Básico','R$ 19,90/mês')">Assinar Básico</button>
+  </div>
+
+  <div class="plan-card pro-plan">
+    <div class="popular">MAIS POPULAR</div>
+    <div><span class="plan-name">Profissional</span><span class="plan-price">R$ 39,90<small>/mês</small></span></div>
+    <p>Para quem usa proteção com frequência</p>
+    <ul><li>100 análises por mês</li><li>Tudo do Básico</li><li>Relatório detalhado</li><li>Histórico organizado</li><li>Favoritar análises</li><li>Proteção para família</li></ul>
+    <button class="primary" onclick="prepareSubscription('Profissional','R$ 39,90/mês')">Assinar Profissional</button>
+  </div>
+
+  <div class="plan-card premium-plan">
+    <div><span class="plan-name">Premium</span><span class="plan-price">R$ 69,90<small>/mês</small></span></div>
+    <p>Experiência completa</p>
+    <ul><li>Análises ilimitadas</li><li>Tudo do Profissional</li><li>Até 5 perfis da família</li><li>Relatórios completos</li><li>Suporte prioritário</li><li>Novos recursos primeiro</li></ul>
+    <button class="primary" onclick="prepareSubscription('Premium','R$ 69,90/mês')">Assinar Premium</button>
+  </div>
+
+  <div class="card">
+    <b>Pagamento</b>
+    <p class="muted">O teste grátis funciona por 5 dias. Após isso, as análises ficam bloqueadas até existir uma assinatura válida. Planos pagos vencem mensalmente e têm somente 1 dia de tolerância; depois disso ficam suspensos. O pagamento automático ainda será conectado.</p>
+  </div>
+</section>
 
 <section id="call" class="screen">
   <div class="topline"><button class="back" data-go="home">‹</button><b>Verificar ligação</b></div>
@@ -336,6 +396,7 @@ function riskPercent(score, level){
   }
 
   function analyze(){
+    if(!checkAccess(true)) return;
     const input=document.getElementById('textInput');
     const file=document.getElementById('fileInput');
     if(currentTool==='print' && (!file || !file.files || !file.files.length)){
@@ -519,13 +580,14 @@ function riskPercent(score, level){
         <p class="safe-note">Esta verificação é uma análise local de sinais do conteúdo e do endereço. Ela não consulta, nesta versão, bancos externos de reputação em tempo real.</p>
       </div>
       <div class="card">
-        <button class="primary" onclick="go(currentTool)">Analisar novamente</button>
+        <button class="primary" onclick="setupTool(currentTool)">Analisar novamente</button>
         <button class="secondary" style="margin-top:10px" onclick="shareLastResult('${level}',${riskPercent(analysis.score||0,level)})">Compartilhar resultado</button>
       </div>`;
 
     const percent=riskPercent(analysis.score||0,level);
 history.unshift({type:currentTool,level,percent,time:new Date().toLocaleString('pt-BR')});
 saveHistory();
+    recordAnalysisUse();
     go('result');
   }
 
@@ -562,6 +624,7 @@ saveHistory();
   }
 
   function analyzeCall(){
+    if(!checkAccess(true)) return;
     const text=(document.getElementById('callText')?.value||'').toLowerCase();
     const number=(document.getElementById('callNumber')?.value||'').trim();
 
@@ -624,12 +687,191 @@ saveHistory();
 
     history.unshift({type:'call',level,percent,time:new Date().toLocaleString('pt-BR')});
     saveHistory();
+    recordAnalysisUse();
     go('result');
+  }
+
+
+  const DAY=24*60*60*1000;
+  const TRIAL_DAYS=5;
+  const GRACE_DAYS=1;
+  const TRIAL_START_KEY='pc_trial_start_v14';
+  const SUB_KEY='pc_subscription_v14';
+  const USAGE_KEY='pc_usage_v14';
+
+  if(!localStorage.getItem(TRIAL_START_KEY)){
+    localStorage.setItem(TRIAL_START_KEY,String(Date.now()));
+  }
+
+  function getSubscription(){
+    try{return JSON.parse(localStorage.getItem(SUB_KEY)||'null')}catch(e){return null}
+  }
+
+  function getTrialInfo(){
+    const start=Number(localStorage.getItem(TRIAL_START_KEY)||Date.now());
+    const end=start+(TRIAL_DAYS*DAY);
+    const now=Date.now();
+    return {start,end,active:now<end,remainingMs:Math.max(0,end-now)};
+  }
+
+  function getUsage(){
+    try{return JSON.parse(localStorage.getItem(USAGE_KEY)||'{}')}catch(e){return {}}
+  }
+
+  function currentMonthKey(){
+    const d=new Date();
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+  }
+
+  function planLimit(plan){
+    if(plan==='Básico') return 20;
+    if(plan==='Profissional') return 100;
+    if(plan==='Premium') return Infinity;
+    return Infinity;
+  }
+
+  function subscriptionState(){
+    const sub=getSubscription();
+    const now=Date.now();
+
+    if(sub && sub.plan && sub.paidUntil){
+      const paidUntil=Number(sub.paidUntil);
+      const graceUntil=paidUntil+(GRACE_DAYS*DAY);
+      if(now<=paidUntil) return {mode:'paid',allowed:true,plan:sub.plan,paidUntil,grace:false};
+      if(now<=graceUntil) return {mode:'paid',allowed:true,plan:sub.plan,paidUntil,grace:true,graceUntil};
+      return {mode:'suspended',allowed:false,plan:sub.plan,paidUntil,graceUntil};
+    }
+
+    const trial=getTrialInfo();
+    if(trial.active) return {mode:'trial',allowed:true,plan:'Teste grátis',trial};
+    return {mode:'trial_expired',allowed:false,plan:'Teste grátis',trial};
+  }
+
+  function usageStatus(plan){
+    const limit=planLimit(plan);
+    if(!Number.isFinite(limit)) return {used:0,limit,allowed:true};
+    const all=getUsage();
+    const key=currentMonthKey()+'_'+plan;
+    const used=Number(all[key]||0);
+    return {used,limit,allowed:used<limit};
+  }
+
+  function incrementUsage(plan){
+    const limit=planLimit(plan);
+    if(!Number.isFinite(limit)) return;
+    const all=getUsage();
+    const key=currentMonthKey()+'_'+plan;
+    all[key]=Number(all[key]||0)+1;
+    localStorage.setItem(USAGE_KEY,JSON.stringify(all));
+  }
+
+  function formatDate(ts){
+    return new Date(ts).toLocaleDateString('pt-BR');
+  }
+
+  function remainingTrialText(ms){
+    const hours=Math.ceil(ms/(60*60*1000));
+    if(hours<=24) return hours+' hora'+(hours===1?'':'s');
+    const days=Math.ceil(ms/DAY);
+    return days+' dia'+(days===1?'':'s');
+  }
+
+  function checkAccess(showMessage=true){
+    const state=subscriptionState();
+
+    if(state.mode==='trial'){
+      return true;
+    }
+
+    if(state.mode==='paid'){
+      const usage=usageStatus(state.plan);
+      if(!usage.allowed){
+        if(showMessage){
+          alert(`Você atingiu o limite de ${usage.limit} análises do plano ${state.plan} neste mês.`);
+          go('plans');
+        }
+        return false;
+      }
+      return true;
+    }
+
+    if(showMessage){
+      if(state.mode==='suspended'){
+        alert('Assinatura suspensa. O prazo de 1 dia após o vencimento terminou. Regularize a mensalidade para voltar a usar as análises.');
+      }else{
+        alert('Seu teste grátis de 5 dias terminou. Escolha um plano para continuar usando as análises.');
+      }
+      go('plans');
+    }
+    return false;
+  }
+
+  function recordAnalysisUse(){
+    const state=subscriptionState();
+    if(state.mode==='paid') incrementUsage(state.plan);
+    updatePlanUI();
+  }
+
+  function showTrialStatus(){
+    const state=subscriptionState();
+    if(state.mode==='trial'){
+      alert('Teste grátis ativo. Restam aproximadamente '+remainingTrialText(state.trial.remainingMs)+'.');
+    }else if(state.mode==='trial_expired'){
+      alert('Seu teste grátis de 5 dias terminou.');
+    }else{
+      alert('Plano atual: '+state.plan);
+    }
+  }
+
+  let currentPlan='Teste grátis';
+
+  function updatePlanUI(){
+    const state=subscriptionState();
+    currentPlan=state.plan;
+    const badge=document.getElementById('currentPlanBadge');
+    const status=document.getElementById('subscriptionStatus');
+
+    if(badge){
+      badge.textContent='Plano atual: '+currentPlan;
+      badge.className='badge-risk '+(state.allowed?'low':'high');
+    }
+
+    if(status){
+      if(state.mode==='trial'){
+        status.innerHTML=`Teste grátis por 5 dias · restante: <b>${remainingTrialText(state.trial.remainingMs)}</b>`;
+      }else if(state.mode==='trial_expired'){
+        status.innerHTML='<span class="danger"><b>Teste grátis encerrado.</b> Escolha um plano para continuar.</span>';
+      }else if(state.mode==='paid'){
+        const use=usageStatus(state.plan);
+        const usageText=Number.isFinite(use.limit)?`${use.used}/${use.limit} análises usadas neste mês`:'Análises ilimitadas';
+        status.innerHTML=`Mensalidade válida até <b>${formatDate(state.paidUntil)}</b>${state.grace?' · <span class="warn"><b>prazo de 1 dia em andamento</b></span>':''}<br>${usageText}`;
+      }else{
+        status.innerHTML=`<span class="danger"><b>Assinatura suspensa.</b> O prazo de 1 dia após o vencimento terminou.</span>`;
+      }
+    }
+  }
+
+  function choosePlan(name){
+    showTrialStatus();
+  }
+
+  function prepareSubscription(name,price){
+    alert(`${name} — ${price}\n\nA regra do plano já está pronta no aplicativo.\n\nPara cobrar e liberar automaticamente após o pagamento, ainda precisamos conectar um meio de pagamento. Nenhuma cobrança foi feita.`);
   }
 
   document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
   document.querySelectorAll('[data-tool]').forEach(b=>b.addEventListener('click',()=>setupTool(b.dataset.tool)));
   document.getElementById('analyzeBtn').addEventListener('click',analyze);
+
+  window.go=go;
+  window.setupTool=setupTool;
+  window.shareLastResult=shareLastResult;
+  window.clearHistory=clearHistory;
+  window.analyzeCall=analyzeCall;
+  window.prepareSubscription=prepareSubscription;
+  window.choosePlan=choosePlan;
+  window.showTrialStatus=showTrialStatus;
+  updatePlanUI();
 })();
 </script>
 
@@ -637,7 +879,7 @@ saveHistory();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
-      const reg = await navigator.serviceWorker.register('./sw.js?v=13', { updateViaCache: 'none' });
+      const reg = await navigator.serviceWorker.register('./sw.js?v=14-final', { updateViaCache: 'none' });
       await reg.update();
     } catch(e) {}
   });
@@ -645,7 +887,7 @@ if ('serviceWorker' in navigator) {
 if ('caches' in window) {
   caches.keys().then(keys => {
     keys.forEach(k => {
-      if (k !== 'podeconfiar-v10-logo-exata') caches.delete(k);
+      if (k !== 'podeconfiar-v14-final') caches.delete(k);
     });
   });
 }
