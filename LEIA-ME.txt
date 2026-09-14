@@ -1,0 +1,14 @@
+CORREÇÃO V5 — CACHE/GITHUB PAGES
+
+O problema era que o arquivo sw.js antigo continuava entregando a versão velha do aplicativo.
+
+Substitua estes 4 arquivos na RAIZ do GitHub:
+- index.html
+- robot-clean.png
+- shield-clean.png
+- sw.js
+
+Depois do Commit, abra:
+https://juniorarlindo329-crypto.github.io/podeconfiar/?v=5
+
+O ?v=5 força o navegador a buscar a versão nova.

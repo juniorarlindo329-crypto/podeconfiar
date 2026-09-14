@@ -95,7 +95,7 @@ textarea.field{min-height:150px;resize:vertical}
   <div class="kicker">SEGURANÇA • ANÁLISE • PROTEÇÃO</div>
   <h1>Sua segurança digital em <span>primeiro lugar!</span></h1>
   <p class="lead">Analise mensagens, links, prints e cobranças suspeitas com inteligência e rapidez.</p>
-  <div class="robot-stage"><img src="robot-clean.png" alt="Robô de segurança PodeConfiar"></div>
+  <div class="robot-stage"><img src="robot-clean.png?v=5" alt="Robô de segurança PodeConfiar"></div>
   <div class="featurebar">
     <div><b>🛡</b>Previne<br>golpes</div>
     <div><b>⚡</b>Análise em<br>segundos</div>
@@ -121,7 +121,7 @@ textarea.field{min-height:150px;resize:vertical}
     <h2>Desconfie.<br>Analise.<br><span>Fique seguro.</span></h2>
     <p>Evite golpes e proteja o que é seu.</p>
     <button class="smallbtn" data-go="tips">Saiba mais →</button>
-    <img src="shield-clean.png" alt="Escudo de proteção">
+    <img src="shield-clean.png?v=5" alt="Escudo de proteção">
   </div>
 
   <div class="grid">
@@ -266,5 +266,24 @@ textarea.field{min-height:150px;resize:vertical}
   document.getElementById('analyzeBtn').addEventListener('click',analyze);
 })();
 </script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', async () => {
+    try {
+      const reg = await navigator.serviceWorker.register('./sw.js?v=5', { updateViaCache: 'none' });
+      await reg.update();
+    } catch(e) {}
+  });
+}
+if ('caches' in window) {
+  caches.keys().then(keys => {
+    keys.forEach(k => {
+      if (k !== 'podeconfiar-v5-clean') caches.delete(k);
+    });
+  });
+}
+</script>
+
 </body>
 </html>
