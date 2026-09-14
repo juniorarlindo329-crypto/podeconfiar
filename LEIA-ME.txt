@@ -1,25 +1,17 @@
-PODECONFIAR? V8 — LOGO OFICIAL
+PODECONFIAR V9 - LOGO CORRIGIDA
+A V8 podia continuar buscando logo-p.png antigo. Na V9 a logo recebeu um NOVO NOME:
+logo-oficial-v9.png
 
-Esta é uma ATUALIZAÇÃO REAL DO APLICATIVO, não é foto/mockup.
+Isso força o GitHub Pages/navegador a carregar a imagem nova.
 
-Mantido da V7:
-- verificação de links melhorada
-- baixo risco / atenção / alto risco
-- motivos da classificação
-- histórico
-- visual profissional
-- robô e escudo
-
-Alterado:
-- a imagem logo-p.png agora é EXATAMENTE a logo enviada pelo usuário
-- cache atualizado para V8 para evitar aparecer a logo antiga
-
-ENVIE/SUBSTITUA NA RAIZ DO GITHUB:
+Substitua/envie TODOS estes arquivos na raiz:
 index.html
-logo-p.png
+logo-oficial-v9.png
 robot-clean.png
 shield-clean.png
 sw.js
 
-Depois do Commit, abra:
-https://juniorarlindo329-crypto.github.io/podeconfiar/?v=8
+Não renomeie logo-oficial-v9.png.
+
+Depois do Commit abra:
+https://juniorarlindo329-crypto.github.io/podeconfiar/?v=9

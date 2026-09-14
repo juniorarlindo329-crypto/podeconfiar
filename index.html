@@ -101,7 +101,14 @@ textarea.field{min-height:150px;resize:vertical}
 .reason .dot{font-size:15px;line-height:1.2}
 .safe-note{font-size:12px;line-height:1.5;opacity:.78}
 </style>
-</head>
+<style>
+.official-p-logo{
+ display:block!important;width:190px!important;max-width:52vw!important;height:auto!important;
+ margin:4px auto 16px!important;object-fit:contain!important;border-radius:0!important;
+ opacity:1!important;visibility:visible!important;
+ filter:drop-shadow(0 0 20px rgba(0,255,145,.38))!important;
+}
+</style></head>
 <body>
 <main class="app">
 
@@ -450,7 +457,7 @@ textarea.field{min-height:150px;resize:vertical}
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
-      const reg = await navigator.serviceWorker.register('./sw.js?v=8', { updateViaCache: 'none' });
+      const reg = await navigator.serviceWorker.register('./sw.js?v=9', { updateViaCache: 'none' });
       await reg.update();
     } catch(e) {}
   });
@@ -458,7 +465,7 @@ if ('serviceWorker' in navigator) {
 if ('caches' in window) {
   caches.keys().then(keys => {
     keys.forEach(k => {
-      if (k !== 'podeconfiar-v8-logo-oficial') caches.delete(k);
+      if (k !== 'podeconfiar-v9-logo-corrigida') caches.delete(k);
     });
   });
 }
