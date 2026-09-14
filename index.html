@@ -1,141 +1,188 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#03110d" />
-  <title>PodeConfiar?</title>
-  <style>
-    :root{
-      --bg:#020806;--panel:#071511;--card:#0b1d18;--line:#14382d;
-      --text:#f4fff9;--muted:#9bb4aa;--green:#18e58b;--green2:#00b86b;
-      --red:#ff4d5e;--orange:#ff9e32;--blue:#3988ff;--purple:#8b5cff;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;background:radial-gradient(circle at 50% -10%,#0b2b21 0,#03100c 32%,var(--bg) 70%);
-      color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
-    button,input,textarea{font:inherit}
-    .app{max-width:480px;margin:auto;min-height:100vh;padding-bottom:86px}
-    .screen{display:none;padding:18px}.screen.active{display:block}
-    .top{display:flex;align-items:center;justify-content:space-between;margin:8px 0 22px}
-    .brand{font-size:23px;font-weight:800}.brand span{color:var(--green)}
-    .pill{border:1px solid #7a5b16;color:#ffd24b;background:#1b1608;padding:7px 10px;border-radius:999px;font-size:12px;font-weight:800}
-    .hello{font-size:26px;font-weight:800;margin:8px 0 4px}.sub{color:var(--muted);margin:0 0 18px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .action{border:0;border-radius:20px;padding:18px 14px;min-height:145px;color:white;text-align:left;box-shadow:inset 0 0 0 1px rgba(255,255,255,.13)}
-    .action b{display:block;font-size:18px;margin-top:28px}.action small{opacity:.9;display:block;margin-top:4px}
-    .g{background:linear-gradient(145deg,#0aa95d,#05733f)}.b{background:linear-gradient(145deg,#2974eb,#1248a2)}
-    .p{background:linear-gradient(145deg,#7f42e7,#4d1ea0)}.o{background:linear-gradient(145deg,#ff992b,#d15e00)}
-    .ico{font-size:30px}
-    .banner{margin-top:14px;background:linear-gradient(135deg,#0b241d,#082019);border:1px solid #156345;border-radius:17px;padding:16px;display:flex;gap:12px;align-items:center}
-    .banner strong{display:block}.banner small{color:var(--muted)}
-    .hero{padding:44px 18px 24px;text-align:center}.shield{font-size:88px;filter:drop-shadow(0 0 24px rgba(24,229,139,.35))}
-    .hero h1{font-size:38px;margin:10px 0 4px}.hero h1 span{color:var(--green)}
-    .hero p{color:#c8d8d1;line-height:1.55}.primary{width:100%;border:0;border-radius:15px;padding:16px;background:linear-gradient(90deg,#2df09c,#08c976);font-weight:800;font-size:17px;color:#02110b}
-    .features{display:flex;justify-content:space-around;color:var(--green);margin:24px 0 50px;font-size:13px}
-    .footer{text-align:center;color:#7e948b;font-size:12px}
-    .nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(480px,100%);background:rgba(3,12,9,.95);backdrop-filter:blur(12px);border-top:1px solid #103126;display:flex;justify-content:space-around;padding:10px 4px calc(10px + env(safe-area-inset-bottom))}
-    .nav button{border:0;background:transparent;color:#8aa399;font-size:12px;display:flex;flex-direction:column;gap:4px;align-items:center;min-width:66px}
-    .nav button.active{color:var(--green)}.nav .nicon{font-size:21px}
-    .back{border:0;background:#0c1a16;color:white;width:42px;height:42px;border-radius:13px;font-size:20px}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px}
-    .field{width:100%;border:1px solid #1a4436;background:#06130f;color:white;border-radius:14px;padding:14px;outline:none}
-    textarea.field{min-height:140px;resize:vertical}
-    .muted{color:var(--muted)}.title{font-size:24px;font-weight:800}
-    .scan{width:170px;height:170px;margin:34px auto;border-radius:50%;border:2px solid var(--green);display:grid;place-items:center;font-size:56px;box-shadow:0 0 35px rgba(24,229,139,.18),inset 0 0 35px rgba(24,229,139,.08)}
-    .steps div{padding:10px 0;border-bottom:1px solid #17352c}.steps div:last-child{border-bottom:0}
-    .ok{color:var(--green)}.warn{color:var(--orange)}.danger{color:var(--red)}
-    .resultbox{text-align:center;padding:22px;border-radius:20px;margin-bottom:14px}.resultbox.low{background:#082718;border:1px solid #14864d}.resultbox.high{background:#2b0d12;border:1px solid #9d2f3c}
-    .resultbox .big{font-size:54px}.resultbox h2{margin:8px 0 2px}
-    .listitem{display:flex;align-items:center;justify-content:space-between;padding:14px;background:#0a1814;border:1px solid #17392f;border-radius:14px;margin-bottom:10px}
-    .tiptitle{font-weight:700}.tag{font-size:11px;padding:5px 8px;border-radius:999px;background:#123529;color:#7ff1b8}
-    .profile{display:grid;place-items:center;text-align:center;padding:20px}.avatar{width:78px;height:78px;border-radius:50%;display:grid;place-items:center;background:#0f3025;font-size:32px;border:1px solid #1d6c50}
-    .notice{font-size:12px;color:#8ea69d;line-height:1.45;margin-top:14px}
-    .upload{border:1px dashed #267155;border-radius:16px;padding:24px;text-align:center;background:#071812}
-    input[type=file]{width:100%;margin-top:12px;color:#b9cdc4}
-    .hidden{display:none!important}
-  
-    .robot-clean{width:100%;max-width:410px;height:auto;display:block;margin:18px auto 20px;object-fit:contain;filter:drop-shadow(0 0 24px rgba(24,229,139,.22))}
-    .shield-clean{width:100%;max-width:250px;height:auto;display:block;margin:auto;object-fit:contain;filter:drop-shadow(0 0 24px rgba(24,229,139,.30))}
-    .shield-stage{margin:14px 0 18px;padding:18px;border-radius:22px;border:1px solid #156345;background:radial-gradient(circle,#0b3a2a 0,#061b14 48%,#04110d 100%);overflow:hidden}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#03110d">
+<title>PodeConfiar?</title>
+<style>
+:root{
+  --bg:#020806;--panel:#061912;--panel2:#08251a;--line:#0f5b40;
+  --text:#f7fff9;--muted:#9fb5ac;--green:#18ef96;--green2:#04c879;
+  --blue:#1477e8;--purple:#7132df;--orange:#ed8408;--red:#ff5362;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:#000704;color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+body{min-height:100vh}
+button,input,textarea{font:inherit}
+.app{max-width:480px;margin:auto;min-height:100vh;padding-bottom:92px;background:
+radial-gradient(circle at 50% -8%,rgba(21,116,78,.28),transparent 34%),
+linear-gradient(180deg,#02110c 0%,#000805 76%)}
+.screen{display:none;padding:18px}.screen.active{display:block}
+.hidden{display:none!important}
+.primary{width:100%;border:0;border-radius:18px;padding:17px;background:linear-gradient(90deg,#1cf3a3,#06c978);font-weight:900;font-size:17px;color:#00130b}
+.secondary{width:100%;border:1px solid var(--green);border-radius:18px;padding:15px;background:transparent;color:#fff;font-weight:800;margin-top:12px}
+.muted{color:var(--muted)}
+
+/* WELCOME */
+.welcome{text-align:center;padding:24px 22px 28px}
+.logo-mark{width:118px;height:118px;margin:0 auto 6px;border-radius:28px;background:linear-gradient(145deg,#0c4f39,#02160f);display:grid;place-items:center;border:1px solid #0b7d57;box-shadow:0 0 32px rgba(18,239,150,.18)}
+.logo-mark::before{content:"P";font-size:72px;font-weight:950;color:#fff;text-shadow:0 0 18px #0f8}
+.brand{font-size:37px;font-weight:950;line-height:1}.brand span{color:var(--green)}
+.kicker{font-size:11px;letter-spacing:.23em;color:#92edc3;margin-top:10px}
+.welcome h1{font-size:36px;line-height:1.1;margin:28px 0 12px}
+.welcome h1 span{color:var(--green)}
+.lead{font-size:17px;line-height:1.5;color:#d6e4de}
+.robot-stage{margin:20px 0 14px;border-radius:26px;background:radial-gradient(circle at 50% 58%,rgba(0,229,138,.22),transparent 62%);overflow:hidden}
+.robot-stage img{width:100%;display:block;object-fit:contain;filter:drop-shadow(0 0 22px rgba(18,239,150,.22))}
+.featurebar{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;border:1px solid #0b513a;background:#052219;border-radius:18px;padding:14px 6px;margin-bottom:22px}
+.featurebar div{font-size:10px;line-height:1.35}
+.featurebar b{display:grid;place-items:center;width:40px;height:40px;border-radius:11px;background:#073c2c;margin:0 auto 7px;color:var(--green);font-size:20px}
+.footer{text-align:center;color:#82988f;font-size:12px;margin-top:28px}
+
+/* HOME */
+.header{display:flex;align-items:center;justify-content:space-between;padding-bottom:13px;border-bottom:1px solid #073a2b}
+.header-left{display:flex;align-items:center;gap:10px}
+.header-logo{width:45px;height:45px;border-radius:12px;background:#082419;border:1px solid #0d694b;display:grid;place-items:center;font-weight:900;color:var(--green)}
+.header-name{font-size:20px;font-weight:950}.header-name span{color:var(--green)}
+.iconbtn{width:43px;height:43px;border-radius:50%;border:1px solid #0c513b;background:#041b13;color:#fff;display:grid;place-items:center;font-size:20px}
+.usercard{margin:15px 0;display:flex;align-items:center;gap:13px;padding:14px;border:1px solid #0c6247;border-radius:20px;background:linear-gradient(135deg,#062017,#03150f)}
+.avatar{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#0c9c60,#043a25);border:1px solid #17cf83;font-size:28px}
+.usertext h2{margin:0 0 3px;font-size:21px}.usertext p{margin:0;color:#c5d7d0;font-size:14px}
+.plan{margin-left:auto;border:1px solid #1d7658;border-radius:13px;padding:8px 9px;text-align:center;font-size:10px}
+.security-hero{position:relative;overflow:hidden;border:1px solid #0b7f57;border-radius:20px;min-height:230px;padding:20px;background:linear-gradient(120deg,#05251b 0,#063c29 57%,#04754c 100%)}
+.security-hero h2{font-size:28px;line-height:1.02;margin:0;position:relative;z-index:2}
+.security-hero h2 span{color:var(--green)}
+.security-hero p{width:48%;color:#dce9e4;position:relative;z-index:2}
+.security-hero img{position:absolute;right:-3px;bottom:-6px;width:205px;height:205px;object-fit:contain;filter:drop-shadow(0 0 24px rgba(18,239,150,.35))}
+.smallbtn{position:relative;z-index:2;border:1px solid var(--green);background:rgba(0,0,0,.12);color:#fff;border-radius:999px;padding:8px 14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.action{min-height:182px;border-radius:20px;padding:18px 16px;border:1px solid rgba(255,255,255,.17);color:#fff;text-align:left}
+.action .ico{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.14);font-size:28px;margin-bottom:20px}
+.action b{display:block;font-size:18px}.action small{display:block;margin-top:7px;line-height:1.35;opacity:.9}
+.g{background:linear-gradient(145deg,#07965a,#03492f)}.b{background:linear-gradient(145deg,#087ae8,#073b90)}.p{background:linear-gradient(145deg,#7836e6,#42138d)}.o{background:linear-gradient(145deg,#f4930b,#b95000)}
+.row{width:100%;display:flex;align-items:center;gap:12px;margin-top:12px;padding:15px;border:1px solid #0b5540;border-radius:17px;background:linear-gradient(135deg,#05231a,#03170f);color:#fff;text-align:left}
+.row .ri{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#073c2c;color:var(--green);font-size:22px}
+.row b{display:block;font-size:16px}.row small{display:block;color:var(--muted);margin-top:2px}.row .arrow{margin-left:auto;color:var(--green);font-size:24px}
+
+/* INNER SCREENS */
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.back{width:42px;height:42px;border-radius:13px;border:1px solid #0b4633;background:#041912;color:#fff;font-size:20px}
+.title{font-size:22px;font-weight:900}
+.card{background:#061c14;border:1px solid #0b4e39;border-radius:18px;padding:16px;margin-bottom:12px}
+.field{width:100%;border:1px solid #1a6349;background:#00120c;color:#fff;border-radius:14px;padding:14px;outline:none}
+textarea.field{min-height:150px;resize:vertical}
+.upload{border:1px dashed #19835e;border-radius:18px;padding:26px;text-align:center;background:#051a13}
+.scan{width:174px;height:174px;border-radius:50%;margin:34px auto;border:2px solid var(--green);display:grid;place-items:center;font-size:56px;box-shadow:0 0 40px rgba(0,220,130,.22)}
+.steps div{padding:10px 0;border-bottom:1px solid #15372c}.steps div:last-child{border-bottom:0}
+.ok{color:var(--green)}.warn{color:#ffb24b}.danger{color:var(--red)}
+.resultbox{text-align:center;padding:24px;border-radius:20px;margin-bottom:14px}.resultbox.low{background:#062719;border:1px solid #14864e}.resultbox.high{background:#2c0b11;border:1px solid #9c3340}
+.listitem{display:flex;align-items:center;justify-content:space-between;padding:14px;background:#061a13;border:1px solid #0c4836;border-radius:15px;margin-bottom:10px}
+.profile{display:grid;place-items:center;text-align:center;padding:20px}
+
+/* NAV */
+.nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(480px,100%);display:flex;justify-content:space-around;background:rgba(0,11,7,.97);border-top:1px solid #073b2b;padding:9px 2px calc(9px + env(safe-area-inset-bottom));backdrop-filter:blur(13px)}
+.nav button{border:0;background:none;color:#8ba198;font-size:10px;display:flex;flex-direction:column;gap:4px;align-items:center;min-width:54px}
+.nav button.active{color:var(--green)}.nav .nicon{font-size:22px}
 </style>
 </head>
 <body>
-  <main class="app">
-    <section id="welcome" class="screen active">
-      <div class="hero">
-        <img class="robot-clean" src="robot-clean.png" alt="Robô de segurança PodeConfiar">
-        <h1>Pode<span>Confiar?</span></h1>
-        <h3>Sua segurança digital em primeiro lugar</h3>
-        <p>Analise mensagens, links, prints e cobranças suspeitas antes de agir.</p>
-        <button class="primary" data-go="home">Começar agora →</button>
-        <div class="features"><span>◉ Rápido</span><span>♢ Seguro</span><span>✓ Confiável</span></div>
-        <div class="footer">Desenvolvido por JNR</div>
-      </div>
-    </section>
+<main class="app">
 
-    <section id="home" class="screen">
-      <div class="top"><div class="brand">Pode<span>Confiar?</span></div><div class="pill">👑 PRO</div></div>
-      <div class="hello">Olá!</div><p class="sub">O que você quer verificar hoje?</p>
-      <div class="grid">
-        <button class="action g" data-tool="print"><span class="ico">🖼️</span><b>Analisar print</b><small>Envie uma captura de tela</small></button>
-        <button class="action b" data-tool="link"><span class="ico">🔗</span><b>Verificar link</b><small>Analise sites e URLs</small></button>
-        <button class="action p" data-tool="message"><span class="ico">💬</span><b>Verificar mensagem</b><small>Cole o texto suspeito</small></button>
-        <button class="action o" data-tool="pix"><span class="ico">▦</span><b>Conferir cobrança/Pix</b><small>Cheque sinais de fraude</small></button>
-      </div>
-      <div class="shield-stage"><img class="shield-clean" src="shield-clean.png" alt="Escudo de proteção"></div><div class="banner"><div><strong>Proteja você e sua família</strong><small>Evite golpes e navegue com mais tranquilidade.</small></div></div>
-    </section>
+<section id="welcome" class="screen active welcome">
+  <div class="logo-mark"></div>
+  <div class="brand">Pode<span>Confiar?</span></div>
+  <div class="kicker">SEGURANÇA • ANÁLISE • PROTEÇÃO</div>
+  <h1>Sua segurança digital em <span>primeiro lugar!</span></h1>
+  <p class="lead">Analise mensagens, links, prints e cobranças suspeitas com inteligência e rapidez.</p>
+  <div class="robot-stage"><img src="robot-clean.png" alt="Robô de segurança PodeConfiar"></div>
+  <div class="featurebar">
+    <div><b>🛡</b>Previne<br>golpes</div>
+    <div><b>⚡</b>Análise em<br>segundos</div>
+    <div><b>🔒</b>Seus dados<br>protegidos</div>
+    <div><b>👥</b>Tecnologia<br>confiável</div>
+  </div>
+  <button class="primary" data-go="home">Começar agora →</button>
+  <button class="secondary" data-go="home">Já tenho conta</button>
+  <div class="footer">Aplicativo Oficial • Desenvolvido por JNR</div>
+</section>
 
-    <section id="analyze" class="screen">
-      <div class="top"><button class="back" data-go="home">←</button><div class="title" id="analyzeTitle">Analisar</div><div></div></div>
-      <div id="inputWrap"></div>
-      <button class="primary" id="analyzeBtn" style="margin-top:14px">Analisar agora</button>
-      <p class="notice">Esta versão demonstra a experiência do aplicativo. O resultado é baseado em sinais simples no conteúdo informado e não substitui confirmação junto a bancos, empresas ou órgãos oficiais.</p>
-    </section>
+<section id="home" class="screen">
+  <div class="header">
+    <div class="header-left"><div class="header-logo">P</div><div class="header-name">Pode<span>Confiar?</span></div></div>
+    <button class="iconbtn">🔔</button>
+  </div>
+  <div class="usercard">
+    <div class="avatar">👤</div>
+    <div class="usertext"><h2>Olá, Alexandre!</h2><p>Vamos manter você sempre seguro.</p></div>
+    <div class="plan">🛡️<br>Usuário<br><b>Gratuito</b></div>
+  </div>
+  <div class="security-hero">
+    <h2>Desconfie.<br>Analise.<br><span>Fique seguro.</span></h2>
+    <p>Evite golpes e proteja o que é seu.</p>
+    <button class="smallbtn" data-go="tips">Saiba mais →</button>
+    <img src="shield-clean.png" alt="Escudo de proteção">
+  </div>
 
-    <section id="scanning" class="screen">
-      <div class="top"><button class="back" data-go="home">←</button><div class="title">Analisando...</div><div></div></div>
-      <div class="scan">🔎</div>
-      <h2 style="text-align:center">Analisando conteúdo...</h2>
-      <p class="sub" style="text-align:center">Procurando sinais comuns de fraude e comportamento suspeito.</p>
-      <div class="card steps"><div class="ok">✓ Verificando conteúdo</div><div class="ok">✓ Procurando sinais de urgência</div><div class="ok">✓ Conferindo solicitações de dados</div><div>◌ Calculando nível de atenção</div></div>
-    </section>
+  <div class="grid">
+    <button class="action g" data-tool="print"><span class="ico">🖼️</span><b>Analisar print</b><small>Envie uma captura de tela</small></button>
+    <button class="action b" data-tool="link"><span class="ico">🔗</span><b>Verificar link</b><small>Analise sites e URLs</small></button>
+    <button class="action p" data-tool="message"><span class="ico">💬</span><b>Verificar mensagem</b><small>Cole o texto suspeito</small></button>
+    <button class="action o" data-tool="pix"><span class="ico">▦</span><b>Conferir cobrança/Pix</b><small>Analise boletos e QR Code</small></button>
+  </div>
 
-    <section id="result" class="screen">
-      <div class="top"><button class="back" data-go="home">←</button><div class="title">Resultado da análise</div><div></div></div>
-      <div id="resultContent"></div>
-      <button class="primary" data-go="home">Nova análise</button>
-    </section>
+  <button class="row" data-go="history"><span class="ri">◷</span><span><b>Histórico de análises</b><small>Veja suas verificações anteriores</small></span><span class="arrow">›</span></button>
+  <button class="row" data-go="tips"><span class="ri">💡</span><span><b>Dicas de segurança</b><small>Aprenda a se proteger de golpes</small></span><span class="arrow">›</span></button>
+</section>
 
-    <section id="history" class="screen">
-      <div class="top"><div class="title">Histórico</div><div></div></div>
-      <div id="historyList"></div>
-    </section>
+<section id="analyze" class="screen">
+  <div class="top"><button class="back" data-go="home">←</button><div class="title" id="analyzeTitle">Analisar</div><div></div></div>
+  <div id="inputWrap"></div>
+  <button class="primary" id="analyzeBtn" style="margin-top:14px">Analisar agora</button>
+  <p class="muted" style="font-size:12px;line-height:1.5">Não envie senhas, códigos de autenticação ou dados bancários completos.</p>
+</section>
 
-    <section id="tips" class="screen">
-      <div class="top"><div class="title">Dicas de segurança</div><div></div></div>
-      <div class="listitem"><div><div class="tiptitle">📱 WhatsApp clonado</div><div class="muted">Nunca envie código de verificação.</div></div><span>›</span></div>
-      <div class="listitem"><div><div class="tiptitle">💠 Pix errado</div><div class="muted">Confirme nome e instituição antes de pagar.</div></div><span>›</span></div>
-      <div class="listitem"><div><div class="tiptitle">🛒 Marketplace</div><div class="muted">Desconfie de pressa e pagamento fora da plataforma.</div></div><span>›</span></div>
-      <div class="listitem"><div><div class="tiptitle">🧾 Boleto falso</div><div class="muted">Confira beneficiário, valor e banco emissor.</div></div><span>›</span></div>
-      <div class="listitem"><div><div class="tiptitle">🔗 Links perigosos</div><div class="muted">Evite links encurtados ou domínios parecidos com marcas.</div></div><span>›</span></div>
-    </section>
+<section id="scanning" class="screen">
+  <div class="top"><button class="back" data-go="home">←</button><div class="title">Analisando...</div><div></div></div>
+  <div class="scan">🔎</div>
+  <h2 style="text-align:center">Analisando conteúdo...</h2>
+  <p class="muted" style="text-align:center">Procurando sinais comuns de fraude e comportamento suspeito.</p>
+  <div class="card steps"><div class="ok">✓ Verificando conteúdo</div><div class="ok">✓ Procurando sinais de urgência</div><div class="ok">✓ Conferindo solicitações de dados</div><div>◌ Calculando nível de atenção</div></div>
+</section>
 
-    <section id="profile" class="screen">
-      <div class="top"><div class="title">Perfil</div><div></div></div>
-      <div class="profile"><div class="avatar">👤</div><h2>Minha conta</h2><p class="muted">PodeConfiar? • Segurança digital</p></div>
-      <div class="card"><strong>🔐 Privacidade</strong><p class="muted">Evite enviar senhas, códigos de autenticação ou dados bancários completos.</p></div>
-      <div class="card"><strong>👑 PodeConfiar?+</strong><p class="muted">Área preparada para recursos premium no futuro.</p></div>
-      <div class="footer">Desenvolvido por JNR</div>
-    </section>
-  </main>
+<section id="result" class="screen">
+  <div class="top"><button class="back" data-go="home">←</button><div class="title">Resultado da análise</div><div></div></div>
+  <div id="resultContent"></div>
+  <button class="primary" data-go="home">Nova análise</button>
+</section>
 
-  <nav class="nav hidden" id="nav">
-    <button data-go="home"><span class="nicon">⌂</span>Início</button>
-    <button data-go="history"><span class="nicon">◷</span>Histórico</button>
-    <button data-go="tips"><span class="nicon">🛡</span>Dicas</button>
-    <button data-go="profile"><span class="nicon">♙</span>Perfil</button>
-  </nav>
+<section id="history" class="screen">
+  <div class="top"><div class="title">Histórico</div><div></div></div>
+  <div id="historyList"></div>
+</section>
+
+<section id="tips" class="screen">
+  <div class="top"><div class="title">Dicas de segurança</div><div></div></div>
+  <div class="listitem"><div><b>📱 WhatsApp clonado</b><div class="muted">Nunca envie código de verificação.</div></div><span>›</span></div>
+  <div class="listitem"><div><b>💠 Pix errado</b><div class="muted">Confirme nome e instituição antes de pagar.</div></div><span>›</span></div>
+  <div class="listitem"><div><b>🧾 Boleto falso</b><div class="muted">Confira beneficiário, valor e banco emissor.</div></div><span>›</span></div>
+  <div class="listitem"><div><b>🔗 Links perigosos</b><div class="muted">Evite links encurtados ou domínios parecidos com marcas.</div></div><span>›</span></div>
+</section>
+
+<section id="profile" class="screen">
+  <div class="top"><div class="title">Perfil</div><div></div></div>
+  <div class="profile"><div class="avatar">👤</div><h2>Alexandre</h2><p class="muted">PodeConfiar? • Segurança digital</p></div>
+  <div class="card"><strong>🔐 Privacidade</strong><p class="muted">Evite enviar senhas, códigos de autenticação ou dados bancários completos.</p></div>
+  <div class="footer">Desenvolvido por JNR</div>
+</section>
+</main>
+
+<nav class="nav hidden" id="nav">
+  <button data-go="home"><span class="nicon">⌂</span>Início</button>
+  <button data-go="history"><span class="nicon">◷</span>Histórico</button>
+  <button data-go="tips"><span class="nicon">💡</span>Dicas</button>
+  <button data-go="profile"><span class="nicon">♙</span>Perfil</button>
+</nav>
 
 <script>
 (() => {
