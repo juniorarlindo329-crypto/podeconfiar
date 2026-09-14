@@ -29,9 +29,7 @@
     .ico{font-size:30px}
     .banner{margin-top:14px;background:linear-gradient(135deg,#0b241d,#082019);border:1px solid #156345;border-radius:17px;padding:16px;display:flex;gap:12px;align-items:center}
     .banner strong{display:block}.banner small{color:var(--muted)}
-    .hero{padding:44px 18px 24px;text-align:center}
-    .hero-robot{width:min(92%,390px);height:auto;display:block;margin:4px auto 10px;filter:drop-shadow(0 18px 34px rgba(0,255,153,.18))}
-    .real-shield{width:58px;height:58px;object-fit:contain;filter:drop-shadow(0 0 14px rgba(24,229,139,.35))}
+    .hero{padding:44px 18px 24px;text-align:center}.shield{font-size:88px;filter:drop-shadow(0 0 24px rgba(24,229,139,.35))}
     .hero h1{font-size:38px;margin:10px 0 4px}.hero h1 span{color:var(--green)}
     .hero p{color:#c8d8d1;line-height:1.55}.primary{width:100%;border:0;border-radius:15px;padding:16px;background:linear-gradient(90deg,#2df09c,#08c976);font-weight:800;font-size:17px;color:#02110b}
     .features{display:flex;justify-content:space-around;color:var(--green);margin:24px 0 50px;font-size:13px}
@@ -56,13 +54,17 @@
     .upload{border:1px dashed #267155;border-radius:16px;padding:24px;text-align:center;background:#071812}
     input[type=file]{width:100%;margin-top:12px;color:#b9cdc4}
     .hidden{display:none!important}
-  </style>
+  
+    .robot-clean{width:100%;max-width:410px;height:auto;display:block;margin:18px auto 20px;object-fit:contain;filter:drop-shadow(0 0 24px rgba(24,229,139,.22))}
+    .shield-clean{width:100%;max-width:250px;height:auto;display:block;margin:auto;object-fit:contain;filter:drop-shadow(0 0 24px rgba(24,229,139,.30))}
+    .shield-stage{margin:14px 0 18px;padding:18px;border-radius:22px;border:1px solid #156345;background:radial-gradient(circle,#0b3a2a 0,#061b14 48%,#04110d 100%);overflow:hidden}
+</style>
 </head>
 <body>
   <main class="app">
     <section id="welcome" class="screen active">
       <div class="hero">
-        <img class="hero-robot" src="robo-e-icones.png?v=6" alt="Robô de segurança PodeConfiar">
+        <img class="robot-clean" src="robot-clean.png" alt="Robô de segurança PodeConfiar">
         <h1>Pode<span>Confiar?</span></h1>
         <h3>Sua segurança digital em primeiro lugar</h3>
         <p>Analise mensagens, links, prints e cobranças suspeitas antes de agir.</p>
@@ -81,7 +83,7 @@
         <button class="action p" data-tool="message"><span class="ico">💬</span><b>Verificar mensagem</b><small>Cole o texto suspeito</small></button>
         <button class="action o" data-tool="pix"><span class="ico">▦</span><b>Conferir cobrança/Pix</b><small>Cheque sinais de fraude</small></button>
       </div>
-      <div class="banner"><img class="real-shield" src="escudo-real.png?v=6" alt="Escudo de proteção"><div><strong>Proteja você e sua família</strong><small>Evite golpes e navegue com mais tranquilidade.</small></div></div>
+      <div class="shield-stage"><img class="shield-clean" src="shield-clean.png" alt="Escudo de proteção"></div><div class="banner"><div><strong>Proteja você e sua família</strong><small>Evite golpes e navegue com mais tranquilidade.</small></div></div>
     </section>
 
     <section id="analyze" class="screen">
