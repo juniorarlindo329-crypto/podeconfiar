@@ -1,14 +1,34 @@
-CORREÇÃO V5 — CACHE/GITHUB PAGES
+PODECONFIAR? V7 COMPLETA
 
-O problema era que o arquivo sw.js antigo continuava entregando a versão velha do aplicativo.
+Incluído nesta versão:
+- Logo oficial P no topo, sem JNR.
+- Visual profissional atual mantido.
+- Verificação de links melhorada.
+- Classificação: BAIXO RISCO / ATENÇÃO / ALTO RISCO.
+- Detecta localmente:
+  * HTTP sem HTTPS
+  * endereço IP no lugar de domínio
+  * encurtadores de link
+  * domínio codificado (xn--)
+  * muitos subdomínios/hífens/números
+  * extensões suspeitas
+  * termos como login, pix, prêmio, bloqueio, senha etc.
+  * uso de @ e caracteres codificados
+  * domínio parecido com marcas junto de termos suspeitos
+- Mostra os motivos encontrados.
+- Histórico também mostra o nível de risco.
+- Cache atualizado para V7.
 
-Substitua estes 4 arquivos na RAIZ do GitHub:
-- index.html
-- robot-clean.png
-- shield-clean.png
-- sw.js
+IMPORTANTE:
+A análise de links desta versão é local. Ela NÃO consulta ainda serviços externos de reputação/ameaças em tempo real, então não existe garantia de 100% de detecção.
+
+PARA INSTALAR:
+Substitua/envie na raiz do GitHub:
+index.html
+logo-p.png
+robot-clean.png
+shield-clean.png
+sw.js
 
 Depois do Commit, abra:
-https://juniorarlindo329-crypto.github.io/podeconfiar/?v=5
-
-O ?v=5 força o navegador a buscar a versão nova.
+https://juniorarlindo329-crypto.github.io/podeconfiar/?v=7

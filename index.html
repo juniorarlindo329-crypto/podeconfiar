@@ -85,6 +85,22 @@ textarea.field{min-height:150px;resize:vertical}
 .nav button{border:0;background:none;color:#8ba198;font-size:10px;display:flex;flex-direction:column;gap:4px;align-items:center;min-width:54px}
 .nav button.active{color:var(--green)}.nav .nicon{font-size:22px}
 </style>
+<style>
+.official-p-logo{display:block;width:155px;max-width:43vw;height:auto;margin:0 auto 14px;object-fit:contain;border-radius:28px;filter:drop-shadow(0 0 16px rgba(0,255,145,.25))}
+</style>
+<style>
+.resultbox.medium{border:1px solid rgba(255,184,0,.65);background:linear-gradient(180deg,rgba(255,184,0,.13),rgba(255,184,0,.045));}
+.warn{color:#ffbd35!important}
+.urlbox{word-break:break-all;background:#091310;border:1px solid rgba(255,255,255,.11);border-radius:14px;padding:12px;margin-top:10px;font-size:13px}
+.badge-risk{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:999px;font-size:12px;font-weight:800;margin-top:8px}
+.badge-risk.high{background:rgba(255,66,66,.13);color:#ff6262;border:1px solid rgba(255,66,66,.35)}
+.badge-risk.medium{background:rgba(255,184,0,.12);color:#ffc64a;border:1px solid rgba(255,184,0,.35)}
+.badge-risk.low{background:rgba(0,235,145,.10);color:#16ec9a;border:1px solid rgba(0,235,145,.30)}
+.reason{display:flex;gap:9px;align-items:flex-start;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.reason:last-child{border-bottom:0}
+.reason .dot{font-size:15px;line-height:1.2}
+.safe-note{font-size:12px;line-height:1.5;opacity:.78}
+</style>
 </head>
 <body>
 <main class="app">
@@ -95,7 +111,7 @@ textarea.field{min-height:150px;resize:vertical}
   <div class="kicker">SEGURANÇA • ANÁLISE • PROTEÇÃO</div>
   <h1>Sua segurança digital em <span>primeiro lugar!</span></h1>
   <p class="lead">Analise mensagens, links, prints e cobranças suspeitas com inteligência e rapidez.</p>
-  <div class="robot-stage"><img src="robot-clean.png?v=5" alt="Robô de segurança PodeConfiar"></div>
+  <div class="robot-stage"><img src="robot-clean.png?v=7" alt="Robô de segurança PodeConfiar"></div>
   <div class="featurebar">
     <div><b>🛡</b>Previne<br>golpes</div>
     <div><b>⚡</b>Análise em<br>segundos</div>
@@ -121,7 +137,7 @@ textarea.field{min-height:150px;resize:vertical}
     <h2>Desconfie.<br>Analise.<br><span>Fique seguro.</span></h2>
     <p>Evite golpes e proteja o que é seu.</p>
     <button class="smallbtn" data-go="tips">Saiba mais →</button>
-    <img src="shield-clean.png?v=5" alt="Escudo de proteção">
+    <img src="shield-clean.png?v=7" alt="Escudo de proteção">
   </div>
 
   <div class="grid">
@@ -206,7 +222,7 @@ textarea.field{min-height:150px;resize:vertical}
       wrap.innerHTML='<div class="upload"><div style="font-size:46px">🖼️</div><b>Envie uma captura de tela</b><p class="muted">Escolha uma imagem do seu celular.</p><input id="fileInput" type="file" accept="image/*"></div>';
     }else if(tool==='link'){
       title.textContent='Verificar link';
-      wrap.innerHTML='<div class="card"><label>Link suspeito</label><input id="textInput" class="field" inputmode="url" placeholder="https://exemplo.com"></div>';
+      wrap.innerHTML='<div class="card"><label>Link suspeito</label><input id="textInput" class="field" inputmode="url" placeholder="Cole o link completo aqui..."></div>';
     }else if(tool==='message'){
       title.textContent='Verificar mensagem';
       wrap.innerHTML='<div class="card"><label>Mensagem recebida</label><textarea id="textInput" class="field" placeholder="Cole aqui a mensagem suspeita..."></textarea></div>';
@@ -230,35 +246,198 @@ textarea.field{min-height:150px;resize:vertical}
     setTimeout(()=>showResult(text),1200);
   }
 
-  function showResult(text){
+  function normalizeUrl(value){
+    let v=(value||'').trim();
+    if(!/^[a-z][a-z0-9+.-]*:\/\//i.test(v)) v='https://'+v;
+    try{return new URL(v)}catch(e){return null}
+  }
+
+  function analyzeLink(value){
+    const u=normalizeUrl(value);
+    let score=0, reasons=[], positives=[];
+    if(!u){
+      return {score:8, reasons:['O endereço informado não parece ser um link válido'], positives:[], display:value||'', host:'', level:'high'};
+    }
+
+    const host=u.hostname.toLowerCase();
+    const full=u.href.toLowerCase();
+    const path=(u.pathname+u.search).toLowerCase();
+    const parts=host.split('.').filter(Boolean);
+    const suspiciousWords=['login','conta','pix','premio','prêmio','sorteio','brinde','bonus','bônus','atualizar','verificar','seguranca','segurança','bloqueio','desbloquear','pagamento','fatura','boleto','suporte','recuperar','senha'];
+    const shorteners=['bit.ly','tinyurl.com','t.co','cutt.ly','is.gd','rb.gy','rebrand.ly','shorturl.at','goo.gl'];
+    const riskyTlds=['zip','mov','top','xyz','click','link','live','work','support','shop','site','online','icu','cam'];
+    const brandNames=['nubank','itau','itaú','bradesco','santander','caixa','bb','bancodobrasil','mercadopago','picpay','inter','gov','correios','whatsapp','instagram','facebook','netflix','amazon'];
+
+    if(u.protocol!=='https:'){
+      score+=3; reasons.push('Não usa HTTPS (conexão sem proteção adequada)');
+    }else{
+      positives.push('Usa HTTPS');
+    }
+
+    if(/^\d{1,3}(\.\d{1,3}){3}$/.test(host)){
+      score+=4; reasons.push('Usa endereço IP no lugar de um domínio normal');
+    }
+
+    if(shorteners.includes(host) || shorteners.some(d=>host.endsWith('.'+d))){
+      score+=4; reasons.push('Link encurtado esconde o endereço final');
+    }
+
+    if(host.includes('xn--')){
+      score+=3; reasons.push('Domínio usa caracteres codificados que podem imitar nomes conhecidos');
+    }
+
+    if(host.length>45){
+      score+=1; reasons.push('Domínio anormalmente comprido');
+    }
+
+    if(parts.length>=5){
+      score+=2; reasons.push('Muitos subdomínios podem dificultar identificar o site verdadeiro');
+    }
+
+    const hyphens=(host.match(/-/g)||[]).length;
+    if(hyphens>=3){
+      score+=2; reasons.push('Domínio contém muitos hífens');
+    }
+
+    const digitCount=(host.match(/\d/g)||[]).length;
+    if(digitCount>=5){
+      score+=2; reasons.push('Domínio contém muitos números');
+    }
+
+    const tld=parts[parts.length-1]||'';
+    if(riskyTlds.includes(tld)){
+      score+=2; reasons.push('Extensão de domínio frequentemente usada em links temporários ou enganosos');
+    }
+
+    const wordHits=suspiciousWords.filter(w=>full.includes(w));
+    if(wordHits.length>=1){
+      score+=Math.min(4,wordHits.length);
+      reasons.push('O link contém termos sensíveis como '+wordHits.slice(0,4).join(', '));
+    }
+
+    // "Brand" words combined with extra terms/hyphens are suspicious, but do not claim the brand itself is fake.
+    const brandHits=brandNames.filter(b=>host.includes(b));
+    if(brandHits.length && (hyphens>0 || parts.length>=3 || wordHits.length)){
+      score+=3; reasons.push('O domínio usa nome parecido com marca/serviço conhecido junto de outros termos');
+    }
+
+    if(/@/.test(value)){
+      score+=4; reasons.push('O endereço contém @, técnica que pode esconder o domínio real');
+    }
+
+    if(/%[0-9a-f]{2}/i.test(value) && (value.match(/%[0-9a-f]{2}/ig)||[]).length>=3){
+      score+=2; reasons.push('O link contém muitos caracteres codificados');
+    }
+
+    if(path.length>120){
+      score+=1; reasons.push('Caminho do link muito comprido');
+    }
+
+    if(!reasons.length){
+      positives.push('Não foram encontrados sinais locais fortes de manipulação do endereço');
+    }
+
+    const level=score>=6?'high':score>=3?'medium':'low';
+    return {score,reasons,positives,display:u.href,host,level};
+  }
+
+  function analyzeTextContent(text, tool){
     const raw=(text||'').toLowerCase();
     let score=0, reasons=[];
     const checks=[
-      [/urgente|agora|imediatamente|última chance|bloqueado|suspensa/,2,'Mensagem cria senso de urgência'],
-      [/senha|código|token|dados pessoais|cpf|cartão|cvv/,3,'Solicita dados sensíveis ou códigos'],
-      [/pix|transferência|pagamento|depósito/,1,'Envolve pagamento ou transferência'],
-      [/clique|acesse|link|http|www\./,1,'Contém chamada para acessar um link'],
-      [/prêmio|ganhou|sorteio|brinde|renda garantida/,2,'Promessa financeira ou prêmio incomum']
+      [/urgente|agora|imediatamente|última chance|bloquead[oa]|suspens[ao]|expira hoje/,2,'Cria senso de urgência ou ameaça'],
+      [/senha|código|token|dados pessoais|cpf|cartão|cvv|biometria/,3,'Solicita dados sensíveis, senha ou código'],
+      [/pix|transferência|pagamento|depósito|boleto/,1,'Envolve pagamento ou transferência'],
+      [/clique|acesse|link|https?:\/\/|www\./,1,'Pede para acessar um link'],
+      [/prêmio|premio|ganhou|sorteio|brinde|renda garantida|dinheiro fácil/,2,'Promessa de prêmio ou vantagem incomum'],
+      [/não conte|sigilo|confidencial|não desligue|não fale com/,2,'Tenta impedir confirmação com terceiros'],
+      [/taxa de liberação|liberar prêmio|regularizar conta|evitar bloqueio/,2,'Pede ação financeira para liberar ou regularizar algo']
     ];
-    checks.forEach(([re,p,msg])=>{ if(re.test(raw)){score+=p;reasons.push(msg)} });
-    if(currentTool==='print'){ score=1; reasons=['Imagem recebida; confirme remetente, valores e links antes de agir']; }
-    const high=score>=4;
+    checks.forEach(([re,p,msg])=>{if(re.test(raw)){score+=p;reasons.push(msg)}});
+
+    if(tool==='pix'){
+      if(/chave aleatória|copia e cola|qr code|favorecido|beneficiário/.test(raw)){
+        score+=1; reasons.push('Contém informações de cobrança/Pix que devem ser conferidas');
+      }
+    }
+    return {score,reasons,level:score>=5?'high':score>=3?'medium':'low'};
+  }
+
+  function riskLabel(level){
+    return level==='high'?'ALTO RISCO':level==='medium'?'ATENÇÃO':'BAIXO RISCO';
+  }
+
+  function showResult(text){
+    let analysis;
+    let extra='';
+
+    if(currentTool==='link'){
+      analysis=analyzeLink(text);
+      extra=`<div class="card"><b>Link analisado</b><div class="urlbox">${escapeHtml(analysis.display||text)}</div>
+      <div class="badge-risk ${analysis.level}">${analysis.level==='high'?'⚠️':analysis.level==='medium'?'⚠️':'✓'} ${riskLabel(analysis.level)}</div></div>`;
+    }else if(currentTool==='print'){
+      analysis={score:1,reasons:['A imagem foi recebida, mas esta versão ainda não lê visualmente o conteúdo do print. Confira remetente, valores e links antes de agir.'],level:'medium'};
+    }else{
+      analysis=analyzeTextContent(text,currentTool);
+    }
+
+    const level=analysis.level;
     const box=document.getElementById('resultContent');
-    box.innerHTML=high
-      ? `<div class="resultbox high"><div class="big">⚠️</div><h2 class="danger">ALTO RISCO</h2><b>Há sinais que merecem muita atenção</b></div>
-         <div class="card"><b>Sinais encontrados</b>${reasons.map(r=>`<p class="danger">● ${r}</p>`).join('')||'<p class="muted">Nenhum padrão claro foi identificado.</p>'}</div>
-         <div class="card"><b>💡 Recomendação</b><p>Não faça pagamentos, não compartilhe códigos e confirme a solicitação por um canal oficial.</p></div>`
-      : `<div class="resultbox low"><div class="big">✅</div><h2 class="ok">BAIXO RISCO</h2><b>Não encontramos sinais fortes nesta análise simples</b></div>
-         <div class="card"><b>Mesmo assim</b><p>Confirme remetente, domínio, beneficiário e informações antes de pagar ou compartilhar dados.</p></div>`;
-    history.unshift({type: currentTool, high, time:new Date().toLocaleString('pt-BR')});
+    const icon=level==='high'?'⚠️':level==='medium'?'⚠️':'✅';
+    const cls=level==='high'?'high':level==='medium'?'medium':'low';
+    const textCls=level==='high'?'danger':level==='medium'?'warn':'ok';
+    const subtitle=level==='high'
+      ? 'Encontramos vários sinais que merecem muita atenção.'
+      : level==='medium'
+      ? 'Há sinais que precisam ser conferidos antes de continuar.'
+      : 'Não encontramos sinais locais fortes nesta análise.';
+
+    const reasons=analysis.reasons||[];
+    const signals = reasons.length
+      ? reasons.map(r=>`<div class="reason"><span class="dot ${textCls}">●</span><span>${escapeHtml(r)}</span></div>`).join('')
+      : `<p class="muted">Nenhum padrão suspeito forte foi identificado.</p>`;
+
+    const positives=(analysis.positives||[]).length
+      ? `<div class="card"><b>Sinais positivos</b>${analysis.positives.map(r=>`<div class="reason"><span class="dot ok">●</span><span>${escapeHtml(r)}</span></div>`).join('')}</div>`
+      : '';
+
+    box.innerHTML=`
+      <div class="resultbox ${cls}">
+        <div class="big">${icon}</div>
+        <h2 class="${textCls}">${riskLabel(level)}</h2>
+        <b>${subtitle}</b>
+      </div>
+      ${extra}
+      <div class="card"><b>Por que recebemos esse resultado?</b>${signals}</div>
+      ${positives}
+      <div class="card"><b>🛡️ Recomendação</b>
+        <p>${level==='low'
+          ? 'Mesmo com baixo risco, confirme o domínio, o remetente e o beneficiário antes de informar dados ou fazer pagamentos.'
+          : 'Não informe senhas ou códigos, não faça pagamentos e confirme a solicitação usando o aplicativo/site oficial ou um telefone oficial.'}</p>
+        <p class="safe-note">Esta verificação é uma análise local de sinais do conteúdo e do endereço. Ela não consulta, nesta versão, bancos externos de reputação em tempo real.</p>
+      </div>`;
+
+    history.unshift({type:currentTool,level,time:new Date().toLocaleString('pt-BR')});
     go('result');
+  }
+
+  function escapeHtml(value){
+    return String(value??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
   }
 
   function renderHistory(){
     const el=document.getElementById('historyList');
-    if(!history.length){el.innerHTML='<div class="card"><b>Nenhuma análise ainda</b><p class="muted">Suas verificações aparecerão aqui durante esta sessão.</p></div>';return;}
+    if(!history.length){
+      el.innerHTML='<div class="card"><b>Nenhuma análise ainda</b><p class="muted">Suas verificações aparecerão aqui durante esta sessão.</p></div>';
+      return;
+    }
     const names={print:'Print analisado',link:'Link verificado',message:'Mensagem analisada',pix:'Cobrança/Pix analisado'};
-    el.innerHTML=history.map(h=>`<div class="listitem"><div><b>${names[h.type]}</b><div class="${h.high?'danger':'ok'}">${h.high?'Atenção elevada':'Baixo risco'}</div></div><div class="muted" style="font-size:11px">${h.time}</div></div>`).join('');
+    el.innerHTML=history.map(h=>{
+      const level=h.level||'low';
+      const cls=level==='high'?'danger':level==='medium'?'warn':'ok';
+      const label=level==='high'?'Alto risco':level==='medium'?'Atenção':'Baixo risco';
+      return `<div class="listitem"><div><b>${names[h.type]}</b><div class="${cls}">${label}</div></div><div class="muted" style="font-size:11px">${h.time}</div></div>`;
+    }).join('');
   }
 
   document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
@@ -271,7 +450,7 @@ textarea.field{min-height:150px;resize:vertical}
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
-      const reg = await navigator.serviceWorker.register('./sw.js?v=5', { updateViaCache: 'none' });
+      const reg = await navigator.serviceWorker.register('./sw.js?v=7', { updateViaCache: 'none' });
       await reg.update();
     } catch(e) {}
   });
@@ -279,7 +458,7 @@ if ('serviceWorker' in navigator) {
 if ('caches' in window) {
   caches.keys().then(keys => {
     keys.forEach(k => {
-      if (k !== 'podeconfiar-v5-clean') caches.delete(k);
+      if (k !== 'podeconfiar-v7-completa') caches.delete(k);
     });
   });
 }
