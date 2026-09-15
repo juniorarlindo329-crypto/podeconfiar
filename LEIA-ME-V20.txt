@@ -1,0 +1,9 @@
+PodeConfiar? V20 — Login Profissional
+- Cadastro/login redesenhados em visual premium.
+- Texto alterado para representar TODAS as análises do aplicativo, não apenas lojas online.
+- Nome, e-mail, senha, confirmar senha, aceite de termos e mostrar/ocultar senha.
+- 5 dias de teste grátis.
+- Login, recuperação de senha e sessão Supabase preservados.
+- Mercado Pago e demais ferramentas preservados.
+Observação: login Google/Facebook/Apple não foi adicionado porque esses provedores ainda não foram configurados no Supabase.
+Teste: https://juniorarlindo329-crypto.github.io/podeconfiar/?v=20

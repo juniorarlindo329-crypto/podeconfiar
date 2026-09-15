@@ -168,17 +168,47 @@ textarea.field{min-height:150px;resize:vertical}
 .ocr-status.fail{border-color:rgba(255,80,80,.35);background:rgba(255,80,80,.08)}
 #shopOcrText{opacity:.92}
 </style>
+
+<style>
+#authLogin,#authSignup{padding-bottom:110px;background:
+ radial-gradient(circle at 50% 0%,rgba(0,255,160,.12),transparent 34%),
+ linear-gradient(180deg,#00251d 0%,#00120e 55%,#000b08 100%);}
+.auth-shell{max-width:720px;margin:0 auto;padding:8px 18px 28px}
+.auth-brand{text-align:center;margin:8px 0 24px}
+.auth-brand img{width:88px;height:70px;object-fit:contain;filter:drop-shadow(0 0 18px rgba(0,255,160,.28))}
+.auth-brand-name{font-size:31px;font-weight:950;letter-spacing:-1.2px}.auth-brand-name span{color:#14e99b}
+.auth-kicker{font-size:11px;letter-spacing:3px;color:#b7c8c2;margin-top:4px}
+.auth-title{text-align:center;font-size:32px;font-weight:950;margin:16px 0 6px}
+.auth-sub{text-align:center;color:#afc0ba;font-size:16px;line-height:1.45;margin:0 10px 22px}
+.auth-card{border:1px solid rgba(30,235,158,.35);background:rgba(3,32,25,.78);border-radius:25px;padding:20px;box-shadow:0 18px 45px rgba(0,0,0,.22)}
+.auth-field{position:relative;margin:14px 0}
+.auth-field .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);font-size:21px;opacity:.9}
+.auth-field input{box-sizing:border-box;width:100%;height:58px;padding:0 48px;border:1px solid rgba(157,190,179,.27);border-radius:16px;background:rgba(4,25,20,.9);color:#fff;font-size:17px;outline:none}
+.auth-field input:focus{border-color:#14e99b;box-shadow:0 0 0 3px rgba(20,233,155,.08)}
+.auth-field .eye{position:absolute;right:13px;top:50%;transform:translateY(-50%);border:0;background:none;color:#c8d5d1;font-size:20px;padding:8px}
+.auth-hint{font-size:12px;color:#94a9a2;margin:-7px 0 8px 49px}
+.auth-main-btn{width:100%;border:0;border-radius:18px;min-height:58px;background:linear-gradient(90deg,#22f0b3,#00ce7e);color:#001a12;font-size:19px;font-weight:950;margin-top:15px}
+.auth-switch{text-align:center;margin-top:20px;color:#c6d4cf}.auth-switch button,.auth-link{border:0;background:none;color:#1ff0aa;font-weight:850;font-size:inherit}
+.auth-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:13px 2px;font-size:13px;color:#c5d3ce}
+.auth-check{display:flex;align-items:center;gap:8px}.auth-check input{accent-color:#12df98;width:18px;height:18px}
+.auth-trial{display:flex;gap:13px;align-items:center;margin-top:17px;padding:14px;border:1px solid rgba(30,235,158,.22);border-radius:16px;background:rgba(0,100,70,.10)}
+.auth-trial strong{display:block}.auth-trial small{color:#9fb1ab}
+.auth-secure{display:flex;gap:12px;margin-top:16px;padding:14px;border-radius:16px;background:rgba(0,95,66,.12);color:#b7c9c3;font-size:13px}
+.auth-secure b{color:#fff;display:block;margin-bottom:3px}
+#authLogin .top,#authSignup .top{background:transparent}
+</style>
+
 </head>
 <body>
 <main class="app">
 
 <section id="welcome" class="screen active welcome">
-  <img class="logo-real-welcome" src="./logo-oficial-v11.png?v=19.1" alt="Logo oficial PodeConfiar">
+  <img class="logo-real-welcome" src="./logo-oficial-v11.png?v=20" alt="Logo oficial PodeConfiar">
   <div class="brand">Pode<span>Confiar?</span></div>
   <div class="kicker">SEGURANÇA • ANÁLISE • PROTEÇÃO</div>
   <h1>Sua segurança digital em <span>primeiro lugar!</span></h1>
   <p class="lead">Analise mensagens, links, prints e cobranças suspeitas com inteligência e rapidez.</p>
-  <div class="robot-stage"><img src="robot-clean.png?v=19.1" alt="Robô de segurança PodeConfiar"></div>
+  <div class="robot-stage"><img src="robot-clean.png?v=20" alt="Robô de segurança PodeConfiar"></div>
   <div class="featurebar">
     <div><b>🛡</b>Previne<br>golpes</div>
     <div><b>⚡</b>Análise em<br>segundos</div>
@@ -192,7 +222,7 @@ textarea.field{min-height:150px;resize:vertical}
 
 <section id="home" class="screen">
   <div class="header">
-    <div class="header-left"><div class="header-logo header-logo-real"><img src="./logo-oficial-v11.png?v=19.1" alt="Logo"></div><div class="header-name">Pode<span>Confiar?</span></div></div>
+    <div class="header-left"><div class="header-logo header-logo-real"><img src="./logo-oficial-v11.png?v=20" alt="Logo"></div><div class="header-name">Pode<span>Confiar?</span></div></div>
     <button class="iconbtn">🔔</button>
   </div>
   <div class="usercard">
@@ -204,7 +234,7 @@ textarea.field{min-height:150px;resize:vertical}
     <h2>Desconfie.<br>Analise.<br><span>Fique seguro.</span></h2>
     <p>Evite golpes e proteja o que é seu.</p>
     <button class="smallbtn" data-go="tips">Saiba mais →</button>
-    <img src="shield-clean.png?v=19.1" alt="Escudo de proteção">
+    <img src="shield-clean.png?v=20" alt="Escudo de proteção">
   </div>
 
   <div class="grid">
@@ -434,22 +464,46 @@ textarea.field{min-height:150px;resize:vertical}
 
 
 
+
 <section id="authLogin" class="screen">
-<div class="top"><button class="back" onclick="go('welcome')">←</button><div class="title">Entrar</div><div></div></div>
-<div class="card"><h2>Entre no PodeConfiar?</h2><p class="muted">Use seu e-mail e senha.</p>
-<label>E-mail</label><input id="loginEmail" type="email" placeholder="seu@email.com">
-<label>Senha</label><input id="loginPassword" type="password" placeholder="Sua senha">
-<button class="primary" onclick="pcLogin()">Entrar</button>
-<button class="secondary" onclick="go('authSignup')">Criar minha conta</button>
-<button class="secondary" onclick="pcResetPassword()">Esqueci minha senha</button><p id="loginMsg" class="muted"></p></div></section>
+ <div class="top"><button class="back" onclick="go('welcome')">←</button><div></div><div></div></div>
+ <div class="auth-shell">
+  <div class="auth-brand"><img src="logo-oficial-v11.png" alt="PodeConfiar?"><div class="auth-brand-name">Pode<span>Confiar?</span></div><div class="auth-kicker">SEGURANÇA DIGITAL</div></div>
+  <div class="auth-title">Bem-vindo de volta</div>
+  <p class="auth-sub">Entre para continuar usando todas as análises de segurança do aplicativo.</p>
+  <div class="auth-card">
+   <div class="auth-field"><span class="ico">✉️</span><input id="loginEmail" type="email" autocomplete="email" placeholder="E-mail"></div>
+   <div class="auth-field"><span class="ico">🔒</span><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Senha"><button class="eye" type="button" onclick="pcTogglePass('loginPassword',this)">◉</button></div>
+   <div class="auth-row"><label class="auth-check"><input type="checkbox" checked> <span>Manter-me conectado</span></label><button class="auth-link" onclick="pcResetPassword()">Esqueci minha senha?</button></div>
+   <button class="auth-main-btn" onclick="pcLogin()">↪ Entrar</button><p id="loginMsg" class="muted"></p>
+   <div class="auth-secure"><span style="font-size:27px">🔐</span><div><b>Seus dados estão protegidos</b>Seu acesso é autenticado pelo Supabase e a sessão fica protegida no navegador.</div></div>
+  </div>
+  <div class="auth-switch">Não tem uma conta? <button onclick="go('authSignup')">Criar agora →</button></div>
+ </div>
+</section>
+
+
 <section id="authSignup" class="screen">
-<div class="top"><button class="back" onclick="go('authLogin')">←</button><div class="title">Criar conta</div><div></div></div>
-<div class="card"><h2>Crie sua conta</h2><p class="muted">Seu teste de 5 dias começa quando a conta é criada.</p>
-<label>Nome</label><input id="signupName" type="text" placeholder="Seu nome">
-<label>E-mail</label><input id="signupEmail" type="email" placeholder="seu@email.com">
-<label>Senha</label><input id="signupPassword" type="password" placeholder="Crie uma senha">
-<button class="primary" onclick="pcSignup()">Criar conta</button>
-<button class="secondary" onclick="go('authLogin')">Já tenho conta</button><p id="signupMsg" class="muted"></p></div></section>
+ <div class="top"><button class="back" onclick="go('welcome')">←</button><div></div><div></div></div>
+ <div class="auth-shell">
+  <div class="auth-brand"><img src="logo-oficial-v11.png" alt="PodeConfiar?"><div class="auth-brand-name">Pode<span>Confiar?</span></div><div class="auth-kicker">SEGURANÇA DIGITAL</div></div>
+  <div class="auth-title">Crie sua conta</div>
+  <p class="auth-sub">Comece agora e ganhe 5 dias de teste grátis para analisar mensagens, links, prints, cobranças, ligações e compras online.</p>
+  <div class="auth-card">
+   <div class="auth-field"><span class="ico">👤</span><input id="signupName" type="text" autocomplete="name" placeholder="Nome completo"></div>
+   <div class="auth-field"><span class="ico">✉️</span><input id="signupEmail" type="email" autocomplete="email" placeholder="E-mail"></div>
+   <div class="auth-field"><span class="ico">🔒</span><input id="signupPassword" type="password" autocomplete="new-password" placeholder="Senha"><button class="eye" type="button" onclick="pcTogglePass('signupPassword',this)">◉</button></div>
+   <div class="auth-hint">Mínimo de 6 caracteres</div>
+   <div class="auth-field"><span class="ico">🔒</span><input id="signupPassword2" type="password" autocomplete="new-password" placeholder="Confirmar senha"><button class="eye" type="button" onclick="pcTogglePass('signupPassword2',this)">◉</button></div>
+   <label class="auth-check"><input id="signupTerms" type="checkbox"> <span>Li e aceito os Termos de Uso e a Política de Privacidade</span></label>
+   <button class="auth-main-btn" onclick="pcSignup()">👤＋ Criar conta</button>
+   <p id="signupMsg" class="muted"></p>
+   <div class="auth-trial"><span style="font-size:29px">🎁</span><div><strong>5 dias de teste grátis</strong><small>Explore as ferramentas do PodeConfiar? antes de escolher um plano.</small></div></div>
+  </div>
+  <div class="auth-switch">Já tem uma conta? <button onclick="go('authLogin')">Entrar agora →</button></div>
+ </div>
+</section>
+
 <section id="account" class="screen">
 <div class="top"><button class="back" onclick="go('home')">←</button><div class="title">Minha conta</div><div></div></div>
 <div class="card"><h2 id="accountName">Minha conta</h2><p id="accountEmail" class="muted"></p>
@@ -1303,7 +1357,7 @@ saveHistory();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
-      const reg = await navigator.serviceWorker.register('./sw.js?v=19.1', { updateViaCache: 'none' });
+      const reg = await navigator.serviceWorker.register('./sw.js?v=20', { updateViaCache: 'none' });
       await reg.update();
     } catch(e) {}
   });
@@ -1323,8 +1377,11 @@ let pcCurrentUser=null,pcProfile=null;
 function pcSetMsg(id,msg,ok=false){const e=document.getElementById(id);if(e){e.textContent=msg||'';e.style.color=ok?'#54f0aa':'#ffb3b3';}}
 async function pcSignup(){
  const name=(document.getElementById('signupName')?.value||'').trim(),email=(document.getElementById('signupEmail')?.value||'').trim(),password=document.getElementById('signupPassword')?.value||'';
+ const password2=document.getElementById('signupPassword2')?.value||'',terms=document.getElementById('signupTerms')?.checked;
  if(!name||!email||password.length<6)return pcSetMsg('signupMsg','Preencha nome, e-mail e uma senha com pelo menos 6 caracteres.');
- const {data,error}=await pcSupabase.auth.signUp({email,password,options:{data:{name},emailRedirectTo:'https://juniorarlindo329-crypto.github.io/podeconfiar/?v=19.1'}});
+ if(password!==password2)return pcSetMsg('signupMsg','As senhas não são iguais.');
+ if(!terms)return pcSetMsg('signupMsg','Aceite os Termos de Uso e a Política de Privacidade para continuar.');
+ const {data,error}=await pcSupabase.auth.signUp({email,password,options:{data:{name},emailRedirectTo:'https://juniorarlindo329-crypto.github.io/podeconfiar/?v=20'}});
  if(error)return pcSetMsg('signupMsg',error.message);
  if(data.session){await pcLoadSession();go('home');}else pcSetMsg('signupMsg','Conta criada! Confira seu e-mail e toque no link de confirmação.',true);
 }
@@ -1338,7 +1395,7 @@ async function pcLogin(){
 async function pcResetPassword(){
  const email=(document.getElementById('loginEmail')?.value||'').trim();
  if(!email)return pcSetMsg('loginMsg','Digite seu e-mail primeiro.');
- const {error}=await pcSupabase.auth.resetPasswordForEmail(email,{redirectTo:'https://juniorarlindo329-crypto.github.io/podeconfiar/?v=19.1'});
+ const {error}=await pcSupabase.auth.resetPasswordForEmail(email,{redirectTo:'https://juniorarlindo329-crypto.github.io/podeconfiar/?v=20'});
  pcSetMsg('loginMsg',error?error.message:'E-mail de recuperação enviado.',!error);
 }
 async function pcLogout(){await pcSupabase.auth.signOut();pcCurrentUser=null;pcProfile=null;go('welcome');}
@@ -1354,6 +1411,13 @@ function pcRenderAccount(){
 }
 async function pcOpenAccount(){await pcLoadSession();if(!pcCurrentUser)return go('authLogin');go('account');}
 pcSupabase.auth.onAuthStateChange(()=>setTimeout(pcLoadSession,0));setTimeout(pcLoadSession,0);
+
+
+function pcTogglePass(id,btn){
+ const el=document.getElementById(id); if(!el)return;
+ el.type=el.type==='password'?'text':'password';
+ if(btn)btn.textContent=el.type==='password'?'◉':'◎';
+}
 
 </script>
 
