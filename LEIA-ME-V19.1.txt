@@ -1,0 +1,10 @@
+PodeConfiar? V19.1
+CORREÇÃO:
+- Corrigidos os botões Começar agora e Já tenho conta.
+- Cadastro/login Supabase preservados.
+- Pagamentos Mercado Pago preservados.
+- Cache atualizado para v19.1.
+
+Publique TODOS os arquivos na raiz do GitHub substituindo os anteriores.
+Teste:
+https://juniorarlindo329-crypto.github.io/podeconfiar/?v=19.1
