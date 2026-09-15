@@ -173,26 +173,26 @@ textarea.field{min-height:150px;resize:vertical}
 <main class="app">
 
 <section id="welcome" class="screen active welcome">
-  <img class="logo-real-welcome" src="./logo-oficial-v11.png?v=18" alt="Logo oficial PodeConfiar">
+  <img class="logo-real-welcome" src="./logo-oficial-v11.png?v=19" alt="Logo oficial PodeConfiar">
   <div class="brand">Pode<span>Confiar?</span></div>
   <div class="kicker">SEGURANÇA • ANÁLISE • PROTEÇÃO</div>
   <h1>Sua segurança digital em <span>primeiro lugar!</span></h1>
   <p class="lead">Analise mensagens, links, prints e cobranças suspeitas com inteligência e rapidez.</p>
-  <div class="robot-stage"><img src="robot-clean.png?v=18" alt="Robô de segurança PodeConfiar"></div>
+  <div class="robot-stage"><img src="robot-clean.png?v=19" alt="Robô de segurança PodeConfiar"></div>
   <div class="featurebar">
     <div><b>🛡</b>Previne<br>golpes</div>
     <div><b>⚡</b>Análise em<br>segundos</div>
     <div><b>🔒</b>Seus dados<br>protegidos</div>
     <div><b>👥</b>Tecnologia<br>confiável</div>
   </div>
-  <button class="primary" data-go="home">Começar agora →</button>
-  <button class="secondary" data-go="home">Já tenho conta</button>
+  <button class="primary" onclick="go(\'authSignup\')">Começar agora →</button>
+  <button class="secondary" onclick="go(\'authLogin\')">Já tenho conta</button>
   <div class="footer">Aplicativo Oficial • Desenvolvido por JNR</div>
 </section>
 
 <section id="home" class="screen">
   <div class="header">
-    <div class="header-left"><div class="header-logo header-logo-real"><img src="./logo-oficial-v11.png?v=18" alt="Logo"></div><div class="header-name">Pode<span>Confiar?</span></div></div>
+    <div class="header-left"><div class="header-logo header-logo-real"><img src="./logo-oficial-v11.png?v=19" alt="Logo"></div><div class="header-name">Pode<span>Confiar?</span></div></div>
     <button class="iconbtn">🔔</button>
   </div>
   <div class="usercard">
@@ -204,7 +204,7 @@ textarea.field{min-height:150px;resize:vertical}
     <h2>Desconfie.<br>Analise.<br><span>Fique seguro.</span></h2>
     <p>Evite golpes e proteja o que é seu.</p>
     <button class="smallbtn" data-go="tips">Saiba mais →</button>
-    <img src="shield-clean.png?v=18" alt="Escudo de proteção">
+    <img src="shield-clean.png?v=19" alt="Escudo de proteção">
   </div>
 
   <div class="grid">
@@ -433,6 +433,30 @@ textarea.field{min-height:150px;resize:vertical}
 </section>
 
 
+
+<section id="authLogin" class="screen">
+<div class="top"><button class="back" onclick="go('welcome')">←</button><div class="title">Entrar</div><div></div></div>
+<div class="card"><h2>Entre no PodeConfiar?</h2><p class="muted">Use seu e-mail e senha.</p>
+<label>E-mail</label><input id="loginEmail" type="email" placeholder="seu@email.com">
+<label>Senha</label><input id="loginPassword" type="password" placeholder="Sua senha">
+<button class="primary" onclick="pcLogin()">Entrar</button>
+<button class="secondary" onclick="go('authSignup')">Criar minha conta</button>
+<button class="secondary" onclick="pcResetPassword()">Esqueci minha senha</button><p id="loginMsg" class="muted"></p></div></section>
+<section id="authSignup" class="screen">
+<div class="top"><button class="back" onclick="go('authLogin')">←</button><div class="title">Criar conta</div><div></div></div>
+<div class="card"><h2>Crie sua conta</h2><p class="muted">Seu teste de 5 dias começa quando a conta é criada.</p>
+<label>Nome</label><input id="signupName" type="text" placeholder="Seu nome">
+<label>E-mail</label><input id="signupEmail" type="email" placeholder="seu@email.com">
+<label>Senha</label><input id="signupPassword" type="password" placeholder="Crie uma senha">
+<button class="primary" onclick="pcSignup()">Criar conta</button>
+<button class="secondary" onclick="go('authLogin')">Já tenho conta</button><p id="signupMsg" class="muted"></p></div></section>
+<section id="account" class="screen">
+<div class="top"><button class="back" onclick="go('home')">←</button><div class="title">Minha conta</div><div></div></div>
+<div class="card"><h2 id="accountName">Minha conta</h2><p id="accountEmail" class="muted"></p>
+<p><b>Plano:</b> <span id="accountPlan">—</span></p><p><b>Status:</b> <span id="accountStatus">—</span></p>
+<p><b>Análises usadas:</b> <span id="accountUsed">0</span></p><p><b>Teste até:</b> <span id="accountTrial">—</span></p>
+<button class="secondary" onclick="go('plans')">Ver planos</button><button class="secondary" onclick="pcLogout()">Sair da conta</button></div></section>
+
 </main>
 
 
@@ -452,6 +476,7 @@ textarea.field{min-height:150px;resize:vertical}
 </nav>
 
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (() => {
   const screens=[...document.querySelectorAll('.screen')], nav=document.getElementById('nav');
@@ -1278,7 +1303,7 @@ saveHistory();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
-      const reg = await navigator.serviceWorker.register('./sw.js?v=18', { updateViaCache: 'none' });
+      const reg = await navigator.serviceWorker.register('./sw.js?v=19', { updateViaCache: 'none' });
       await reg.update();
     } catch(e) {}
   });
@@ -1290,6 +1315,46 @@ if ('caches' in window) {
     });
   });
 }
+
+const SUPABASE_URL='https://wzeptvrlpfdafauzcvzg.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY='sb_publishable_HfZjjkqF1fdZbjCGdfUbWg_tg-v-RoF';
+const pcSupabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+let pcCurrentUser=null,pcProfile=null;
+function pcSetMsg(id,msg,ok=false){const e=document.getElementById(id);if(e){e.textContent=msg||'';e.style.color=ok?'#54f0aa':'#ffb3b3';}}
+async function pcSignup(){
+ const name=(document.getElementById('signupName')?.value||'').trim(),email=(document.getElementById('signupEmail')?.value||'').trim(),password=document.getElementById('signupPassword')?.value||'';
+ if(!name||!email||password.length<6)return pcSetMsg('signupMsg','Preencha nome, e-mail e uma senha com pelo menos 6 caracteres.');
+ const {data,error}=await pcSupabase.auth.signUp({email,password,options:{data:{name},emailRedirectTo:'https://juniorarlindo329-crypto.github.io/podeconfiar/?v=19'}});
+ if(error)return pcSetMsg('signupMsg',error.message);
+ if(data.session){await pcLoadSession();go('home');}else pcSetMsg('signupMsg','Conta criada! Confira seu e-mail e toque no link de confirmação.',true);
+}
+async function pcLogin(){
+ const email=(document.getElementById('loginEmail')?.value||'').trim(),password=document.getElementById('loginPassword')?.value||'';
+ if(!email||!password)return pcSetMsg('loginMsg','Digite seu e-mail e sua senha.');
+ const {error}=await pcSupabase.auth.signInWithPassword({email,password});
+ if(error)return pcSetMsg('loginMsg',error.message);
+ await pcLoadSession();go('home');
+}
+async function pcResetPassword(){
+ const email=(document.getElementById('loginEmail')?.value||'').trim();
+ if(!email)return pcSetMsg('loginMsg','Digite seu e-mail primeiro.');
+ const {error}=await pcSupabase.auth.resetPasswordForEmail(email,{redirectTo:'https://juniorarlindo329-crypto.github.io/podeconfiar/?v=19'});
+ pcSetMsg('loginMsg',error?error.message:'E-mail de recuperação enviado.',!error);
+}
+async function pcLogout(){await pcSupabase.auth.signOut();pcCurrentUser=null;pcProfile=null;go('welcome');}
+async function pcLoadSession(){
+ const {data}=await pcSupabase.auth.getSession();pcCurrentUser=data?.session?.user||null;
+ if(!pcCurrentUser){pcProfile=null;pcRenderAccount();return null;}
+ const {data:profile}=await pcSupabase.from('profiles').select('*').eq('id',pcCurrentUser.id).maybeSingle();pcProfile=profile||null;pcRenderAccount();return pcCurrentUser;
+}
+function pcRenderAccount(){
+ const m=pcCurrentUser?.user_metadata||{},set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+ const pn={trial:'Teste grátis',basic:'Básico',professional:'Profissional',premium:'Premium'},sn={trial:'Teste grátis',active:'Ativo',grace:'1 dia de tolerância',suspended:'Suspenso'};
+ set('accountName',m.name||pcProfile?.name||'Minha conta');set('accountEmail',pcCurrentUser?.email||'');set('accountPlan',pn[pcProfile?.plan]||'—');set('accountStatus',sn[pcProfile?.subscription_status]||'—');set('accountUsed',String(pcProfile?.analyses_used??0));set('accountTrial',pcProfile?.trial_ends_at?new Date(pcProfile.trial_ends_at).toLocaleString('pt-BR'):'—');
+}
+async function pcOpenAccount(){await pcLoadSession();if(!pcCurrentUser)return go('authLogin');go('account');}
+pcSupabase.auth.onAuthStateChange(()=>setTimeout(pcLoadSession,0));setTimeout(pcLoadSession,0);
+
 </script>
 
 </body>

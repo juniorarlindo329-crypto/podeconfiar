@@ -1,0 +1,10 @@
+PodeConfiar? V19
+- Cadastro real: nome, e-mail e senha
+- Confirmação de e-mail
+- Login e sessão Supabase
+- Recuperação de senha
+- Minha Conta: plano/status/uso/teste
+- Logout
+- Mantém Mercado Pago e recursos da V18
+A ativação automática após pagamento ainda requer webhook/backend.
+URL: https://juniorarlindo329-crypto.github.io/podeconfiar/?v=19
